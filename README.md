@@ -1,6 +1,7 @@
 # Finding Things Migration Checker
 
-Check that publishing-api, rummager links are in sync.
+The scripts in this repository compare [publishing api](https://github.com/alphagov/publishing-api) links
+with [rummager](https://github.com/alphagov/rummager) to know if both are in sync.
 
 
 ## fetch_publishing_api_links
