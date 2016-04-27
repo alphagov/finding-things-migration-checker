@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/data_importer'
+
+class Import
+
+  def import!
+    data_importer = DataImporter.new
+
+    data_importer.import_data_from_publishing_api if import_publishing_api?
+    data_importer.import_data_from_rummager if import_rummager?
+  end
+
+private
+  def to_import
+    ENV.fetch('IMPORT', 'rummager,publishing_api').split(',')
+  end
+
+  def import_rummager?
+    to_import.include?("rummager")
+  end
+
+  def import_publishing_api?
+    to_import.include?("publishing_api")
+  end
+end
+
+Import.new.import!
