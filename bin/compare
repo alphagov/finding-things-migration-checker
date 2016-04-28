@@ -4,3 +4,5 @@ require './lib/database'
 
 database = Database.new
 database.compare!
+puts
+database.summarise_missing_publishing_api_link_types!
