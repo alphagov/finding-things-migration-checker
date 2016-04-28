@@ -1,5 +1,6 @@
 require './lib/database'
 require './lib/fetch_publishing_api_links'
+require './lib/fetch_publishing_api_content'
 require './lib/fetch_rummager'
 require './lib/rummager_data_presenter'
 
@@ -9,7 +10,7 @@ class DataImporter
     @database = Database.new
   end
 
-  def import_data_from_publishing_api
+  def import_links_from_publishing_api
     create_publishing_api_table
 
     publishing_api = FetchPublishingApiLinks.new
@@ -17,6 +18,20 @@ class DataImporter
     data = publishing_api.request_data!
 
     @database.copy_rows(table_name: 'publishing_api') do
+      data.each_row do |row|
+        @database.copy_row(row)
+      end
+    end
+  end
+
+  def import_content_from_publishing_api
+    create_publishing_api_content_table
+
+    publishing_api = FetchPublishingApiContent.new
+
+    data = publishing_api.request_data!
+
+    @database.copy_rows(table_name: 'api_content') do
       data.each_row do |row|
         @database.copy_row(row)
       end
@@ -55,6 +70,21 @@ class DataImporter
         'link_type text',
         'link_content_ids text',
         'link_base_paths text[]',
+      ]
+    )
+  end
+
+  def create_publishing_api_content_table
+    puts "creating publishing api content table..."
+
+    @database.create_table(
+      table_name: 'api_content',
+      columns: [
+        'content_id text',
+        'base_path text',
+        'format text',
+        'publishing_app text',
+        'routes text',
       ]
     )
   end
