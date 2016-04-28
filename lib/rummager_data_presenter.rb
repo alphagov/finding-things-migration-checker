@@ -4,7 +4,14 @@ class RummagerDataPresenter
   end
 
   def present!
-    base_path     = @search_result["link"]
+    link = @search_result["link"]
+    slug = @search_result["slug"]
+    if slug
+      match         = link.match(/(?<base_path>.*#{Regexp.escape(slug)})/)
+      base_path     = match[:base_path] if match
+    else
+      base_path = link
+    end
     organisations = fetch_resources("organisations", "/government/organisations/")
     people        = fetch_resources("people", "/government/people/")
     policies      = fetch_resources("policies")

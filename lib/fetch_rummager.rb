@@ -21,7 +21,7 @@ class FetchRummager
 
       puts "pages to go: #{page_counter}"
 
-      url = "#{@endpoint}?fields[]=link&fields[]=mainstream_browse_pages" \
+      url = "#{@endpoint}?fields[]=link&fields[]=slug&fields[]=mainstream_browse_pages" \
             "&fields[]=specialist_sectors&fields[]=organisations" \
             "&fields[]=policy_groups&fields[]=content_id&count=#{BATCH_SIZE}&start=#{offset}"
 
