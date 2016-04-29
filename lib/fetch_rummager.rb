@@ -3,7 +3,7 @@ require 'active_support'
 require 'active_support/core_ext/object/blank'
 
 class FetchRummager
-  BATCH_SIZE = 3500
+  BATCH_SIZE = 1000
 
   def initialize
     @endpoint = ENV["RUMMAGER_URL"] || 'http://rummager.dev.gov.uk/unified_search.json'
