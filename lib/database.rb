@@ -1,3 +1,4 @@
+require 'csv'
 require 'pg'
 
 class Database
@@ -110,7 +111,7 @@ class Database
   end
 
   # All items with missing topics or browse pages
-  def find_missing_topics_and_browse!
+  def find_missing_topics_and_browse!(output:)
     query = <<-SQL
       WITH missing_links as (
         SELECT
@@ -135,16 +136,24 @@ class Database
 
     results = @connection.exec(query)
 
-    puts "MISSING TOPICS AND MAINSTREAM_BROWSE_PAGES:"
+    if (output == :csv)
+      CSV do |csv|
+        csv << %w(base_path link_type format publishing_app)
 
-    results.each_row do |row|
-      %w(base_path link_type format publishing_app).zip(row).each do |name, value|
-        puts ("%-20s " % name) + value
+        results.each_row do |row|
+          csv << row
+        end
       end
-      puts '------------------------------'
-    end
+    elsif (output == :text)
+      results.each_row do |row|
+        %w(base_path link_type format publishing_app).zip(row).each do |name, value|
+          puts ("%-20s " % name) + value
+        end
+        puts '------------------------------'
+      end
 
-    puts "#{results.ntuples} rows found"
+      puts "#{results.ntuples} rows found"
+    end
   end
 
   def summarise_missing_publishing_api_link_types!
@@ -177,5 +186,4 @@ class Database
     end
 
   end
-
 end

@@ -1,6 +1,24 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require './lib/database'
 
+options = {format: :text}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+
+  opts.on("-fFORMAT", [:csv, :text], "--format=FORMAT") do |form|
+    options[:format] = form
+
+  end
+end
+
+begin
+  parser.parse!
+rescue OptionParser::InvalidOption => error
+  die error.message, :usage => true
+end
+
 database = Database.new
-database.find_missing_topics_and_browse!
+database.find_missing_topics_and_browse!(output: options[:format])
