@@ -76,7 +76,17 @@ class Database
   # in rummager.
   def find_missing_publishing_api_link_types!(publishing_app:)
     query = <<-SQL
-      WITH missing_links as (
+      WITH
+      publishing_api_combined as (
+        SELECT
+          base_path,
+          'organisations'::text as link_type
+        FROM
+          publishing_api
+        WHERE link_type in ('lead_organisations', 'organisations')
+      ),
+
+      missing_links as (
         SELECT
           rummager.base_path, rummager.link_type
         FROM rummager
@@ -85,7 +95,7 @@ class Database
 
         SELECT
           base_path,link_type
-        FROM publishing_api
+        FROM publishing_api_combined
       )
 
       SELECT base_path, link_type, format
@@ -110,16 +120,28 @@ class Database
 
   def summarise_missing_publishing_api_link_types!
     query = <<-SQL
-      WITH missing_links as (
+
+      WITH
+
+      publishing_api_combined as (
+        SELECT
+          base_path,
+          'organisations'::text as link_type
+        FROM
+          publishing_api
+        WHERE link_type in ('lead_organisations', 'organisations')
+      ),
+
+      missing_links as (
         SELECT
           rummager.base_path, rummager.link_type
         FROM rummager
+        WHERE link_type='organisations'
 
         EXCEPT
 
-        SELECT
-          base_path,link_type
-        FROM publishing_api
+        SELECT base_path, link_type
+        FROM publishing_api_combined
       )
       SELECT link_type, publishing_app, count(*)
       FROM
