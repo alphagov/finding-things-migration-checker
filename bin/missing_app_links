@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require './lib/database'
+
+if ARGV.length < 1
+  $stderr.puts "Usage: missing_app_links PUBLISHING_APP"
+  exit(1)
+end
+
+database = Database.new
+database.find_missing_publishing_api_link_types!(publishing_app: ARGV.first)
