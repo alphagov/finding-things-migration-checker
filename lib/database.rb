@@ -52,7 +52,8 @@ class Database
   end
 
   # Identify rummager content that is not in the publishing api.
-  # This content is ignored in other queries.
+  # If the target of a link is not in the publishing api it gets
+  # ignored by the other queries.
   def find_unmatched_base_paths!
     query = <<-SQL
       SELECT DISTINCT base_path FROM rummager
@@ -106,6 +107,44 @@ class Database
     end
 
     puts "#{results.ntuples} missing #{publishing_app} links found"
+  end
+
+  # All items with missing topics or browse pages
+  def find_missing_topics_and_browse!
+    query = <<-SQL
+      WITH missing_links as (
+        SELECT
+          base_path, link_type
+        FROM rummager
+        WHERE link_type in ('topics', 'mainstream_browse_pages')
+
+        EXCEPT
+
+        SELECT
+          base_path,link_type
+        FROM publishing_api
+        WHERE link_type in ('topics', 'mainstream_browse_pages')
+      )
+
+      SELECT base_path, link_type, format, publishing_app
+      FROM
+        missing_links
+      JOIN
+        api_content USING(base_path)
+    SQL
+
+    results = @connection.exec(query)
+
+    puts "MISSING TOPICS AND MAINSTREAM_BROWSE_PAGES:"
+
+    results.each_row do |row|
+      %w(base_path link_type format publishing_app).zip(row).each do |name, value|
+        puts ("%-20s " % name) + value
+      end
+      puts '------------------------------'
+    end
+
+    puts "#{results.ntuples} rows found"
   end
 
   def summarise_missing_publishing_api_link_types!

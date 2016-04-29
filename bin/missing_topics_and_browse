@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require './lib/database'
+
+database = Database.new
+database.find_missing_topics_and_browse!
