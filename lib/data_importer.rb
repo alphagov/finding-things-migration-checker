@@ -17,10 +17,8 @@ class DataImporter
 
     data = publishing_api.request_data!
 
-    @database.copy_rows(table_name: 'publishing_api') do
-      data.each_row do |row|
-        @database.copy_row(row)
-      end
+    data.each do |row|
+      @database.insert(table_name: 'publishing_api', row: row)
     end
   end
 
@@ -31,10 +29,8 @@ class DataImporter
 
     data = publishing_api.request_data!
 
-    @database.copy_rows(table_name: 'api_content') do
-      data.each_row do |row|
-        @database.copy_row(row)
-      end
+    data.each do |row|
+      @database.insert(table_name: 'api_content', row: row)
     end
   end
 
@@ -47,10 +43,8 @@ class DataImporter
       search_results.each do |search_result|
         rows = RummagerDataPresenter.new(search_result).present!
 
-        @database.copy_rows(table_name: 'rummager') do
-          rows.each do |row|
-            @database.copy_row(row)
-          end
+        rows.each do |row|
+          @database.insert(table_name: 'rummager', row: row)
         end
       end
     end

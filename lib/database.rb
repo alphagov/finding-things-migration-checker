@@ -1,9 +1,15 @@
 require 'csv'
-require 'pg'
+require 'sqlite3'
+
+# NOTES
+# http://stackoverflow.com/questions/1711631/improve-insert-per-second-performance-of-sqlite
 
 class Database
   def initialize
-    @connection = PG.connect('postgresql:///migration_checker')
+    @connection = SQLite3::Database.new("migration_checker.db")
+    # turn transactions off
+    # http://www.sqlite.org/pragma.html#pragma_synchronous
+    @connection.default_synchronous = 0
   end
 
   def create_table(table_name:, columns:)
@@ -13,20 +19,26 @@ class Database
       )
     SQL
 
-    @connection.exec("DROP TABLE IF EXISTS #{table_name}")
-    @connection.exec(query)
+    @connection.execute("DROP TABLE IF EXISTS #{table_name}")
+    @connection.execute(query)
   end
 
-  def copy_rows(table_name:)
-    enco = PG::TextEncoder::CopyRow.new
+  def insert(table_name:, row:)
+    column_names = column_names(table_name, row)
+    row = row.class == Hash ? row.values : row
+    values = row.map{ '?' }.join(',')
 
-    @connection.copy_data "COPY #{table_name} FROM STDIN", enco do
-      yield
-    end
+    query = <<-SQL
+      INSERT INTO #{table_name} (#{column_names})
+      VALUES (#{values})
+    SQL
+
+    @connection.execute(query, row)
   end
 
-  def copy_row(row)
-    @connection.put_copy_data(row)
+  def column_names(table_name, row)
+    return "base_path, link_type, link_base_paths" if table_name == "rummager"
+    row.keys.join(',')
   end
 
   # Compare links where we have a matching {base_path, link_type} pair in both
@@ -43,7 +55,7 @@ class Database
       WHERE publishing_api.link_base_paths <> rummager.link_base_paths
     SQL
 
-    results = @connection.exec(query)
+    results = @connection.execute(query)
     results.each_row do |row|
       puts row
       puts '------------------------------'
@@ -62,7 +74,7 @@ class Database
       SELECT base_path FROM api_content
     SQL
 
-    results = @connection.exec(query)
+    results = @connection.execute(query)
 
     puts "UNMATCHED BASE PATHS"
 
@@ -98,7 +110,7 @@ class Database
       WHERE api_content.publishing_app = $1
     SQL
 
-    results = @connection.exec(query, [publishing_app])
+    results = @connection.execute(query, [publishing_app])
 
     puts "MISSING LINKS: #{publishing_app.upcase}"
 
@@ -134,7 +146,7 @@ class Database
         api_content USING(base_path)
     SQL
 
-    results = @connection.exec(query)
+    results = @connection.execute(query)
 
     if (output == :csv)
       CSV do |csv|
@@ -176,7 +188,7 @@ class Database
       GROUP BY link_type, publishing_app
     SQL
 
-    results = @connection.exec(query)
+    results = @connection.execute(query)
 
     puts "MISSING LINKS SUMMARY:"
 

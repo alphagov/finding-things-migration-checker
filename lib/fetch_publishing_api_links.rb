@@ -2,6 +2,7 @@
 
 # Extracts content items with their links from the publishing API database
 # (about 200,000 items) and dumps the data to disk as CSV.
+require 'pg'
 
 class FetchPublishingApiLinks
   def initialize

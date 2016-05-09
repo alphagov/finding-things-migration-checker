@@ -15,6 +15,7 @@ GEM
     pg (0.18.4)
     rest-client (1.6.9)
       mime-types (~> 1.16)
+    sqlite3 (1.3.11)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -29,6 +30,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   pg
+  sqlite3
   unirest
 
 BUNDLED WITH

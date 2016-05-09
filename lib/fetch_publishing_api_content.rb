@@ -11,7 +11,7 @@ class FetchPublishingApiContent
       locations.base_path,
       content.format,
       content.publishing_app,
-      (content.routes)->0->>'path'
+      (content.routes)->0->>'path' as routes
     FROM
       content_items content
       join states on states.content_item_id = content.id and states.name='published'
