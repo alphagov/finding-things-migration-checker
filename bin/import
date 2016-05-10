@@ -4,13 +4,19 @@ require_relative '../lib/data_importer'
 
 class Import
 
+  def initialize
+    @importer = DataImporter.new
+  end
+
   def import!
-    data_importer = DataImporter.new
+    @importer.import_links_from_publishing_api if import_publishing_api?
+    @importer.import_content_from_publishing_api if import_publishing_api?
 
-    # data_importer.import_links_from_publishing_api if import_publishing_api?
-    data_importer.import_content_from_publishing_api if import_publishing_api?
+    @importer.import_data_from_rummager if import_rummager?
+  end
 
-    # data_importer.import_data_from_rummager if import_rummager?
+  def compare!
+    @importer.compare!
   end
 
 private
@@ -27,4 +33,6 @@ private
   end
 end
 
-Import.new.import!
+importer = Import.new
+importer.import!
+importer.compare!

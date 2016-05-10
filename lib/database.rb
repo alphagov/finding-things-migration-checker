@@ -6,7 +6,8 @@ require 'sqlite3'
 
 class Database
   def initialize
-    @connection = SQLite3::Database.new("migration_checker.db")
+    @connection = SQLite3::Database.new(':memory:')
+    # @connection = SQLite3::Database.new("migration_checker.db")
     # turn transactions off
     # http://www.sqlite.org/pragma.html#pragma_synchronous
     @connection.default_synchronous = 0
@@ -14,9 +15,7 @@ class Database
 
   def create_table(table_name:, columns:)
     query = <<-SQL
-      CREATE TABLE IF NOT EXISTS #{table_name} (
-        #{columns.join(",")}
-      )
+      CREATE TABLE IF NOT EXISTS #{table_name} (#{columns.join(",")})
     SQL
 
     @connection.execute("DROP TABLE IF EXISTS #{table_name}")

@@ -10,6 +10,10 @@ class DataImporter
     @database = Database.new
   end
 
+  def compare!
+    @database.find_missing_topics_and_browse!(output: :csv)
+  end
+
   def import_links_from_publishing_api
     create_publishing_api_table
 
