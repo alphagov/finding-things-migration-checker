@@ -1,16 +1,9 @@
 require 'csv'
 require 'sqlite3'
 
-# NOTES
-# http://stackoverflow.com/questions/1711631/improve-insert-per-second-performance-of-sqlite
-
 class Database
   def initialize
     @connection = SQLite3::Database.new(':memory:')
-    # @connection = SQLite3::Database.new("migration_checker.db")
-    # turn transactions off
-    # http://www.sqlite.org/pragma.html#pragma_synchronous
-    @connection.default_synchronous = 0
   end
 
   def create_table(table_name:, columns:)

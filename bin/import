@@ -9,9 +9,6 @@ class Import
   end
 
   def import!
-    @importer.import_links_from_publishing_api if import_publishing_api?
-    @importer.import_content_from_publishing_api if import_publishing_api?
-
     @importer.import_data_from_rummager if import_rummager?
   end
 
@@ -35,4 +32,4 @@ end
 
 importer = Import.new
 importer.import!
-importer.compare!
+# importer.compare!
