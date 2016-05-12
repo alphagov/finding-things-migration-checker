@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+bundle install
+
+govuk_setenv rummager bundle exec bin/run_checks.rb 'MismatchedLinks' 'MissingFromRummager' 'BasePathsMissingFromPublishingApi' 'LinkedBasePathsMissingFromPublishingApi'

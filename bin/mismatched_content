@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-require './lib/database'
-
-database = Database.new
-database.find_unmatched_base_paths!
