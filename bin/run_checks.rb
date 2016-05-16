@@ -5,4 +5,4 @@ $:.unshift lib unless $:.include?(lib)
 
 require 'checker'
 
-CheckRunner.new(*ARGV).run
+exit CheckRunner.new(*ARGV).run

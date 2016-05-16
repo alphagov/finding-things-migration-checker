@@ -3,7 +3,6 @@ module Checks
 
     def initialize(checker_db)
       @checker_db = checker_db
-      @missing_from_rummager = {}
     end
 
     # find content_ids present in Publishing API which have a published, not withdrawn content item
@@ -28,12 +27,20 @@ module Checks
 
     end
 
-    def report
-      'MissingFromRummager report'
-    end
+    class Report
 
-    def failed?
-      !@missing_from_rummager.empty?
+      def initialize(missing_from_rummager)
+        @missing_from_rummager = missing_from_rummager
+      end
+
+      def report
+        'MissingFromRummager report'
+      end
+
+      def failed?
+        !@missing_from_rummager.empty?
+      end
+
     end
   end
 end

@@ -11,9 +11,7 @@ module Import
       create_publishing_api_tables
 
       import_publishing_api_batches do |batch_data|
-        batch_data.each do |content_id_data|
-          import_content_id_data(content_id_data)
-        end
+        import_content_id_data(batch_data.flat_map { |content_id_data| Import::PublishingApiDataPresenter.present(content_id_data) })
       end
     end
 
@@ -66,15 +64,12 @@ module Import
       response.body
     end
 
-    def import_content_id_data(content_id_data)
-      rows = Import::PublishingApiDataPresenter.present(content_id_data)
-      rows.each do |row|
-        @checker_db.insert(
-            table_name: 'publishing_api_link',
-            column_names: ['content_id', 'link_type', 'link_content_id'],
-            row: row
+    def import_content_id_data(rows)
+      @checker_db.insert_batch(
+          table_name: 'publishing_api_link',
+          column_names: ['content_id', 'link_type', 'link_content_id'],
+          rows: rows
         )
-      end
     end
 
   end

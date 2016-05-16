@@ -36,11 +36,35 @@ class CheckerDB
     execute(query, row)
   end
 
+  def insert_batch(table_name:, column_names:, rows:)
+    rows.each_slice(500) do |slice_rows|
+      insert_sqlite_batch(
+          table_name: table_name,
+          column_names: column_names,
+          rows: slice_rows
+      )
+    end
+  end
+
+  def insert_sqlite_batch(table_name:, column_names:, rows:)
+    return if rows.empty?
+
+    row_placeholder = rows[0].map{ '?' }.join(',')
+    cols = column_names.join(',')
+    batch_values = "(#{Array.new(rows.size, row_placeholder).join('),(')})"
+
+    query = <<-SQL
+    INSERT INTO #{table_name} (#{cols})
+    VALUES #{batch_values}
+    SQL
+
+    execute(query, rows.flatten)
+  end
+
   def self.in_memory_db_name
     ':memory:'
   end
 
-  private
   def execute(*args)
     begin
       @connection.execute(*args)

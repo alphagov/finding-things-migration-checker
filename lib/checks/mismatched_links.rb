@@ -3,7 +3,6 @@ module Checks
 
     def initialize(checker_db)
       @checker_db = checker_db
-      @differing_links = {}
     end
 
     # find content_ids present in both Rummager and Publishing API
@@ -31,13 +30,21 @@ module Checks
       # puts "#{results.ntuples} mismatches found"
 
     end
-    
-    def report
-      'MismatchedLinks report'
-    end
 
-    def failed?
-      !@differing_links.empty?
+    class Report
+
+      def initialize(differing_links)
+        @differing_links = differing_links
+      end
+
+      def report
+        'MismatchedLinks report'
+      end
+
+      def failed?
+        !@differing_links.empty?
+      end
+
     end
   end
 end

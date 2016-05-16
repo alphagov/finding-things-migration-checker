@@ -18,27 +18,44 @@ module Import
     def import
       create_rummager_tables
 
+      count = 0
       import_rummager_batches do |batch_data|
 
         base_paths = Import::RummagerDataPresenter.present_base_paths(batch_data)
-        base_paths_to_content_ids = @publishing_api.lookup_content_ids(base_paths: base_paths)
-        if base_paths.size != base_paths_to_content_ids.size
-          @progress_reporter.error('rummager import', "unexpected base path mapping size: #{base_paths_to_content_ids.size} for #{base_paths.size} base paths")
-        end
-        import_base_path_mappings(base_paths_to_content_ids)
 
-        batch_data.each do |row_data|
-          import_rummager_links(row_data)
-        end
+        import_base_paths(base_paths)
+        import_base_path_mappings(base_paths)
+
+        import_rummager_links(batch_data)
+
+        count += 1
+        break if count > 15
       end
 
-      # TODO: look up all linked base_paths - but no need to look up those we already have
+      import_linked_base_path_mappings
 
     end
 
-  private
+    def import_base_paths(base_paths)
+      @checker_db.insert_batch(
+          table_name: 'rummager_content',
+          column_names: ['base_path'],
+          rows: base_paths.map { |base_path| [base_path] }
+      )
+    end
+
+    private
 
     def create_rummager_tables
+      @checker_db.create_table(
+          table_name: "rummager_content",
+          columns: [
+              # todo: can get content_id from rummager for some but not all rows here
+              "base_path text",
+          ],
+          index: ['base_path']
+      )
+
       @checker_db.create_table(
           table_name: "rummager_link",
           columns: [
@@ -83,25 +100,37 @@ module Import
       ).results
     end
 
-    def import_base_path_mappings(base_paths_to_content_ids)
-      base_paths_to_content_ids.each do |base_path_mapping|
-        @checker_db.insert(
-            table_name: 'rummager_base_path_content_id',
-            column_names: ['base_path', 'content_id'],
-            row: base_path_mapping
-        )
+    def import_base_path_mappings(base_paths)
+      base_paths_to_content_ids = @publishing_api.lookup_content_ids(base_paths: base_paths)
+      if base_paths.size != base_paths_to_content_ids.size
+        @progress_reporter.error('rummager import', "unexpected base path mapping size: #{base_paths_to_content_ids.size} for #{base_paths.size} base paths")
       end
+      @checker_db.insert_batch(
+          table_name: 'rummager_base_path_content_id',
+          column_names: ['base_path', 'content_id'],
+          rows: base_paths_to_content_ids
+      )
     end
 
-    def import_rummager_links(row_data)
-      rows = Import::RummagerDataPresenter.present(row_data)
-      rows.each do |row|
-        @checker_db.insert(
-            table_name: 'rummager_link',
-            column_names: ['base_path', 'link_type', 'link_base_path'],
-            row: row
-        )
-      end
+    def import_rummager_links(batch_data)
+      link_data = batch_data.flat_map { |row_data| Import::RummagerDataPresenter.present(row_data) }
+      @checker_db.insert_batch(
+          table_name: 'rummager_link',
+          column_names: ['base_path', 'link_type', 'link_base_path'],
+          rows: link_data
+      )
+    end
+
+    def import_linked_base_path_mappings
+      # query = <<-SQL
+      # SELECT
+      # rl.link_base_path
+      # FROM rummager_links rl
+      # LEFT JOIN rummager_base_path_content_id lookup ON lookup.base_path = rl.link_base_path
+      # WHERE lookup.content_id IS NULL
+      # SQL
+      # missing_links_base_path = @checker_db.execute(query)
+      # import_base_path_mappings(missing_links_base_path)
     end
 
     def get_total_document_count
