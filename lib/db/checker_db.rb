@@ -1,7 +1,20 @@
 class CheckerDB
 
+  def self.in_memory_db_name
+    ':memory:'
+  end
+
   def initialize(checker_db_name)
     @connection = SQLite3::Database.new(checker_db_name)
+  end
+
+  def execute(*args)
+    begin
+      @connection.execute(*args)
+    rescue Exception => e
+      puts "Query failed: #{args}"
+      raise e
+    end
   end
 
   def create_table(table_name:, columns:, index: [])
@@ -22,21 +35,8 @@ class CheckerDB
     end
   end
 
-  def insert(table_name:, column_names:, row:)
-    row = row.class == Hash ? row.values : row
-    cols = column_names.join(',')
-    values = row.map{ '?' }.join(',')
-
-
-    query = <<-SQL
-    INSERT INTO #{table_name} (#{cols})
-    VALUES (#{values})
-    SQL
-
-    execute(query, row)
-  end
-
   def insert_batch(table_name:, column_names:, rows:)
+    # SQLITE_LIMIT_COMPOUND_SELECT defaults to 500
     rows.each_slice(500) do |slice_rows|
       insert_sqlite_batch(
           table_name: table_name,
@@ -45,6 +45,8 @@ class CheckerDB
       )
     end
   end
+
+private
 
   def insert_sqlite_batch(table_name:, column_names:, rows:)
     return if rows.empty?
@@ -59,18 +61,5 @@ class CheckerDB
     SQL
 
     execute(query, rows.flatten)
-  end
-
-  def self.in_memory_db_name
-    ':memory:'
-  end
-
-  def execute(*args)
-    begin
-      @connection.execute(*args)
-    rescue Exception => e
-      puts "Query failed: #{args}"
-      raise e
-    end
   end
 end

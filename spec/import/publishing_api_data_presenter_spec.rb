@@ -3,7 +3,7 @@ require 'import/publishing_api_data_presenter'
 module Import
   RSpec.describe PublishingApiDataPresenter do
 
-    it "presents row data from publishing-api in a form suitable for insertion in the local sqlite db" do
+    it "presents links from publishing-api in a form suitable for insertion in the local sqlite db" do
 
       content_id_data = test_data_example
 
@@ -13,9 +13,20 @@ module Import
           ["00015d3f-e7d9-48e8-95ff-ac3f7fa07be3", "policy_areas", "6667cce2-e809-4e21-ae09-cb0bdc1ddda3"],
       ]
 
-      rows = PublishingApiDataPresenter.present(content_id_data)
+      rows = PublishingApiDataPresenter.present_links(content_id_data)
 
       expect(rows).to eq(expected_rows)
+    end
+
+    it "presents content from publishing-api in a form suitable for insertion in the local sqlite db" do
+
+      content_id_data = test_data_example
+
+      expected_row = ["00015d3f-e7d9-48e8-95ff-ac3f7fa07be3", "whitehall", "statistics_announcement", 'published_at_least_once']
+
+      row = PublishingApiDataPresenter.present_content(content_id_data)
+
+      expect(row).to eq(expected_row)
     end
 
   private

@@ -9,34 +9,31 @@ module Checks
     # don't map to a published content item in the Publishing API
 
     def run_check
-
       query = <<-SQL
       SELECT
-      rl.linked_base_path
-      FROM rummager_links rl
-      LEFT JOIN ruwmmager_base_path_content_id lookup ON rl.linked_base_path = lookup.base_path
+      rl.link_base_path,
+      rl.link_type,
+      rl.base_path,
+      rc.format,
+      rc.rummager_index,
+      rc.document_type
+      FROM rummager_link rl
+      LEFT JOIN rummager_base_path_content_id lookup ON rl.link_base_path = lookup.base_path
+      JOIN rummager_content rc ON rc.base_path = rl.base_path
       WHERE lookup.content_id IS NULL
       SQL
 
-      Report.new(@checker_db.execute(query))
-
-    end
-
-    class Report
-
-      def initialize(missing_from_publishing_api)
-        @missing_from_publishing_api = missing_from_publishing_api
-      end
-
-      def report
-        p @missing_from_publishing_api
-        'LinkedBasePathsMissingFromPublishingApi report'
-      end
-
-      def failed?
-        !@missing_from_publishing_api.empty?
-      end
-
+      missing_from_publishing_api = @checker_db.execute(query)
+      name = self.class.name.split('::').last
+      Report.new(
+          name: name,
+          success: missing_from_publishing_api.empty?,
+          summary: "#{name} report: found #{missing_from_publishing_api.size}",
+          csv: CSV.generate do |csv|
+            csv << ['link', 'link_type', 'item', 'item_format', 'item_index', 'item_document_type']
+            missing_from_publishing_api.each { |row| csv << row }
+          end
+      )
     end
   end
 end

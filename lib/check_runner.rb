@@ -35,12 +35,13 @@ private
 
   def run_checks
     puts "running checks using #{@checks.map(&:class)}"
-    @checks.map { |check| Thread.new { check.run_check } }.each(&:join)
+    @checks.map { |check| Thread.future { check.run_check } }.map(&:value)
   end
 
   def report_results(reports)
-    reports.each { |check| puts check.report }
-    exit_code = reports.any? { |report| report.failed? } ? 1 : 0
+    reports.each { |report| File.write("#{report.name}.csv", report.csv) }
+    reports.each { |report| puts report.summary }
+    exit_code = reports.all? { |report| report.success } ? 0 : 1
     exit_code
   end
 

@@ -2,6 +2,9 @@ require 'sqlite3'
 require 'unirest'
 require 'gds_api/rummager'
 require 'gds_api/publishing_api_v2'
+require 'thread/pool'
+require 'thread/future'
+require 'csv'
 
 require 'db/checker_db'
 

@@ -1,13 +1,11 @@
 module Import
-  class RummagerDataPresenter
+  module RummagerDataPresenter
 
-    private_class_method :initialize
-
-    def self.present_base_paths(batch_data)
-      batch_data.map { |row_data| row_data['link'] }
+    def self.present_content(batch_data)
+      batch_data.map { |item| [item['link'], item['content_id'], item['format'], item['index'], item['document_type']] }
     end
 
-    def self.present(row_data)
+    def self.present_links(row_data)
 
       base_path     = row_data["link"]
 
@@ -17,7 +15,6 @@ module Import
       policy_groups = fetch_resources(row_data, "policy_groups", '/government/groups/')
       specialist_sectors = fetch_resources(row_data, "specialist_sectors", "/topic/")
       mainstream_browse_pages = fetch_resources(row_data, "mainstream_browse_pages", "/browse/")
-
 
       rows_for(base_path, 'policies', policies) +
           rows_for(base_path, 'people', people) +
@@ -30,20 +27,17 @@ module Import
   private
 
     def self.fetch_resources(row_data, resource_name, prefix = "")
-
       resources = row_data[resource_name]
       return nil unless resources
 
-      fetched_resources = resources.map { |resource|
+      resources.map { |resource|
           case resource
-            when Hash
-              resource['link']
             when String
               prefix + resource
+            else
+              resource['link']
           end
       }
-
-      fetched_resources.sort
     end
 
     def self.rows_for(base_path, link_type, links)

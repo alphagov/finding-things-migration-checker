@@ -3,7 +3,7 @@ require 'import/rummager_data_presenter'
 module Import
   RSpec.describe RummagerDataPresenter do
 
-    it "presents row data from rummager in a form suitable for insertion in the local sqlite db" do
+    it "presents links from rummager in a form suitable for insertion in the local sqlite db" do
 
       row_data = test_data_example
 
@@ -13,12 +13,26 @@ module Import
           ["/vehicle-tax", "mainstream_browse_pages", "/browse/driving/car-tax-discs"],
       ]
 
-      rows = RummagerDataPresenter.present(row_data)
+      rows = RummagerDataPresenter.present_links(row_data)
 
       expect(rows).to eq(expected_rows)
     end
 
-  private
+    it "presents content from rummager in a form suitable for insertion in the local sqlite db" do
+
+      batch_data = [test_data_example]
+
+      expected_rows = [
+          ['/vehicle-tax', nil, 'transaction', 'mainstream', 'edition'],
+      ]
+
+      rows = RummagerDataPresenter.present_content(batch_data)
+
+      expect(rows).to eq(expected_rows)
+    end
+
+
+    private
     def test_data_example
       {
         'link' => "/vehicle-tax",
@@ -37,8 +51,11 @@ module Import
             'acronym' => "TO",
             'organisation_state' => "live",
             'link' => "/government/organisations/test-org"
-         },
+          },
         ],
+        'document_type' => 'edition',
+        'format' => 'transaction',
+        'index' => 'mainstream',
       }
     end
   end
