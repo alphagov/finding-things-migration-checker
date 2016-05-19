@@ -7,8 +7,11 @@ class CheckRunner
     publishing_api_url = ENV["PUBLISHING_API_URL"] || 'http://publishing-api.dev.gov.uk/v2/grouped_content_and_links'
     checker_db_name = ENV["CHECKER_DB_NAME"] || CheckerDB.in_memory_db_name
     skip_import = ENV["SKIP_DATA_IMPORT"] ? true : false
+    whitelist_file = ENV["WHITELIST_FILE"] || 'whitelist.yaml'
 
     checker_db = CheckerDB.new(checker_db_name)
+    whitelist = Whitelist.load(whitelist_file)
+
     progress_reporter = ProgressReporter.new
 
     @importers = []
@@ -17,7 +20,7 @@ class CheckRunner
       @importers << Import::PublishingApiImporter.new(checker_db, progress_reporter, publishing_api_url)
     end
 
-    @checks = CheckRunner.load_checks(checker_db, *check_names)
+    @checks = CheckRunner.load_checks(checker_db, whitelist, *check_names)
   end
 
   def run
@@ -45,9 +48,9 @@ private
     exit_code
   end
 
-  def self.load_checks(checker_db, *check_names)
+  def self.load_checks(checker_db, whitelist, *check_names)
     check_files = File.join(File.dirname(__FILE__), 'checks', '*.rb')
     Dir[check_files].each { |file| require file }
-    check_names.map { |check_name| Checks.const_get(check_name).new(checker_db) }
+    check_names.map { |check_name| Checks.const_get(check_name).new(checker_db, whitelist) }
   end
 end

@@ -1,8 +1,9 @@
 module Checks
   class BasePathsMissingFromRummager
 
-    def initialize(checker_db)
+    def initialize(checker_db, whitelist)
       @checker_db = checker_db
+      @whitelist = whitelist
     end
 
     # find content_ids present in Publishing API which have a published content item
@@ -23,17 +24,11 @@ module Checks
       AND pac.ever_published = 'published_at_least_once'
       SQL
 
-      missing_from_rummager = @checker_db.execute(query)
       name = self.class.name.split('::').last
-      Report.new(
-          name: name,
-          success: missing_from_rummager.empty?,
-          summary: "#{name} report: found #{missing_from_rummager.size}",
-          csv: CSV.generate do |csv|
-            csv << ['content_id', 'publishing_app', 'format']
-            missing_from_rummager.each { |row| csv << row }
-          end
-      )
+      headers = ['content_id', 'publishing_app', 'format']
+      missing_from_rummager = @whitelist.apply(name, headers, @checker_db.execute(query))
+
+      Report.create(name, headers, missing_from_rummager)
     end
   end
 end

@@ -1,8 +1,9 @@
 module Checks
   class LinksMissingFromRummager
 
-    def initialize(checker_db)
+    def initialize(checker_db, whitelist)
       @checker_db = checker_db
+      @whitelist = whitelist
     end
 
     # find links present in Publishing API which are not present in Rummager
@@ -35,20 +36,14 @@ module Checks
       SQL
 
       rummager_missing_links_query = "#{publishing_api_links_query} EXCEPT #{rummager_links_query}"
-      rummager_missing_links = @checker_db.execute(rummager_missing_links_query)
+
+      name = self.class.name.split('::').last
+      headers = ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
+      rummager_missing_links = @whitelist.apply(name, headers, @checker_db.execute(rummager_missing_links_query))
 
       # TODO figure out why we get some null rows?
 
-      name = self.class.name.split('::').last
-      Report.new(
-          name: name,
-          success: rummager_missing_links.empty?,
-          summary: "#{name} report: found #{rummager_missing_links.size}",
-          csv: CSV.generate do |csv|
-            csv << ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
-            rummager_missing_links.each { |row| csv << row }
-          end
-      )
+      Report.create(name, headers, rummager_missing_links)
     end
   end
 end

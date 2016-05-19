@@ -1,8 +1,9 @@
 module Checks
   class LinksMissingFromPublishingApi
 
-    def initialize(checker_db)
+    def initialize(checker_db, whitelist)
       @checker_db = checker_db
+      @whitelist = whitelist
     end
 
     # find links present in Rummager which are not present in Publishing API
@@ -33,18 +34,12 @@ module Checks
       SQL
 
       publishing_api_missing_links_query = "#{rummager_links_query} EXCEPT #{publishing_api_links_query}"
-      publishing_api_missing_links = @checker_db.execute(publishing_api_missing_links_query)
 
       name = self.class.name.split('::').last
-      Report.new(
-          name: name,
-          success: publishing_api_missing_links.empty?,
-          summary: "#{name} report: found #{publishing_api_missing_links.size}",
-          csv: CSV.generate do |csv|
-            csv << ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
-            publishing_api_missing_links.each { |row| csv << row }
-          end
-      )
+      headers = ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
+      publishing_api_missing_links = @whitelist.apply(name, headers, @checker_db.execute(publishing_api_missing_links_query))
+
+      Report.create(name, headers, publishing_api_missing_links)
     end
   end
 end

@@ -1,8 +1,9 @@
 module Checks
   class RummagerLinksNotIndexedInRummager
 
-    def initialize(checker_db)
+    def initialize(checker_db, whitelist)
       @checker_db = checker_db
+      @whitelist = whitelist
     end
 
     # find base_paths linked to from Rummager items which are not themselves indexed in Rummager
@@ -23,17 +24,11 @@ module Checks
       WHERE rc.base_path IS NULL
       SQL
 
-      links_not_indexed = @checker_db.execute(query)
       name = self.class.name.split('::').last
-      Report.new(
-          name: name,
-          success: links_not_indexed.empty?,
-          summary: "#{name} report: found #{links_not_indexed.size}",
-          csv: CSV.generate do |csv|
-            csv << ['link', 'link_type', 'item', 'item_format', 'item_index', 'item_document_type']
-            links_not_indexed.each { |row| csv << row }
-          end
-      )
+      headers = ['link', 'link_type', 'item', 'item_format', 'item_index', 'item_document_type']
+      links_not_indexed = @whitelist.apply(name, headers, @checker_db.execute(query))
+
+      Report.create(name, headers, links_not_indexed)
     end
   end
 end
