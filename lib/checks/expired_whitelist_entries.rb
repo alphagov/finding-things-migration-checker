@@ -1,7 +1,8 @@
 module Checks
   class ExpiredWhitelistEntries
 
-    def initialize(checker_db, whitelist)
+    def initialize(name, checker_db, whitelist)
+      @name = name
       @checker_db = checker_db
       @whitelist = whitelist
     end
@@ -10,7 +11,6 @@ module Checks
 
     def run_check
 
-      name = self.class.name.split('::').last
       headers = ['check_name', 'expiry_date', 'reason']
       expiries = @whitelist.report_expired_entries(Date.today)
 

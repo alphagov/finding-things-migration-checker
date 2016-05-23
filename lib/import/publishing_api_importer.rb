@@ -29,24 +29,24 @@ module Import
 
     def create_publishing_api_tables
       @checker_db.create_table(
-          table_name: 'publishing_api_content',
-          columns: [
-              'content_id text',
-              'publishing_app text',
-              'format text',
-              'ever_published text',
-          ],
-          index: ['content_id'],
+        table_name: 'publishing_api_content',
+        columns: [
+          'content_id text',
+          'publishing_app text',
+          'format text',
+          'ever_published text',
+        ],
+        index: ['content_id'],
       )
 
       @checker_db.create_table(
-          table_name: 'publishing_api_link',
-          columns: [
-              'content_id text',
-              'link_type text',
-              'link_content_id text',
-          ],
-          index: ['content_id'],
+        table_name: 'publishing_api_link',
+        columns: [
+          'content_id text',
+          'link_type text',
+          'link_content_id text',
+        ],
+        index: ['content_id'],
       )
     end
 
@@ -54,7 +54,8 @@ module Import
       response = do_request(NIL_UUID)
       results = response["results"]
 
-      # todo: can we get this for real? needs a new endpoint... probably not worth it. just supply a different progress reporter?
+      # We currently don't have a way in the publishing api to get the expected count of content_ids.
+      # We hardcode a guess just to make the progress reporting slightly nicer during development.
       expected_total = 602365
 
       @progress_reporter.report('publishing api import', expected_total, 0, 'just starting')

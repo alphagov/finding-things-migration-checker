@@ -51,6 +51,6 @@ private
   def self.load_checks(checker_db, whitelist, *check_names)
     check_files = File.join(File.dirname(__FILE__), 'checks', '*.rb')
     Dir[check_files].each { |file| require file }
-    check_names.map { |check_name| Checks.const_get(check_name).new(checker_db, whitelist) }
+    check_names.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, whitelist) }
   end
 end

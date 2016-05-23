@@ -2,7 +2,15 @@ module Import
   module RummagerDataPresenter
 
     def self.present_content(batch_data)
-      batch_data.map { |item| [item['link'], item['content_id'], item['format'], item['index'], item['document_type']] }
+      batch_data.map do |item|
+        [
+          item['link'],
+          item['content_id'],
+          item['format'],
+          item['index'],
+          item['document_type']
+        ]
+      end
     end
 
     def self.present_links(row_data)
@@ -30,14 +38,14 @@ module Import
       resources = row_data[resource_name]
       return nil unless resources
 
-      resources.map { |resource|
-          case resource
-            when String
-              prefix + resource
-            else
-              resource['link']
-          end
-      }
+      resources.map do |resource|
+        case resource
+          when String
+            prefix + resource
+          else
+            resource['link']
+        end
+      end
     end
 
     def self.rows_for(base_path, link_type, links)

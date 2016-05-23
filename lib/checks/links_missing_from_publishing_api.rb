@@ -1,7 +1,8 @@
 module Checks
   class LinksMissingFromPublishingApi
 
-    def initialize(checker_db, whitelist)
+    def initialize(name, checker_db, whitelist)
+      @name = name
       @checker_db = checker_db
       @whitelist = whitelist
     end
@@ -35,9 +36,12 @@ module Checks
 
       publishing_api_missing_links_query = "#{rummager_links_query} EXCEPT #{publishing_api_links_query}"
 
-      name = self.class.name.split('::').last
       headers = ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
-      publishing_api_missing_links = @whitelist.apply(name, headers, @checker_db.execute(publishing_api_missing_links_query))
+      publishing_api_missing_links = @whitelist.apply(
+          name,
+          headers,
+          @checker_db.execute(publishing_api_missing_links_query)
+      )
 
       Report.create(name, headers, publishing_api_missing_links)
     end

@@ -1,7 +1,8 @@
 module Checks
   class LinksMissingFromRummager
 
-    def initialize(checker_db, whitelist)
+    def initialize(name, checker_db, whitelist)
+      @name = name
       @checker_db = checker_db
       @whitelist = whitelist
     end
@@ -37,7 +38,6 @@ module Checks
 
       rummager_missing_links_query = "#{publishing_api_links_query} EXCEPT #{rummager_links_query}"
 
-      name = self.class.name.split('::').last
       headers = ['link_type', 'link_content_id', 'content_id', 'publishing_app', 'format']
       rummager_missing_links = @whitelist.apply(name, headers, @checker_db.execute(rummager_missing_links_query))
 

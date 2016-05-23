@@ -7,13 +7,13 @@ module Import
       @progress_reporter = progress_reporter
 
       @rummager = GdsApi::Rummager.new(
-          Plek.new.find('rummager'),
-          timeout: 20,
+        Plek.new.find('rummager'),
+        timeout: 20,
       )
       @publishing_api = GdsApi::PublishingApiV2.new(
-          Plek.new.find('publishing-api'),
-          bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
-          timeout: 20,
+        Plek.new.find('publishing-api'),
+        bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
+        timeout: 20,
       )
     end
 

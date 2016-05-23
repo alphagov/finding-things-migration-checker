@@ -11,7 +11,9 @@ module Import
     end
 
     def self.ever_published(content_id_data)
-      published_state = content_id_data['content_items'].any? { |ci| ['published', 'unpublished', 'superseded'].include?(ci['state']) }
+      published_state = content_id_data['content_items'].any? do |ci|
+        ['published', 'unpublished', 'superseded'].include?(ci['state'])
+      end
       published_state ? 'published_at_least_once' : 'never_published'
     end
 

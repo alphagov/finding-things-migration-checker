@@ -39,9 +39,9 @@ class CheckerDB
     # SQLITE_LIMIT_COMPOUND_SELECT defaults to 500
     rows.each_slice(500) do |slice_rows|
       insert_sqlite_batch(
-          table_name: table_name,
-          column_names: column_names,
-          rows: slice_rows
+        table_name: table_name,
+        column_names: column_names,
+        rows: slice_rows
       )
     end
   end
