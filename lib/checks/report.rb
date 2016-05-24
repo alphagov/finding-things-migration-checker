@@ -1,6 +1,5 @@
 module Checks
   class Report
-
     attr_reader :name, :success, :summary, :csv
 
     private_class_method :initialize

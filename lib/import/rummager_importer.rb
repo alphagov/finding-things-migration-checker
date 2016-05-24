@@ -1,6 +1,5 @@
 module Import
   class RummagerImporter
-
     def initialize(checker_db, progress_reporter)
       @checker_db = checker_db
       @thread_pool = Thread.pool(3)
@@ -21,7 +20,6 @@ module Import
       create_rummager_tables
 
       import_rummager_batches do |batch_data|
-
         @thread_pool.process {
           items = Import::RummagerDataPresenter.present_content(batch_data)
           import_content(items)
@@ -44,34 +42,34 @@ module Import
 
     def create_rummager_tables
       @checker_db.create_table(
-          table_name: "rummager_content",
-          columns: [
-              'base_path text',
-              'content_id text',
-              'format text',
-              'rummager_index text',
-              'document_type text',
-          ],
-          index: ['base_path']
+        table_name: "rummager_content",
+        columns: [
+          'base_path text',
+          'content_id text',
+          'format text',
+          'rummager_index text',
+          'document_type text',
+        ],
+        index: ['base_path']
       )
 
       @checker_db.create_table(
-          table_name: "rummager_link",
-          columns: [
-              "base_path text",
-              "link_type text",
-              "link_base_path text",
-          ],
-          index: ['base_path']
+        table_name: "rummager_link",
+        columns: [
+          "base_path text",
+          "link_type text",
+          "link_base_path text",
+        ],
+        index: ['base_path']
       )
 
       @checker_db.create_table(
-          table_name: "rummager_base_path_content_id",
-          columns: [
-              "base_path text",
-              "content_id text",
-          ],
-          index: ['base_path', 'content_id']
+        table_name: "rummager_base_path_content_id",
+        columns: [
+          "base_path text",
+          "content_id text",
+        ],
+        index: %w(base_path content_id)
       )
     end
 
@@ -82,7 +80,7 @@ module Import
 
       results = do_request(offset)
 
-      while results && results.size > 0 do
+      while results && !results.empty? do
         yield results
         offset += results.size
         results = do_request(offset)
@@ -92,20 +90,17 @@ module Import
 
     def do_request(offset)
       @rummager.unified_search(
-          fields: [
-              'link', 'content_id', 'format',
-              'mainstream_browse_pages', 'specialist_sectors', 'organisations', 'policy_groups', 'people',
-          ],
-          start: offset,
-          count: BATCH_SIZE,
+        fields: %w(link content_id format mainstream_browse_pages specialist_sectors organisations policy_groups people),
+        start: offset,
+        count: BATCH_SIZE,
       ).results
     end
 
     def import_content(rows)
       @checker_db.insert_batch(
-          table_name: 'rummager_content',
-          column_names: ['base_path', 'content_id', 'format', 'rummager_index', 'document_type'],
-          rows: rows
+        table_name: 'rummager_content',
+        column_names: %w(base_path content_id format rummager_index document_type),
+        rows: rows
       )
     end
 
@@ -113,9 +108,9 @@ module Import
       base_paths.each_slice(200) do |batch|
         base_paths_to_content_ids = @publishing_api.lookup_content_ids(base_paths: batch)
         @checker_db.insert_batch(
-            table_name: 'rummager_base_path_content_id',
-            column_names: ['base_path', 'content_id'],
-            rows: base_paths_to_content_ids
+          table_name: 'rummager_base_path_content_id',
+          column_names: %w(base_path content_id),
+          rows: base_paths_to_content_ids
         )
       end
     end
@@ -123,16 +118,16 @@ module Import
     def import_rummager_links(batch_data)
       link_data = batch_data.flat_map { |row_data| Import::RummagerDataPresenter.present_links(row_data) }
       @checker_db.insert_batch(
-          table_name: 'rummager_link',
-          column_names: ['base_path', 'link_type', 'link_base_path'],
-          rows: link_data
+        table_name: 'rummager_link',
+        column_names: %w(base_path link_type link_base_path),
+        rows: link_data
       )
     end
 
     def import_linked_base_path_mappings
       query = <<-SQL
       SELECT
-      rl.link_base_path
+        rl.link_base_path
       FROM rummager_link rl
       LEFT JOIN rummager_base_path_content_id lookup ON lookup.base_path = rl.link_base_path
       WHERE lookup.content_id IS NULL

@@ -1,6 +1,5 @@
 module Checks
   class RummagerLinksNotIndexedInRummager
-
     def initialize(name, checker_db, whitelist)
       @name = name
       @checker_db = checker_db
@@ -25,7 +24,7 @@ module Checks
       WHERE rc.base_path IS NULL
       SQL
 
-      headers = ['link', 'link_type', 'item', 'item_format', 'item_index', 'item_document_type']
+      headers = %w(link link_type item item_format item_index item_document_type)
       links_not_indexed = @whitelist.apply(name, headers, @checker_db.execute(query))
 
       Report.create(name, headers, links_not_indexed)

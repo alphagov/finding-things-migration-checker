@@ -1,6 +1,5 @@
 module Import
   class PublishingApiImporter
-
     def initialize(checker_db, progress_reporter, publishing_api_url)
       @checker_db = checker_db
       @thread_pool = Thread.pool(1)
@@ -25,7 +24,7 @@ module Import
   private
 
     BATCH_SIZE = 1000
-    NIL_UUID = '00000000-0000-0000-0000-000000000000'
+    NIL_UUID = '00000000-0000-0000-0000-000000000000'.freeze
 
     def create_publishing_api_tables
       @checker_db.create_table(
@@ -62,7 +61,7 @@ module Import
 
       running_total = results ? results.size : 0
 
-      while results && results.size > 0 do
+      while results && !results.empty? do
         running_total += results.size
         yield results
         @progress_reporter.report('publishing api import', expected_total, running_total, 'importing...')
@@ -83,19 +82,18 @@ module Import
 
     def import_content(row)
       @checker_db.insert_batch(
-          table_name: 'publishing_api_content',
-          column_names: ['content_id', 'publishing_app', 'format', 'ever_published'],
-          rows: row
+        table_name: 'publishing_api_content',
+        column_names: %w(content_id publishing_app format ever_published),
+        rows: row
       )
     end
 
     def import_content_links(rows)
       @checker_db.insert_batch(
-          table_name: 'publishing_api_link',
-          column_names: ['content_id', 'link_type', 'link_content_id'],
-          rows: rows
-        )
+        table_name: 'publishing_api_link',
+        column_names: %w(content_id link_type link_content_id),
+        rows: rows
+      )
     end
-
   end
 end

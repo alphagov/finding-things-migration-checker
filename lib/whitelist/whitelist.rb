@@ -13,10 +13,9 @@
 # by the `ExpiredWhitelistEntries` checker.
 # Each rule is formed of some equality tests on the row, in https://en.wikipedia.org/wiki/Disjunctive_normal_form
 #
-# See the default `whitelist.yaml` file for an example.
+# See the default `whitelist.yml` file for an example.
 
 class Whitelist
-
   def initialize(whitelist)
     @whitelist = whitelist
   end

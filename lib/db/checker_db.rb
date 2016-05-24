@@ -1,5 +1,4 @@
 class CheckerDB
-
   def self.in_memory_db_name
     ':memory:'
   end
@@ -11,7 +10,7 @@ class CheckerDB
   def execute(*args)
     begin
       @connection.execute(*args)
-    rescue Exception => e
+    rescue StandardError => e
       puts "Query failed: #{args}"
       raise e
     end
@@ -20,7 +19,7 @@ class CheckerDB
   def create_table(table_name:, columns:, index: [])
     query = <<-SQL
       CREATE TABLE #{table_name} (
-        #{columns.join(",")}
+        #{columns.join(',')}
       )
     SQL
 
@@ -51,7 +50,7 @@ private
   def insert_sqlite_batch(table_name:, column_names:, rows:)
     return if rows.empty?
 
-    row_placeholder = rows[0].map{ '?' }.join(',')
+    row_placeholder = rows[0].map { '?' }.join(',')
     cols = column_names.join(',')
     batch_values = "(#{Array.new(rows.size, row_placeholder).join('),(')})"
 

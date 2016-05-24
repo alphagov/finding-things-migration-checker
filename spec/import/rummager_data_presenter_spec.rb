@@ -2,9 +2,7 @@ require 'import/rummager_data_presenter'
 
 module Import
   RSpec.describe RummagerDataPresenter do
-
     it "presents links from rummager in a form suitable for insertion in the local sqlite db" do
-
       row_data = test_data_example
 
       expected_rows = [
@@ -19,7 +17,6 @@ module Import
     end
 
     it "presents content from rummager in a form suitable for insertion in the local sqlite db" do
-
       batch_data = [test_data_example]
 
       expected_rows = [
@@ -33,6 +30,7 @@ module Import
 
 
     private
+
     def test_data_example
       {
         'link' => "/vehicle-tax",
