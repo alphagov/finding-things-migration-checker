@@ -38,11 +38,11 @@ module Checks
       rummager_missing_links_query = "#{publishing_api_links_query} EXCEPT #{rummager_links_query}"
 
       headers = %w(link_type link_content_id content_id publishing_app format)
-      rummager_missing_links = @whitelist.apply(name, headers, @checker_db.execute(rummager_missing_links_query))
+      rummager_missing_links = @whitelist.apply(@name, headers, @checker_db.execute(rummager_missing_links_query))
 
       # TODO figure out why we get some null rows?
 
-      Report.create(name, headers, rummager_missing_links)
+      Report.create(@name, headers, rummager_missing_links)
     end
   end
 end
