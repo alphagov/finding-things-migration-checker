@@ -1,6 +1,5 @@
 module Checks
   class BasePathsMissingFromPublishingApi
-
     def initialize(name, checker_db, whitelist)
       @name = name
       @checker_db = checker_db
@@ -22,7 +21,7 @@ module Checks
       AND format NOT IN ('recommended-link')
       SQL
 
-      headers = ['base_path', 'format', 'index', 'document_type']
+      headers = %w(base_path format index document_type)
       missing_from_publishing_api = @whitelist.apply(name, headers, @checker_db.execute(query))
 
       Report.create(name, headers, missing_from_publishing_api)

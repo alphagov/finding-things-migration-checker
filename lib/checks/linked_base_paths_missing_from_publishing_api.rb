@@ -1,6 +1,5 @@
 module Checks
   class LinkedBasePathsMissingFromPublishingApi
-
     def initialize(name, checker_db, whitelist)
       @name = name
       @checker_db = checker_db
@@ -25,7 +24,7 @@ module Checks
       WHERE lookup.content_id IS NULL
       SQL
 
-      headers = ['link', 'link_type', 'item', 'item_format', 'item_index', 'item_document_type']
+      headers = %w(link link_type item item_format item_index item_document_type)
       missing_from_publishing_api = @whitelist.apply(name, headers, @checker_db.execute(query))
 
       Report.create(name, headers, missing_from_publishing_api)
