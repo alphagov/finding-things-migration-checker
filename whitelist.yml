@@ -15,10 +15,30 @@
 #      expiry: '2016-05-22'
 #      reason: "service-manual (and one extra page) is not fully baked yet, but we'll be ready to handle it soon"
 
-BasePathsMissingFromPublishingApi:
+
+#BasePathsMissingFromRummager:
+#BasePathsMissingFromPublishingApi:
+#LinkedBasePathsMissingFromPublishingApi:
+#RummagerLinksNotIndexedInRummager:
+
+LinkedBasePathsMissingFromPublishingApi:
   rules:
     - predicate:
-      - index: 'service-manual'
-        format: 'manual_section'
-      expiry: '2016-06-22'
-      reason: "service-manual is not fully baked yet, but we'll be ready to handle it soon"
+      - link_type: 'people'
+      expiry: '2017-06-01'
+      reason: "We're not going to look at people links for a long time - let's reassess next year"
+
+LinksMissingFromRummager:
+  rules:
+    - predicate:
+      - link_type: 'people'
+      expiry: '2017-06-01'
+      reason: "We're not going to look at people links for a long time - let's reassess next year"
+
+LinksMissingFromPublishingApi:
+  rules:
+    - predicate:
+      - link_type: 'people'
+      expiry: '2017-06-01'
+      reason: "We're not going to look at people links for a long time - let's reassess next year"
+
