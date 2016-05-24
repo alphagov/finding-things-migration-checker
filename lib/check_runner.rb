@@ -18,7 +18,7 @@ class CheckRunner
       @importers << Import::PublishingApiImporter.new(checker_db, progress_reporter, publishing_api_url)
     end
 
-    @checks = CheckRunner.load_checks(checker_db, whitelist, *check_names)
+    @checks = load_checks(checker_db, whitelist, *check_names)
   end
 
   def run
@@ -27,15 +27,13 @@ class CheckRunner
     report_results(reports)
   end
 
-  def self.load_checks(checker_db, whitelist, *check_names)
+private
+
+  def load_checks(checker_db, whitelist, *check_names)
     check_files = File.join(File.dirname(__FILE__), 'checks', '*.rb')
     Dir[check_files].each { |file| require file }
     check_names.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, whitelist) }
   end
-
-  private_class_method :load_checks
-
-private
 
   def run_importers
     puts "importing data using #{@importers.map(&:class)}"

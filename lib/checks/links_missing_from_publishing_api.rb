@@ -37,12 +37,12 @@ module Checks
 
       headers = %w(link_type link_content_id content_id publishing_app format)
       publishing_api_missing_links = @whitelist.apply(
-        name,
+        @name,
         headers,
         @checker_db.execute(publishing_api_missing_links_query)
       )
 
-      Report.create(name, headers, publishing_api_missing_links)
+      Report.create(@name, headers, publishing_api_missing_links)
     end
   end
 end
