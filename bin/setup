@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-bundle
-
-if [[ createdb ]] ; then
-  echo 'creating a database named migration_checker'
-  createdb migration_checker
-fi

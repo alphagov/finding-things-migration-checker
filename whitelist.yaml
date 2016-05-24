@@ -1,0 +1,24 @@
+# Whitelist file to filter out some of the differences detected by the checks.
+# Each check has its own section, keyed by the check name.
+# Each section can have multiple rules.
+# Each rule defines a predicate in disjunctive normal form where the innermost
+#   conditions are simple equality checks on particular values for fields in the check output.
+# Each rule also provides an expiry date and a reason for the whitelist entry to exist.
+#
+# An example check section, with a single rule:
+#BasePathsMissingFromPublishingApi:
+#  rules:
+#    - predicate:
+#      - index: 'service-manual'
+#        format: 'manual_section'
+#      - base_path: '/this-page-in-particular-needs-ignoring-as-well'
+#      expiry: '2016-05-22'
+#      reason: "service-manual (and one extra page) is not fully baked yet, but we'll be ready to handle it soon"
+
+BasePathsMissingFromPublishingApi:
+  rules:
+    - predicate:
+      - index: 'service-manual'
+        format: 'manual_section'
+      expiry: '2016-06-22'
+      reason: "service-manual is not fully baked yet, but we'll be ready to handle it soon"
