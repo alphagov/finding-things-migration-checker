@@ -5,4 +5,5 @@ gem 'unirest'
 gem 'rspec'
 gem 'gds-api-adapters'
 gem 'thread'
-gem "govuk-lint"
+gem 'govuk-lint', '~> 1.1.0'
+
