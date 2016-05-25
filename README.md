@@ -1,39 +1,31 @@
 # Finding Things Migration Checker
 
-The scripts in this repository compare [publishing api](https://github.com/alphagov/publishing-api) links
-with [rummager](https://github.com/alphagov/rummager) to know if both are in sync.
+This project compares content in [publishing api](https://github.com/alphagov/publishing-api)
+with that in [rummager](https://github.com/alphagov/rummager) to check whether both are in sync.
 
-The script will check the dev environment if `DATABASE_URL` is not set for publishing api.
+The entry point is the `CheckRunner` class.
+The `CheckRunner` is normally intended to be invoked by Jenkins via the `bin/run_automated_checks` script.
 
-The script will check the dev environment if `RUMMAGER_URL` is not set for rummager.
+There are two phases to a run:
 
-This script extracts all links from the [publishing api](https://github.com/alphagov/publishing-api), for later comparison
-with [rummager](https://github.com/alphagov/rummager) data.
+- Query Rummager and Publishing API public apis and import their data into an in-memory sqlite db
+- Run several independent checks against the local db, each of which writes a csv output file in the working directory.
 
-### Usage
+The exit code for a run is `1` if any check fails, `0` otherwise.
 
-You can simply run the following
-
-    ./bin/bootstrap
-
-Create a local PostgreSQL database called `migration_checker`
-
-    ./bin/setup.sh
-
-Import data from Publishing API and Rummager
-
-    ./bin/import
-
-    # or to only import one of them do
-
-    IMPORT="rummager" ./bin/import
-    IMPORT="publishing_api" ./bin/import
+Each check can filter its usual output using a whitelist. This allows us to run the checks automatically
+in Jenkins and still keep the job green even though there may me some known problems we are working on.
 
 
-To compare the data
+## Configuration
 
-    ./bin/compare
+The `CheckRunner` requires a list of check class names as input.
+Usually, these are provided as command line arguments (see `bin/run_automated_checks`).
+The `CheckRunner` will only run the requested checks.
 
-# LICENSE
+There are a few environment variables which can be used to configure other behaviours:
 
-[MIT](LICENSE)
+- `CHECKER_DB_NAME=foo.db` to use a file-backed db instead of an in-memory one
+- `SKIP_DATA_IMPORT=set` (any value works) to not run the data import phase
+- `PUBLISHING_API_URL=http://p.api.loc/v2/grouped_content_and_links` the URL to use to access Publishing API (soon to be obsoleted by `gds-api-adapters`)
+- `WHITELIST_FILE=alternative_whitelist.yml` specify a whitelist file other than the default `whitelist.yml`
