@@ -30,9 +30,14 @@ class CheckRunner
 private
 
   def load_checks(checker_db, whitelist, *check_names)
-    check_files = File.join(File.dirname(__FILE__), 'checks', '*.rb')
-    Dir[check_files].each { |file| require file }
-    check_names.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, whitelist) }
+    check_files = Dir[File.join(File.dirname(__FILE__), 'checks', '*.rb')]
+    check_names_to_run = check_names.empty? ? get_check_names(check_files) : check_names
+    check_files.each { |file| require file }
+    check_names_to_run.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, whitelist) }
+  end
+
+  def get_check_names(check_files)
+    check_files.map { |f| File.basename(f, '.rb').split('_').map(&:capitalize).join('') }
   end
 
   def run_importers
