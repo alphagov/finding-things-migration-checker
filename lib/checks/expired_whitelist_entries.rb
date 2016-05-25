@@ -12,7 +12,7 @@ module Checks
       headers = %w(check_name expiry_date reason)
       expiries = @whitelist.report_expired_entries(Date.today)
 
-      Report.create(name, headers, expiries)
+      Report.create(@name, headers, expiries)
     end
   end
 end
