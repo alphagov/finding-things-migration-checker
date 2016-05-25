@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# configuration:
-# CHECKER_DB_NAME=foo.db to use a file-backed db instead of an in-memory one
-# SKIP_DATA_IMPORT=y (any value)to not import the data from Rummager or Publishing API
-#
-# Pass checker names as arguments to run specific checks against the imported data.
-# The exit code is 0 if all checks pass and 1 otherwise.
-
 set -e
 
 bundle install
