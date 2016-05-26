@@ -17,4 +17,14 @@ class ProgressReporter
       puts "#{prefix} - #{message}"
     end
   end
+
+  def self.noop
+    NoOp.new
+  end
+
+  class NoOp
+    def method_missing(method_name, *args)
+      %w(report message).include?(method_name.to_s) ? nil : super
+    end
+  end
 end

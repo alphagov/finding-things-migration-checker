@@ -7,16 +7,17 @@ class CheckRunner
     skip_import = env["SKIP_DATA_IMPORT"] ? true : false
     whitelist_file = env["WHITELIST_FILE"] || 'whitelist.yml'
     @output_dir = env["CHECK_OUTPUT_DIR"] || '.'
+    suppress_progress = env["SUPPRESS_PROGRESS"] ? true : false
 
     checker_db = CheckerDB.new(checker_db_name)
     whitelist = Whitelist.load(whitelist_file)
 
-    progress_reporter = ProgressReporter.new
+    @progress_reporter = suppress_progress ? ProgressReporter.noop : ProgressReporter.new
 
     @importers = []
     unless skip_import
-      @importers << Import::RummagerImporter.new(checker_db, progress_reporter)
-      @importers << Import::PublishingApiImporter.new(checker_db, progress_reporter, publishing_api_url)
+      @importers << Import::RummagerImporter.new(checker_db, @progress_reporter)
+      @importers << Import::PublishingApiImporter.new(checker_db, @progress_reporter, publishing_api_url)
     end
 
     @checks = load_checks(checker_db, whitelist, check_names)
@@ -42,18 +43,18 @@ private
   end
 
   def run_importers
-    puts "importing data using #{@importers.map(&:class)}"
+    @progress_reporter.message("setup", "importing data using #{@importers.map(&:class)}")
     @importers.map { |importer| Thread.new { importer.import } }.each(&:join)
   end
 
   def run_checks
-    puts "running checks using #{@checks.map(&:class)}"
+    @progress_reporter.message("setup", "running checks using #{@checks.map(&:class)}")
     @checks.map { |check| Thread.future { check.run_check } }.map(&:value)
   end
 
   def report_results(reports)
     reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}.csv"), report.csv) }
-    reports.each { |report| puts report.summary }
+    reports.each { |report| @progress_reporter.message("setup", report.summary) }
     exit_code = reports.all?(&:success) ? 0 : 1
     exit_code
   end

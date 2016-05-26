@@ -30,7 +30,6 @@ RSpec.describe CheckRunner do
       response_results: [],
     )
     # TODO: stub a real iteration
-
   end
 
   after do
@@ -38,7 +37,7 @@ RSpec.describe CheckRunner do
   end
 
   it "runs imports, runs checks, and generates output" do
-    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir)
+    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir, "SUPPRESS_PROGRESS" => "y")
     exit_code = runner.run
     expect(exit_code).to eq(0)
 

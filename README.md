@@ -39,6 +39,7 @@ There are a few environment variables which can be used to configure other behav
 - `SKIP_DATA_IMPORT=set` (any value works) to not run the data import phase
 - `WHITELIST_FILE=alternative_whitelist.yml` specify a whitelist file other than the default `whitelist.yml`
 - `CHECK_OUTPUT_DIR=/tmp/my_check_output` specify a csv output directory other than the default `.`
+- `SUPPRESS_PROGRESS=set` (any value works) to not emit progress reporting to stdout
 
 ### Running the test suite
 
