@@ -1,5 +1,6 @@
 require 'webmock/rspec'
 require 'checker'
+require 'fileutils'
 
 # integration test with in-memory db, webmocked services, empty whitelist, real csvs (removed afterwards)
 # TODO: suppress logging
@@ -9,9 +10,11 @@ RSpec.describe CheckRunner do
     @publishing_api_lookup_url = "#{Plek.new.find('publishing-api')}/lookup-by-base-path"
     @rummager_search_url = "#{Plek.new.find('rummager')}/unified_search.json"
 
+    @csvdir = tempdir
+
     stub_publishing_api_content_request(
       request_last_seen_content_id: '00000000-0000-0000-0000-000000000000',
-      response_last_seen_content_id: '00000000-0000-0000-0000-000000000001',
+      response_last_seen_content_id: '1',
       response_results: [],
     )
 
@@ -27,17 +30,33 @@ RSpec.describe CheckRunner do
       response_results: [],
     )
     # TODO: stub a real iteration
+
   end
 
   after do
-    # TODO: remove csvs
+    cleanup
   end
 
   it "runs imports, runs checks, and generates output" do
-    runner = CheckRunner.new
+    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir)
     exit_code = runner.run
     expect(exit_code).to eq(0)
-    # TODO: assert csv content
+
+    check_csvs_are_present
+  end
+
+  def check_csvs_are_present
+    expected_csvs = [
+      'BasePathsMissingFromRummager.csv',
+      'BasePathsMissingFromPublishingApi.csv',
+      'LinkedBasePathsMissingFromPublishingApi.csv',
+      'LinksMissingFromRummager.csv',
+      'LinksMissingFromPublishingApi.csv',
+      'RummagerLinksNotIndexedInRummager.csv',
+      'ExpiredWhitelistEntries.csv',
+    ]
+    actual_csvs = Dir[File.join(@csvdir, '*')].map { |f| File.basename(f) }
+    expect(actual_csvs).to contain_exactly(*expected_csvs)
   end
 
   def stub_publishing_api_content_request(request_last_seen_content_id:, response_last_seen_content_id:, response_results:)
@@ -53,5 +72,13 @@ RSpec.describe CheckRunner do
     WebMock.stub_request(:get, @rummager_search_url)
       .with(query: hash_including(query_hash))
       .to_return(body: { total: response_total, results: response_results }.to_json)
+  end
+
+  def tempdir
+    Dir.mktmpdir('finding_things_migration_checker_csvs_')
+  end
+
+  def cleanup
+    FileUtils.rm_r @csvdir
   end
 end

@@ -38,6 +38,7 @@ There are a few environment variables which can be used to configure other behav
 - `CHECKER_DB_NAME=foo.db` to use a file-backed db instead of an in-memory one
 - `SKIP_DATA_IMPORT=set` (any value works) to not run the data import phase
 - `WHITELIST_FILE=alternative_whitelist.yml` specify a whitelist file other than the default `whitelist.yml`
+- `CHECK_OUTPUT_DIR=/tmp/my_check_output` specify a csv output directory other than the default `.`
 
 ### Running the test suite
 

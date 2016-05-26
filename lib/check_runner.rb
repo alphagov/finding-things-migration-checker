@@ -1,11 +1,12 @@
 class CheckRunner
-  def initialize(*check_names)
+  def initialize(env, *check_names)
     Thread.abort_on_exception = true
 
     publishing_api_url = Plek.find('publishing-api') + '/v2/grouped-content-and-links'
-    checker_db_name = ENV["CHECKER_DB_NAME"] || CheckerDB.in_memory_db_name
-    skip_import = ENV["SKIP_DATA_IMPORT"] ? true : false
-    whitelist_file = ENV["WHITELIST_FILE"] || 'whitelist.yml'
+    checker_db_name = env["CHECKER_DB_NAME"] || CheckerDB.in_memory_db_name
+    skip_import = env["SKIP_DATA_IMPORT"] ? true : false
+    whitelist_file = env["WHITELIST_FILE"] || 'whitelist.yml'
+    @output_dir = env["CHECK_OUTPUT_DIR"] || '.'
 
     checker_db = CheckerDB.new(checker_db_name)
     whitelist = Whitelist.load(whitelist_file)
@@ -18,7 +19,7 @@ class CheckRunner
       @importers << Import::PublishingApiImporter.new(checker_db, progress_reporter, publishing_api_url)
     end
 
-    @checks = load_checks(checker_db, whitelist, *check_names)
+    @checks = load_checks(checker_db, whitelist, check_names)
   end
 
   def run
@@ -29,7 +30,7 @@ class CheckRunner
 
 private
 
-  def load_checks(checker_db, whitelist, *check_names)
+  def load_checks(checker_db, whitelist, check_names)
     check_files = Dir[File.join(File.dirname(__FILE__), 'checks', '*.rb')]
     check_names_to_run = check_names.empty? ? get_check_names(check_files) : check_names
     check_files.each { |file| require file }
@@ -51,7 +52,7 @@ private
   end
 
   def report_results(reports)
-    reports.each { |report| File.write("#{report.name}.csv", report.csv) }
+    reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}.csv"), report.csv) }
     reports.each { |report| puts report.summary }
     exit_code = reports.all?(&:success) ? 0 : 1
     exit_code
