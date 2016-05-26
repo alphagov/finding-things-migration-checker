@@ -6,8 +6,6 @@ module Checks
       @whitelist = whitelist
     end
 
-    # find base_paths present in Rummager which don't map to a published content item in the Publishing API
-
     def run_check
       query = <<-SQL
       SELECT

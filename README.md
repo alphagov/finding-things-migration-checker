@@ -18,6 +18,8 @@ The exit code for a run is `1` if any check fails, `0` otherwise.
 Each check can filter its usual output using a whitelist. This allows us to run the checks automatically
 in Jenkins and still keep the job green even though there may be some known problems we are working on.
 
+Each check's purpose and way of working should be described in the [checks readme](lib/checks/README.md) 
+
 ### Dependencies
 
 - [publishing api](https://github.com/alphagov/publishing-api)

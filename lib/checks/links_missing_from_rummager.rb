@@ -6,8 +6,6 @@ module Checks
       @whitelist = whitelist
     end
 
-    # find links present in Publishing API which are not present in Rummager
-
     def run_check
       publishing_api_links_query = <<-SQL
       SELECT

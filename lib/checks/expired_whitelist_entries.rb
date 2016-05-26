@@ -6,8 +6,6 @@ module Checks
       @whitelist = whitelist
     end
 
-    # find whitelist entries which have expired
-
     def run_check
       headers = %w(check_name expiry_date reason)
       expiries = @whitelist.report_expired_entries(Date.today)
