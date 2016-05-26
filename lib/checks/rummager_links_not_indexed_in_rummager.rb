@@ -6,9 +6,6 @@ module Checks
       @whitelist = whitelist
     end
 
-    # find base_paths linked to from Rummager items which are not themselves indexed in Rummager
-    # For example, in the past a removed organisation was correctly deindexed but was not removed from all link sets
-
     def run_check
       query = <<-SQL
       SELECT

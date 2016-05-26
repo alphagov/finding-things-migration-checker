@@ -6,12 +6,6 @@ module Checks
       @whitelist = whitelist
     end
 
-    # find content_ids present in Publishing API which have a published content item
-    # and for which no base_path is present in Rummager
-
-    # assumption for now: if any content_item was ever published under this content_id,
-    # then we should have it in Rummager; otherwise, we shouldn't care.
-
     def run_check
       query = <<-SQL
       SELECT
