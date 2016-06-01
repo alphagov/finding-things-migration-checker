@@ -3,7 +3,6 @@ require 'checker'
 require 'fileutils'
 
 # integration test with in-memory db, webmocked services, empty whitelist, real csvs (removed afterwards)
-# TODO: suppress logging
 RSpec.describe CheckRunner do
   before do
     @publishing_api_content_and_links_url = "#{Plek.new.find('publishing-api')}/v2/grouped-content-and-links"
