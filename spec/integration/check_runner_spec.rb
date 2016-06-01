@@ -35,17 +35,18 @@ RSpec.describe CheckRunner do
   end
 
   def check_csvs_are_present
-    expected_csvs = [
-      'BasePathsMissingFromRummager.csv',
-      'BasePathsMissingFromPublishingApi.csv',
-      'LinkedBasePathsMissingFromPublishingApi.csv',
-      'LinksMissingFromRummager.csv',
-      'LinksMissingFromPublishingApi.csv',
-      'RummagerLinksNotIndexedInRummager.csv',
-      'ExpiredWhitelistEntries.csv',
-      'RummagerRedirectedLinks.csv',
-      'RummagerRedirects.csv',
-    ]
+    expected_names = %w(
+BasePathsMissingFromRummager
+BasePathsMissingFromPublishingApi
+LinkedBasePathsMissingFromPublishingApi
+LinksMissingFromRummager
+LinksMissingFromPublishingApi
+RummagerLinksNotIndexedInRummager
+ExpiredWhitelistEntries
+RummagerRedirectedLinks
+RummagerRedirects
+)
+    expected_csvs = expected_names.flat_map { |name| ["#{name}.csv", "#{name}_all.csv"] }
     actual_csvs = Dir[File.join(@csvdir, '*')].map { |f| File.basename(f) }
     expect(actual_csvs).to contain_exactly(*expected_csvs)
   end

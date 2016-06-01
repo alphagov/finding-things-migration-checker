@@ -10,7 +10,7 @@ module Checks
       Checks::Report.new(
         name: name,
         success: rows.empty?,
-        summary: "#{name} report: found #{rows.size}",
+        summary: "#{name} report: found #{rows.size} (#{candidate_rows.size - rows.size} whitelisted)",
         csv: generate_csv(headers, rows),
         csv_including_whitelisted_rows: generate_csv(headers, candidate_rows),
       )

@@ -55,6 +55,7 @@ private
 
   def report_results(reports)
     reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}.csv"), report.csv) }
+    reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}_all.csv"), report.csv_including_whitelisted_rows) }
     reports.each { |report| @progress_reporter.message("setup", report.summary) }
     exit_code = reports.all?(&:success) ? 0 : 1
     exit_code
