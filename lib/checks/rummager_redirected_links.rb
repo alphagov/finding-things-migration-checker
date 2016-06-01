@@ -40,9 +40,10 @@ module Checks
         document_publishing_app
       )
 
-      results = @whitelist.apply(@name, headers, @checker_db.execute(query))
+      rows = @checker_db.execute(query)
+      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
 
-      Report.create(@name, headers, results)
+      Report.create(@name, headers, rows, whitelist_function)
     end
   end
 end

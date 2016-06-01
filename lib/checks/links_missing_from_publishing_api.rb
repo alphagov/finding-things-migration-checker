@@ -34,13 +34,10 @@ module Checks
       publishing_api_missing_links_query = "#{rummager_links_query} EXCEPT #{publishing_api_links_query}"
 
       headers = %w(link_type link_content_id content_id publishing_app format)
-      publishing_api_missing_links = @whitelist.apply(
-        @name,
-        headers,
-        @checker_db.execute(publishing_api_missing_links_query)
-      )
+      rows = @checker_db.execute(publishing_api_missing_links_query)
+      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
 
-      Report.create(@name, headers, publishing_api_missing_links)
+      Report.create(@name, headers, rows, whitelist_function)
     end
   end
 end

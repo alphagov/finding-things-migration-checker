@@ -9,8 +9,8 @@ module Checks
     def run_check
       headers = %w(check_name expiry_date reason)
       expiries = @whitelist.report_expired_entries(Date.today)
-
-      Report.create(@name, headers, expiries)
+      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
+      Report.create(@name, headers, expiries, whitelist_function)
     end
   end
 end

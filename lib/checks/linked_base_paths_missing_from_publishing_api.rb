@@ -22,9 +22,10 @@ module Checks
       SQL
 
       headers = %w(link link_type item item_format item_index item_document_type)
-      missing_from_publishing_api = @whitelist.apply(@name, headers, @checker_db.execute(query))
+      rows = @checker_db.execute(query)
+      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
 
-      Report.create(@name, headers, missing_from_publishing_api)
+      Report.create(@name, headers, rows, whitelist_function)
     end
   end
 end

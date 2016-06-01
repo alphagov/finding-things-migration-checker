@@ -19,9 +19,10 @@ module Checks
       SQL
 
       headers = %w(content_id publishing_app format)
-      missing_from_rummager = @whitelist.apply(@name, headers, @checker_db.execute(query))
+      rows = @checker_db.execute(query)
+      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
 
-      Report.create(@name, headers, missing_from_rummager)
+      Report.create(@name, headers, rows, whitelist_function)
     end
   end
 end
