@@ -30,8 +30,8 @@ Each check's purpose and way of working should be described in the [checks readm
 `bundle install && bin/run_automated_checks`
 
 The `CheckRunner` requires a list of check class names as input.
-Usually, these are provided as command line arguments (see `bin/run_automated_checks`).
-The `CheckRunner` will only run the requested checks.
+These can be provided as command line arguments, in which case the `CheckRunner` will only run the requested checks.
+If no checks are specified, all checks in the `lib/checks` directory are run.
 
 There are a few environment variables which can be used to configure other behaviours:
 

@@ -2,13 +2,7 @@
 
 set -e
 
-govuk_setenv rummager bundle exec bin/run_checks.rb \
-'BasePathsMissingFromRummager' \
-'BasePathsMissingFromPublishingApi' \
-'LinkedBasePathsMissingFromPublishingApi' \
-'LinksMissingFromRummager' \
-'LinksMissingFromPublishingApi' \
-'RummagerLinksNotIndexedInRummager' \
-'ExpiredWhitelistEntries' \
-'RummagerRedirects' \
-'RummagerRedirectedLinks'
+bundle install
+
+# all checks get run if none are specified
+govuk_setenv rummager bundle exec bin/run_checks.rb
