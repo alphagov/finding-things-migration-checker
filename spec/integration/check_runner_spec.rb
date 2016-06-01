@@ -10,7 +10,11 @@ RSpec.describe CheckRunner do
     @publishing_api_lookup_url = "#{Plek.new.find('publishing-api')}/lookup-by-base-path"
     @rummager_search_url = "#{Plek.new.find('rummager')}/unified_search.json"
 
-    @csvdir = tempdir
+    @tempdir = tempdir
+    @csvdir = File.join(@tempdir, 'csvs')
+    Dir.mkdir(@csvdir)
+    @whitelist = File.join(@tempdir, 'whitelist.yml')
+    FileUtils.touch(@whitelist)
 
     stub_publishing_api_content
     stub_rummager_content
@@ -21,7 +25,7 @@ RSpec.describe CheckRunner do
   end
 
   it "runs imports, runs checks, and generates output" do
-    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir, "SUPPRESS_PROGRESS" => "y")
+    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir, "SUPPRESS_PROGRESS" => "y", "WHITELIST_FILE" => @whitelist)
 
     exit_code = runner.run
     expect(exit_code).to eq(1)
