@@ -132,8 +132,8 @@ module Import
       LEFT JOIN rummager_base_path_content_id lookup ON lookup.base_path = rl.link_base_path
       WHERE lookup.content_id IS NULL
       SQL
-      missing_links_base_path = @checker_db.execute(query)
-      import_base_path_mappings(missing_links_base_path)
+      missing_links_base_paths = @checker_db.execute(query).flatten
+      import_base_path_mappings(missing_links_base_paths)
     end
 
     def get_total_document_count
