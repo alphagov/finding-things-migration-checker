@@ -30,14 +30,16 @@ Each check's purpose and way of working should be described in the [checks readm
 `bundle install && bin/run_automated_checks`
 
 The `CheckRunner` requires a list of check class names as input.
-Usually, these are provided as command line arguments (see `bin/run_automated_checks`).
-The `CheckRunner` will only run the requested checks.
+These can be provided as command line arguments, in which case the `CheckRunner` will only run the requested checks.
+If no checks are specified, all checks in the `lib/checks` directory are run.
 
 There are a few environment variables which can be used to configure other behaviours:
 
 - `CHECKER_DB_NAME=foo.db` to use a file-backed db instead of an in-memory one
 - `SKIP_DATA_IMPORT=set` (any value works) to not run the data import phase
 - `WHITELIST_FILE=alternative_whitelist.yml` specify a whitelist file other than the default `whitelist.yml`
+- `CHECK_OUTPUT_DIR=/tmp/my_check_output` specify a csv output directory other than the default `.`
+- `SUPPRESS_PROGRESS=set` (any value works) to not emit progress reporting to stdout
 
 ### Running the test suite
 

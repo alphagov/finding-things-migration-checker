@@ -58,6 +58,7 @@ class Whitelist
   end
 
   def self.load(whitelist_file)
-    Whitelist.new(YAML.load_file(whitelist_file))
+    yaml = YAML.load_file(whitelist_file)
+    Whitelist.new(yaml ? yaml : {})
   end
 end
