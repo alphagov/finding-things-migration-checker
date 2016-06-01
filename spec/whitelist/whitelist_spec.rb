@@ -192,6 +192,16 @@ RSpec.describe Whitelist do
     expect(test_predicate.call(%w(1 whatever bar))).to eq(false)
   end
 
+  it "detects null values using a value-testing predicate" do
+    headers = %w(id a b)
+    key_value = ['a', nil]
+
+    test_predicate = Whitelist.test_for(headers, key_value)
+
+    expect(test_predicate.call(%w(1 foo bar))).to eq(false)
+    expect(test_predicate.call(['1', nil, 'bar'])).to eq(true)
+  end
+
   it "reports expired whitelist entries" do
     whitelist = create_whitelist(
       '
