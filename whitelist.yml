@@ -31,11 +31,6 @@ LinkedBasePathsMissingFromPublishingApi:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
-    - predicate:
-      - link_type: 'organisations'
-        link: null
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/pFNSVJqm/648-organisations-hash-in-rummager-missing-the-link-field'
 
 LinksMissingFromRummager:
   rules:
