@@ -27,7 +27,7 @@ Each check's purpose and way of working should be described in the [checks readm
 
 ### Running the application
 
-`bin/run_automated_checks`
+`bundle install && bin/run_automated_checks`
 
 The `CheckRunner` requires a list of check class names as input.
 Usually, these are provided as command line arguments (see `bin/run_automated_checks`).
