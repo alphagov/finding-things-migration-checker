@@ -66,3 +66,9 @@ This is equivalent to the following:
 
 - Lookup the base path of the rummager document to get a content id
 - Check whether a redirect exists for that content id
+
+# RummagerRedirectedLinks
+
+Checks for links in rummager that point to content that is redirected in the publishing api.
+
+These should point to the target of the redirect rather than the old URL.
