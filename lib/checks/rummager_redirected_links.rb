@@ -34,10 +34,10 @@ module Checks
 
       headers = %w(
         document_base_path
-        document_publishing_app
         link_type
         link_content_id
         link_base_path
+        document_publishing_app
       )
 
       results = @whitelist.apply(@name, headers, @checker_db.execute(query))
