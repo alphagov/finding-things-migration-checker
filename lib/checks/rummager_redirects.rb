@@ -1,9 +1,9 @@
 module Checks
   class RummagerRedirects
-    def initialize(name, checker_db, whitelist)
+    def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
-      @whitelist = whitelist
+      @reporter = reporter
     end
 
     def run_check
@@ -20,9 +20,7 @@ module Checks
 
       headers = %w(content_id base_path publishing_app)
       rows = @checker_db.execute(query)
-      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
-
-      Report.create(@name, headers, rows, whitelist_function)
+      @reporter.create_report(@name, headers, rows)
     end
   end
 end

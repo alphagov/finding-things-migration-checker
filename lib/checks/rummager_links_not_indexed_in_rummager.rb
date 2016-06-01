@@ -1,9 +1,9 @@
 module Checks
   class RummagerLinksNotIndexedInRummager
-    def initialize(name, checker_db, whitelist)
+    def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
-      @whitelist = whitelist
+      @reporter = reporter
     end
 
     def run_check
@@ -23,9 +23,7 @@ module Checks
 
       headers = %w(link link_type item item_format item_index item_document_type)
       rows = @checker_db.execute(query)
-      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
-
-      Report.create(@name, headers, rows, whitelist_function)
+      @reporter.create_report(@name, headers, rows)
     end
   end
 end

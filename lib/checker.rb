@@ -17,6 +17,6 @@ require 'import/publishing_api_data_presenter'
 require 'import/publishing_api_importer'
 
 require 'whitelist/whitelist'
-require 'checks/report/report'
+require 'checks/reporter/reporter'
 
 require 'check_runner'

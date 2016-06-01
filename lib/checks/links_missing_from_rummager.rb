@@ -1,9 +1,9 @@
 module Checks
   class LinksMissingFromRummager
-    def initialize(name, checker_db, whitelist)
+    def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
-      @whitelist = whitelist
+      @reporter = reporter
     end
 
     def run_check
@@ -37,9 +37,7 @@ module Checks
 
       headers = %w(link_type link_content_id content_id publishing_app format)
       rows = @checker_db.execute(rummager_missing_links_query)
-      whitelist_function = @whitelist.get_whitelist_function(@name, headers)
-
-      Report.create(@name, headers, rows, whitelist_function)
+      @reporter.create_report(@name, headers, rows)
     end
   end
 end
