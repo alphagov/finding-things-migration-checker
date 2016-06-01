@@ -17,9 +17,13 @@
 
 
 #BasePathsMissingFromRummager:
-#BasePathsMissingFromPublishingApi:
-#LinkedBasePathsMissingFromPublishingApi:
-#RummagerLinksNotIndexedInRummager:
+
+BasePathsMissingFromPublishingApi:
+  rules:
+    - predicate:
+      - index: 'service-manual'
+      expiry: '2016-08-14'
+      reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
 
 LinkedBasePathsMissingFromPublishingApi:
   rules:
@@ -27,6 +31,11 @@ LinkedBasePathsMissingFromPublishingApi:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
+    - predicate:
+      - link_type: 'organisations'
+        link: null
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/pFNSVJqm/648-organisations-hash-in-rummager-missing-the-link-field'
 
 LinksMissingFromRummager:
   rules:
@@ -34,6 +43,22 @@ LinksMissingFromRummager:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
+
+RummagerLinksNotIndexedInRummager:
+  rules:
+    - predicate:
+      - link_type: 'people'
+      expiry: '2017-06-01'
+      reason: "We're not going to look at people links for a long time - let's reassess next year"
+    - predicate:
+      - link_type: 'organisations'
+        link: null
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/pFNSVJqm/648-organisations-hash-in-rummager-missing-the-link-field'
+    - predicate:
+      - link_type: 'mainstream_browse_pages'
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/KufxB8Sv/650-item-links-not-getting-updated-in-rummager-when-the-link-target-is-redirected-in-publishing-api'
 
 LinksMissingFromPublishingApi:
   rules:
@@ -43,11 +68,27 @@ LinksMissingFromPublishingApi:
       reason: "We're not going to look at people links for a long time - let's reassess next year"
     - predicate:
       - link_type: 'organisations'
-      expiry: '2016-07-01'
-      reason: |
-        We're looking at problems with organisations tagging already:
-        https://trello.com/c/aOTMr3WJ/640-whitehall-organisations-tagged-to-itself
-        https://trello.com/c/us3MI1n9/602-fix-organisation-tagging
-        https://trello.com/c/ZaFLDY1E/638-fix-rummager-publishing-api-discrepancy-for-guidance-publication
-        https://trello.com/c/oqjOp8jd/639-specialist-publisher-documents-don-t-have-organisations-in-the-publishing-api
-        https://trello.com/c/5aTIhKur/641-publisher-organisation-tagging-not-in-sync-between-rummager-and-publishing-api
+        publishing_app: 'specialist-publisher'
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api'
+
+RummagerRedirectedLinks:
+  rules:
+    - predicate:
+      - link_type: 'mainstream_browse_pages'
+        document_publishing_app: 'publisher'
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/CZK3bygv/647-problem-updating-rummager-links-for-publisher-content-when-mainstream-browse-pages-get-redirected'
+
+RummagerRedirects:
+  rules:
+    - predicate:
+      - publishing_app: 'whitehall'
+      - publishing_app: 'hmrc-manuals-api'
+      expiry: '2016-06-14'
+      reason: 'https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api'
+    - predicate:
+      - publishing_app: 'service-manual-publisher'
+      expiry: '2016-08-14'
+      reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
+
