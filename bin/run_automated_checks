@@ -2,8 +2,6 @@
 
 set -e
 
-bundle install
-
 govuk_setenv rummager bundle exec bin/run_checks.rb \
 'BasePathsMissingFromRummager' \
 'BasePathsMissingFromPublishingApi' \
