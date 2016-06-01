@@ -57,3 +57,18 @@ This check doesn't check anything about Rummager or Publishing API.
 Instead, it reports on whitelist entries which have expired.
 This is so that when the checks are running automatically in Jenkins, we are eventually reminded of discrepancies we previously whitelisted.
 We should provide a reason and a sensible recheck time when we add a whitelist entry.
+
+# RummagerRedirects
+
+Checks for documents in rummager where the base path is now redirected according to publishing api.
+
+This is equivalent to the following:
+
+- Lookup the base path of the rummager document to get a content id
+- Check whether a redirect exists for that content id
+
+# RummagerRedirectedLinks
+
+Checks for links in rummager that point to content that is redirected in the publishing api.
+
+These should point to the target of the redirect rather than the old URL.
