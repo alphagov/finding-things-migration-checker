@@ -18,7 +18,7 @@ The exit code for a run is `1` if any check fails, `0` otherwise.
 Each check can filter its usual output using a whitelist. This allows us to run the checks automatically
 in Jenkins and still keep the job green even though there may be some known problems we are working on.
 
-Each check's purpose and way of working should be described in the [checks readme](lib/checks/README.md) 
+Each check's purpose and way of working should be described in the [checks readme](lib/checks/README.md)
 
 ### Dependencies
 
@@ -37,7 +37,6 @@ There are a few environment variables which can be used to configure other behav
 
 - `CHECKER_DB_NAME=foo.db` to use a file-backed db instead of an in-memory one
 - `SKIP_DATA_IMPORT=set` (any value works) to not run the data import phase
-- `PUBLISHING_API_URL=http://p.api.loc/v2/grouped_content_and_links` the URL to use to access Publishing API (soon to be obsoleted by `gds-api-adapters`)
 - `WHITELIST_FILE=alternative_whitelist.yml` specify a whitelist file other than the default `whitelist.yml`
 
 ### Running the test suite

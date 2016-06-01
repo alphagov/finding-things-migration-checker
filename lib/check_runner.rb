@@ -2,7 +2,7 @@ class CheckRunner
   def initialize(*check_names)
     Thread.abort_on_exception = true
 
-    publishing_api_url = ENV["PUBLISHING_API_URL"] || 'http://publishing-api.dev.gov.uk/v2/grouped-content-and-links'
+    publishing_api_url = Plek.find('publishing-api') + '/v2/grouped-content-and-links'
     checker_db_name = ENV["CHECKER_DB_NAME"] || CheckerDB.in_memory_db_name
     skip_import = ENV["SKIP_DATA_IMPORT"] ? true : false
     whitelist_file = ENV["WHITELIST_FILE"] || 'whitelist.yml'
