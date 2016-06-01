@@ -4,9 +4,10 @@
 # Each checker is provided with a predicate, which, given an array of output stings
 # representing a row in the checker-specific csv output, determines whether to include that row.
 #
-# The `#apply` method is the entry point for filtering an array of rows.
-# In addition to the rows to be filtered, it takes a checker name for which to look up the ruleset
-# and an array of column headers to allow the ruleset to know which indexes to examine in each row array.
+# The `#get_whitelist_function` method is the entry point for filtering an array of rows.
+# It returns a function which, applied to an array representing a row, returns whether to exclude that row.
+# It takes a checker name for which to look up the ruleset and an array of column headers to allow the
+# ruleset to know which indexes to examine in each row array.
 #
 # The ruleset for each checker may contain several rules, each with its own expiry date
 # and reason for existing. Expired rules are still applied but are themselves reported on
@@ -21,10 +22,14 @@ class Whitelist
   end
 
   def apply(check_name, headers, rows)
+    rows.reject(&get_whitelist_function(check_name, headers))
+  end
+
+  def get_whitelist_function(check_name, headers)
     check = get_or_else(@whitelist, check_name, {})
     rules = get_or_else(check, 'rules', [])
     rule_predicates = rules.map { |rule| Whitelist.predicate_for(headers, get_or_else(rule, 'predicate', [])) }
-    rows.reject { |row| rule_predicates.any? { |r| r.call(row) } }
+    lambda { |row| rule_predicates.any? { |r| r.call(row) } }
   end
 
   def get_or_else(hash, key, default)
