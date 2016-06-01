@@ -11,4 +11,5 @@ govuk_setenv rummager bundle exec bin/run_checks.rb \
 'LinksMissingFromRummager' \
 'LinksMissingFromPublishingApi' \
 'RummagerLinksNotIndexedInRummager' \
-'ExpiredWhitelistEntries'
+'ExpiredWhitelistEntries' \
+'RummagerRedirects'
