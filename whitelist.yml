@@ -52,6 +52,11 @@ BasePathsMissingFromRummager:
       expiry: '2017-01-01'
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
+    - predicate:
+      - format: 'inside-government-link'
+      expiry: '3000-01-01'
+      reason: "These are internal links added by recommended links. Don't belong in Publishing API."
+
 BasePathsMissingFromPublishingApi:
   rules:
     - predicate:
@@ -155,4 +160,3 @@ RummagerRedirects:
       - publishing_app: 'service-manual-publisher'
       expiry: '2016-08-14'
       reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
-
