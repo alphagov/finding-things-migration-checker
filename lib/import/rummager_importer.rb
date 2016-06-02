@@ -4,16 +4,6 @@ module Import
       @checker_db = checker_db
       @thread_pool = Thread.pool(3)
       @progress_reporter = progress_reporter
-
-      @rummager = GdsApi::Rummager.new(
-        Plek.new.find('rummager'),
-        timeout: 20,
-      )
-      @publishing_api = GdsApi::PublishingApiV2.new(
-        Plek.new.find('publishing-api'),
-        bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
-        timeout: 20,
-      )
     end
 
     def import
@@ -89,7 +79,7 @@ module Import
     end
 
     def do_request(offset)
-      @rummager.unified_search(
+      Services.rummager.unified_search(
         fields: %w(link content_id format mainstream_browse_pages specialist_sectors organisations policy_groups people),
         start: offset,
         count: BATCH_SIZE,
@@ -106,7 +96,7 @@ module Import
 
     def import_base_path_mappings(base_paths)
       base_paths.each_slice(200) do |batch|
-        base_paths_to_content_ids = @publishing_api.lookup_content_ids(base_paths: batch)
+        base_paths_to_content_ids = Services.publishing_api.lookup_content_ids(base_paths: batch)
         @checker_db.insert_batch(
           table_name: 'rummager_base_path_content_id',
           column_names: %w(base_path content_id),
@@ -137,7 +127,7 @@ module Import
     end
 
     def get_total_document_count
-      @rummager.unified_search(count: 0).total
+      Services.rummager.unified_search(count: 0).total
     end
   end
 end

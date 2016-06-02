@@ -22,7 +22,6 @@ GEM
     hashdiff (0.3.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    json (1.8.3)
     link_header (0.0.8)
     lrucache (0.1.4)
       PriorityQueue (~> 0.1.2)
@@ -73,10 +72,6 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode-display_width (1.0.5)
-    unirest (1.0.8)
-      addressable
-      json
-      rest-client
     webmock (2.0.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -91,7 +86,6 @@ DEPENDENCIES
   rspec
   sqlite3
   thread
-  unirest
   webmock
 
 BUNDLED WITH

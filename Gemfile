@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'sqlite3'
-gem 'unirest'
 gem 'gds-api-adapters', '~> 30.6.0'
 gem 'thread'
 
