@@ -52,18 +52,14 @@ module Import
       response = do_request(NIL_UUID)
       results = response["results"]
 
-      # We currently don't have a way in the publishing api to get the expected count of content_ids.
-      # We hardcode a guess just to make the progress reporting slightly nicer during development.
-      expected_total = 602365
-
-      @progress_reporter.report('publishing api import', expected_total, 0, 'just starting')
+      @progress_reporter.report('publishing api import', 0, 'just starting')
 
       running_total = results ? results.size : 0
 
       while results && !results.empty? do
         running_total += results.size
         yield results
-        @progress_reporter.report('publishing api import', expected_total, running_total, 'importing...')
+        @progress_reporter.report('publishing api import', running_total, 'importing...')
         response = do_request(response['last_seen_content_id'])
         results = response["results"]
       end
