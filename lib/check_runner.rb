@@ -2,7 +2,6 @@ class CheckRunner
   def initialize(env, *check_names)
     Thread.abort_on_exception = true
 
-    publishing_api_url = Plek.find('publishing-api') + '/v2/grouped-content-and-links'
     checker_db_name = env["CHECKER_DB_NAME"] || CheckerDB.in_memory_db_name
     skip_import = env["SKIP_DATA_IMPORT"] ? true : false
     whitelist_file = env["WHITELIST_FILE"] || 'whitelist.yml'
@@ -17,7 +16,7 @@ class CheckRunner
     @importers = []
     unless skip_import
       @importers << Import::RummagerImporter.new(checker_db, @progress_reporter)
-      @importers << Import::PublishingApiImporter.new(checker_db, @progress_reporter, publishing_api_url)
+      @importers << Import::PublishingApiImporter.new(checker_db, @progress_reporter)
     end
 
     @checks = load_checks(checker_db, whitelist, check_names)

@@ -1,9 +1,8 @@
 module Import
   class PublishingApiImporter
-    def initialize(checker_db, progress_reporter, publishing_api_url)
+    def initialize(checker_db, progress_reporter)
       @checker_db = checker_db
       @thread_pool = Thread.pool(1)
-      @publishing_api_url = publishing_api_url
       @progress_reporter = progress_reporter
     end
 
@@ -71,13 +70,10 @@ module Import
     end
 
     def do_request(last_seen_content_id)
-      url = "#{@publishing_api_url}?page_size=#{BATCH_SIZE}&last_seen_content_id=#{last_seen_content_id}"
-
-      response = Unirest.get(url)
-      if response.code != 200 || !response.body["results"]
-        raise "bad response: #{response.code}\n#{response.raw_body}"
-      end
-      response.body
+      Services.publishing_api.get_grouped_content_and_links(
+        last_seen_content_id: last_seen_content_id,
+        page_size: BATCH_SIZE
+      )
     end
 
     def import_content(row)
