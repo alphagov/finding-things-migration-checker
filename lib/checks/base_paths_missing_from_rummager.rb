@@ -1,9 +1,9 @@
 module Checks
   class BasePathsMissingFromRummager
-    def initialize(name, checker_db, whitelist)
+    def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
-      @whitelist = whitelist
+      @reporter = reporter
     end
 
     def run_check
@@ -19,9 +19,8 @@ module Checks
       SQL
 
       headers = %w(content_id publishing_app format)
-      missing_from_rummager = @whitelist.apply(@name, headers, @checker_db.execute(query))
-
-      Report.create(@name, headers, missing_from_rummager)
+      rows = @checker_db.execute(query)
+      @reporter.create_report(@name, headers, rows)
     end
   end
 end

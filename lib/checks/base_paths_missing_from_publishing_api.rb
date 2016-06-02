@@ -1,9 +1,9 @@
 module Checks
   class BasePathsMissingFromPublishingApi
-    def initialize(name, checker_db, whitelist)
+    def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
-      @whitelist = whitelist
+      @reporter = reporter
     end
 
     def run_check
@@ -20,9 +20,8 @@ module Checks
       SQL
 
       headers = %w(base_path format index document_type)
-      missing_from_publishing_api = @whitelist.apply(@name, headers, @checker_db.execute(query))
-
-      Report.create(@name, headers, missing_from_publishing_api)
+      rows = @checker_db.execute(query)
+      @reporter.create_report(@name, headers, rows)
     end
   end
 end

@@ -9,7 +9,7 @@ class CheckRunner
     suppress_progress = env["SUPPRESS_PROGRESS"] ? true : false
 
     checker_db = CheckerDB.new(checker_db_name)
-    whitelist = Whitelist.load(whitelist_file)
+    @check_reporter = Checks::Reporter.new(Whitelist.load(whitelist_file))
 
     @progress_reporter = suppress_progress ? ProgressReporter.noop : ProgressReporter.new
 
@@ -19,22 +19,23 @@ class CheckRunner
       @importers << Import::PublishingApiImporter.new(checker_db, @progress_reporter)
     end
 
-    @checks = load_checks(checker_db, whitelist, check_names)
+    @checks = load_checks(checker_db, check_names)
   end
 
   def run
     run_importers
-    reports = run_checks
-    report_results(reports)
+    check_reports = run_checks
+    whitelist_expiry_report = @check_reporter.report_expired_whitelist_entries
+    report_results(check_reports + [whitelist_expiry_report])
   end
 
 private
 
-  def load_checks(checker_db, whitelist, check_names)
+  def load_checks(checker_db, check_names)
     check_files = Dir[File.join(File.dirname(__FILE__), 'checks', '*.rb')]
     check_names_to_run = check_names.empty? ? get_check_names(check_files) : check_names
     check_files.each { |file| require file }
-    check_names_to_run.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, whitelist) }
+    check_names_to_run.map { |check_name| Checks.const_get(check_name).new(check_name, checker_db, @check_reporter) }
   end
 
   def get_check_names(check_files)
@@ -53,6 +54,7 @@ private
 
   def report_results(reports)
     reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}.csv"), report.csv) }
+    reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}_all.csv"), report.csv_including_whitelisted_rows) }
     reports.each { |report| @progress_reporter.message("setup", report.summary) }
     exit_code = reports.all?(&:success) ? 0 : 1
     exit_code
