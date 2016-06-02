@@ -57,6 +57,11 @@ BasePathsMissingFromRummager:
       expiry: '3000-01-01'
       reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
+    - predicate:
+      - format: operational_field
+      expiry: '2016-07-01'
+      reason: "Being worked on: https://trello.com/c/az1N1nut"
+
 BasePathsMissingFromPublishingApi:
   rules:
     - predicate:
