@@ -16,7 +16,37 @@
 #      reason: "service-manual (and one extra page) is not fully baked yet, but we'll be ready to handle it soon"
 
 
-#BasePathsMissingFromRummager:
+BasePathsMissingFromRummager:
+  rules:
+    - predicate:
+      - format: 'email_alert_signup'
+      - format: 'special_route'
+      - format: 'financial_releases_geoblocker'
+      - format: 'finder_email_signup'
+      - format: 'financial_release'
+      - format: 'financial_releases_campaign'
+      expiry: '3000-01-01'
+      reason: "Format doesn't contain searchable information"
+
+    - predicate:
+      - format: 'redirect'
+      - format: 'gone'
+      - format: 'unpublishing'
+      expiry: '3000-01-01'
+      reason: "Rummager indexes the new link, not the old one"
+
+
+    - predicate:
+      - format: 'taxon'
+      expiry: '2017-01-01'
+      reason: "Taxon is a new thing and shouldn't be visible to users"
+
+    - predicate:
+      - format: 'topic'
+        content_id: '76e9abe7-dac8-49f0-bb5e-53e4b0d2cdba'
+      expiry: '3000-01-01'
+      reason: "Topic main page"
+
 
 BasePathsMissingFromPublishingApi:
   rules:
@@ -24,6 +54,7 @@ BasePathsMissingFromPublishingApi:
       - index: 'service-manual'
       expiry: '2016-08-14'
       reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
+
 
 LinkedBasePathsMissingFromPublishingApi:
   rules:
