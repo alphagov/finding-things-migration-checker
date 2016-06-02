@@ -95,7 +95,7 @@ module Import
     end
 
     def import_base_path_mappings(base_paths)
-      base_paths.each_slice(200) do |batch|
+      base_paths.compact.each_slice(200) do |batch|
         base_paths_to_content_ids = Services.publishing_api.lookup_content_ids(base_paths: batch)
         @checker_db.insert_batch(
           table_name: 'rummager_base_path_content_id',
