@@ -83,6 +83,7 @@ module Import
         fields: %w(link content_id format mainstream_browse_pages specialist_sectors organisations policy_groups people),
         start: offset,
         count: BATCH_SIZE,
+        debug: 'include_withdrawn'
       ).results
     end
 
