@@ -31,7 +31,7 @@ module Services
       begin
         attempts += 1
         @target.public_send(method_sym, *arguments, &block)
-      rescue Timeout::Error, GdsApi::TimedOutException => e
+      rescue Timeout::Error, GdsApi::TimedOutException, GdsApi::HTTPServerError => e
         raise e if attempts >= @maximum_number_of_attempts
         sleep sleep_time_after_attempt(attempts)
         retry
