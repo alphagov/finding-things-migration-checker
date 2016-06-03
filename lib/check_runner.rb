@@ -9,9 +9,9 @@ class CheckRunner
     suppress_progress = env["SUPPRESS_PROGRESS"] ? true : false
 
     checker_db = CheckerDB.new(checker_db_name)
-    @check_reporter = Checks::Reporter.new(Whitelist.load(whitelist_file))
+    @check_reporter = Reporting::CheckReporter.new(Whitelist.load(whitelist_file))
 
-    @progress_reporter = suppress_progress ? ProgressReporter.noop : ProgressReporter.new
+    @progress_reporter = suppress_progress ? Reporting::ProgressReporter.noop : Reporting::ProgressReporter.new
 
     @importers = []
     unless skip_import

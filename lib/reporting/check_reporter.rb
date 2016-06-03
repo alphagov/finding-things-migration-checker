@@ -1,5 +1,5 @@
-module Checks
-  class Reporter
+module Reporting
+  class CheckReporter
     def initialize(whitelist)
       @whitelist = whitelist
     end
@@ -7,7 +7,7 @@ module Checks
     def create_report(name, headers, candidate_rows)
       whitelist_function = @whitelist.get_whitelist_function(name, headers)
       rows = candidate_rows.reject(&whitelist_function)
-      Checks::Report.new(
+      Reporting::Report.new(
         name: name,
         success: rows.empty?,
         summary: "#{name} report: found #{rows.size} (#{candidate_rows.size - rows.size} whitelisted)",
