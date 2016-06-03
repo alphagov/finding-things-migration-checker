@@ -153,6 +153,11 @@ LinksMissingFromPublishingApi:
         publishing_app: 'specialist-publisher'
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api'
+    - predicate:
+      - format: 'placeholder_organisation'
+        link_type: 'organisations'
+      expiry: '2016-07-01'
+      reason: 'Organisations are tagged to itself. https://trello.com/c/aOTMr3WJ'
 
 RummagerRedirectedLinks:
   rules:
