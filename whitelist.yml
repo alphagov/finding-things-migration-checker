@@ -137,6 +137,10 @@ RummagerLinksNotIndexedInRummager:
       - link_type: 'mainstream_browse_pages'
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/KufxB8Sv/650-item-links-not-getting-updated-in-rummager-when-the-link-target-is-redirected-in-publishing-api'
+    - predicate:
+      - link_type: 'working_groups'
+      expiry: '3000-01-01'
+      reason: 'Not interested in working groups right now.'
 
 LinksMissingFromPublishingApi:
   rules:
