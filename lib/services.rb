@@ -1,17 +1,46 @@
 module Services
   def self.publishing_api
-    @publishing_api ||= GdsApi::PublishingApiV2.new(
-      Plek.new.find('publishing-api'),
-      bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
-      timeout: 20,
-    )
+    @publishing_api ||= with_retries(
+      GdsApi::PublishingApiV2.new(Plek.new.find('publishing-api'),
+        bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
+        timeout: 20,
+        disable_cache: true,
+    ))
   end
 
   def self.rummager
-    @rummager ||= GdsApi::Rummager.new(
-      Plek.new.find('rummager'),
-      timeout: 20,
-    )
+    @rummager ||= with_retries(
+      GdsApi::Rummager.new(Plek.new.find('rummager'),
+        timeout: 20,
+        disable_cache: true,
+    ))
+  end
+
+  def self.with_retries(target)
+    RetryWrapper.new(target: target, maximum_number_of_attempts: 5)
+  end
+
+  class RetryWrapper
+    def initialize(target:, maximum_number_of_attempts:)
+      @target = target
+      @maximum_number_of_attempts = maximum_number_of_attempts
+    end
+
+    def method_missing(method_sym, *arguments, &block)
+      attempts = 0
+      begin
+        attempts += 1
+        @target.public_send(method_sym, *arguments, &block)
+      rescue Timeout::Error, GdsApi::TimedOutException => e
+        raise e if attempts >= @maximum_number_of_attempts
+        sleep sleep_time_after_attempt(attempts)
+        retry
+      end
+    end
+
+    def sleep_time_after_attempt(current_attempt)
+      current_attempt
+    end
   end
 end
 
