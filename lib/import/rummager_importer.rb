@@ -65,8 +65,7 @@ module Import
 
     def import_rummager_batches
       offset = 0
-      expected_total_docs = get_total_document_count
-      @progress_reporter.report('rummager import', expected_total_docs, 0, 'just starting')
+      @progress_reporter.report('rummager import', 0, 'just starting')
 
       results = do_request(offset)
 
@@ -74,7 +73,7 @@ module Import
         yield results
         offset += results.size
         results = do_request(offset)
-        @progress_reporter.report('rummager import', expected_total_docs, offset, 'importing...')
+        @progress_reporter.report('rummager import', offset, 'importing...')
       end
     end
 
@@ -125,10 +124,6 @@ module Import
       SQL
       missing_links_base_paths = @checker_db.execute(query).flatten
       import_base_path_mappings(missing_links_base_paths)
-    end
-
-    def get_total_document_count
-      Services.rummager.unified_search(count: 0).total
     end
   end
 end

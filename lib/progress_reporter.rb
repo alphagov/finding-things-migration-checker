@@ -3,10 +3,10 @@ class ProgressReporter
     @mutex = Mutex.new
   end
 
-  def report(task, expected_total, running_total, message)
+  def report(task, running_total, message)
     @mutex.synchronize do
       prefix = "#{task} progress:".ljust(40, ' ')
-      counts = "#{running_total}/#{expected_total} (#{'%.2f' % (100 * (running_total.to_f / expected_total))}%)".rjust(30, ' ')
+      counts = "#{running_total} done".rjust(30, ' ')
       puts "#{prefix}#{counts} - #{message}"
     end
   end
