@@ -158,6 +158,11 @@ LinksMissingFromPublishingApi:
         link_type: 'organisations'
       expiry: '2016-07-01'
       reason: 'Organisations are tagged to itself. https://trello.com/c/aOTMr3WJ'
+    - predicate:
+      - format: 'hmrc_manual_section'
+        link_type: 'organisations'
+      expiry: '2016-07-01'
+      reason: "HMRC Manuals API doesn't tag manual sections yet: https://trello.com/c/ofpGSyzO"
 
 RummagerRedirectedLinks:
   rules:
