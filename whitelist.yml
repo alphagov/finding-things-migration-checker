@@ -63,11 +63,16 @@ BasePathsMissingFromPublishingApi:
       - index: 'service-manual'
       expiry: '2016-08-14'
       reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
+
     - predicate:
       - format: operational_field
       expiry: '2016-07-01'
       reason: "Being worked on: https://trello.com/c/0UAMj5gj"
 
+    - predicate:
+      - format: inside-government-link
+      expiry: '3000-01-01'
+      reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
 LinkedBasePathsMissingFromPublishingApi:
   rules:
@@ -132,6 +137,10 @@ RummagerLinksNotIndexedInRummager:
       - link_type: 'mainstream_browse_pages'
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/KufxB8Sv/650-item-links-not-getting-updated-in-rummager-when-the-link-target-is-redirected-in-publishing-api'
+    - predicate:
+      - link_type: 'working_groups'
+      expiry: '3000-01-01'
+      reason: 'Not interested in working groups right now.'
 
 LinksMissingFromPublishingApi:
   rules:
@@ -144,6 +153,20 @@ LinksMissingFromPublishingApi:
         publishing_app: 'specialist-publisher'
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api'
+    - predicate:
+      - format: 'placeholder_organisation'
+        link_type: 'organisations'
+      expiry: '2016-07-01'
+      reason: 'Organisations are tagged to itself. https://trello.com/c/aOTMr3WJ'
+    - predicate:
+      - format: 'hmrc_manual_section'
+        link_type: 'organisations'
+      expiry: '2016-07-01'
+      reason: "HMRC Manuals API doesn't tag manual sections yet: https://trello.com/c/ofpGSyzO"
+    - predicate:
+      - format: redirect
+      expiry: '3000-01-01'
+      reason: We shouldn't index redirects in search.
 
 RummagerRedirectedLinks:
   rules:
