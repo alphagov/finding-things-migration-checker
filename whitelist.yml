@@ -163,6 +163,11 @@ LinksMissingFromPublishingApi:
         link_type: 'organisations'
       expiry: '2016-07-01'
       reason: "HMRC Manuals API doesn't tag manual sections yet: https://trello.com/c/ofpGSyzO"
+    - predicate:
+      - publishing_app: whitehall
+        format: redirect
+      expiry: '3000-01-01'
+      reason: We don't index redirects in search.
 
 RummagerRedirectedLinks:
   rules:
