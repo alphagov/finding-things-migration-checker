@@ -9,7 +9,8 @@ require 'yaml'
 
 require 'db/checker_db'
 
-require 'progress_reporter'
+require 'reporting/progress_reporter'
+require 'reporting/check_reporter'
 
 require 'import/rummager_data_presenter'
 require 'import/rummager_importer'
@@ -17,6 +18,5 @@ require 'import/publishing_api_data_presenter'
 require 'import/publishing_api_importer'
 
 require 'whitelist/whitelist'
-require 'checks/reporter/reporter'
 
 require 'check_runner'
