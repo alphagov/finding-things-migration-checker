@@ -63,11 +63,16 @@ BasePathsMissingFromPublishingApi:
       - index: 'service-manual'
       expiry: '2016-08-14'
       reason: "We don't think any service manual content has made it into publishing-api yet - it's being rewritten"
+
     - predicate:
       - format: operational_field
       expiry: '2016-07-01'
       reason: "Being worked on: https://trello.com/c/0UAMj5gj"
 
+    - predicate:
+      - format: inside-government-link
+      expiry: '3000-01-01'
+      reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
 LinkedBasePathsMissingFromPublishingApi:
   rules:
