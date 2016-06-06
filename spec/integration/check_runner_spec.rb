@@ -129,7 +129,6 @@ RummagerRedirects
             }
           ],
           index: "mainstream",
-          document_type: "edition"
         }
       ]
     )

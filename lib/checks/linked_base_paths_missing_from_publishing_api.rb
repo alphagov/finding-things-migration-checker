@@ -13,15 +13,14 @@ module Checks
         rl.link_type,
         rl.base_path,
         rc.format,
-        rc.rummager_index,
-        rc.document_type
+        rc.rummager_index
       FROM rummager_link rl
       LEFT JOIN rummager_base_path_content_id lookup ON rl.link_base_path = lookup.base_path
       JOIN rummager_content rc ON rc.base_path = rl.base_path
       WHERE lookup.content_id IS NULL
       SQL
 
-      headers = %w(link link_type item item_format item_index item_document_type)
+      headers = %w(link link_type item item_format item_index)
       rows = @checker_db.execute(query)
       @reporter.create_report(@name, headers, rows)
     end

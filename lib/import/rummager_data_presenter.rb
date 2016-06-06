@@ -7,7 +7,6 @@ module Import
           item['content_id'],
           item['format'],
           item['index'],
-          item['document_type']
         ]
       end
     end
