@@ -15,7 +15,7 @@ module Checks
       FROM rummager_link rl
       JOIN rummager_base_path_content_id lookup ON lookup.base_path = rl.base_path
       JOIN publishing_api_content pac ON lookup.content_id = pac.content_id
-      WHERE pac.format = 'redirect'
+      WHERE pac.schema_name = 'redirect'
       SQL
 
       headers = %w(content_id base_path publishing_app)

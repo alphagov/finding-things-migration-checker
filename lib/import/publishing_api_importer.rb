@@ -31,7 +31,8 @@ module Import
         columns: [
           'content_id text',
           'publishing_app text',
-          'format text',
+          'document_type text',
+          'schema_name text',
           'ever_published text',
         ],
         index: ['content_id'],
@@ -75,7 +76,7 @@ module Import
     def import_content(row)
       @checker_db.insert_batch(
         table_name: 'publishing_api_content',
-        column_names: %w(content_id publishing_app format ever_published),
+        column_names: %w(content_id publishing_app document_type schema_name ever_published),
         rows: row
       )
     end
