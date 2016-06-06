@@ -19,7 +19,7 @@ module Import
     it "presents content from publishing-api in a form suitable for insertion in the local sqlite db" do
       content_id_data = test_data_example
 
-      expected_row = ["00015d3f-e7d9-48e8-95ff-ac3f7fa07be3", "whitehall", "statistics_announcement", 'published_at_least_once']
+      expected_row = ["00015d3f-e7d9-48e8-95ff-ac3f7fa07be3", "whitehall", "statistics_announcement", "statistics_announcement", 'published_at_least_once']
 
       row = PublishingApiDataPresenter.present_content(content_id_data)
 
@@ -34,7 +34,8 @@ module Import
           'content_items' => [
               {
                   'base_path' => "/government/statistics/announcements/some-statistics-page",
-                  'format' => "statistics_announcement",
+                  'document_type' => "statistics_announcement",
+                  'schema_name' => "statistics_announcement",
                   'locale' => "en",
                   'publishing_app' => "whitehall",
                   'state' => "published",
@@ -42,7 +43,8 @@ module Import
               },
               {
                   'base_path' => "/government/statistics/announcements/another-statistics-page",
-                  'format' => "statistics_announcement",
+                  'document_type' => "statistics_announcement",
+                  'schema_name' => "statistics_announcement",
                   'locale' => "en",
                   'publishing_app' => "whitehall",
                   'state' => "superseded",

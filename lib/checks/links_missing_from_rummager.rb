@@ -13,7 +13,8 @@ module Checks
         pal.link_content_id,
         pal.content_id,
         pac.publishing_app,
-        pac.format
+        pac.document_type,
+        pac.schema_name
       FROM publishing_api_link pal
       JOIN publishing_api_content pac ON pal.content_id = pac.content_id
       WHERE pal.link_type IN ('people', 'organisations', 'working_groups', 'topics', 'mainstream_browse_pages')
@@ -26,7 +27,8 @@ module Checks
         link_lookup.content_id as link_content_id,
         lookup.content_id,
         pac.publishing_app,
-        pac.format
+        pac.document_type,
+        pac.schema_name
       FROM rummager_link rl
       JOIN rummager_base_path_content_id lookup ON lookup.base_path = rl.base_path
       JOIN rummager_base_path_content_id link_lookup ON link_lookup.base_path = rl.link_base_path
@@ -35,7 +37,7 @@ module Checks
 
       rummager_missing_links_query = "#{publishing_api_links_query} EXCEPT #{rummager_links_query}"
 
-      headers = %w(link_type link_content_id content_id publishing_app format)
+      headers = %w(link_type link_content_id content_id publishing_app document_type schema_name)
       rows = @checker_db.execute(rummager_missing_links_query)
       @reporter.create_report(@name, headers, rows)
     end

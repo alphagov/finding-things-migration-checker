@@ -19,41 +19,41 @@
 BasePathsMissingFromRummager:
   rules:
     - predicate:
-      - format: 'email_alert_signup'
-      - format: 'special_route'
-      - format: 'financial_releases_geoblocker'
-      - format: 'finder_email_signup'
-      - format: 'financial_release'
-      - format: 'financial_releases_campaign'
+      - schema_name: 'email_alert_signup'
+      - schema_name: 'special_route'
+      - schema_name: 'financial_releases_geoblocker'
+      - schema_name: 'finder_email_signup'
+      - schema_name: 'financial_release'
+      - schema_name: 'financial_releases_campaign'
       expiry: '3000-01-01'
       reason: "Format doesn't contain searchable information"
 
     - predicate:
-      - format: 'redirect'
-      - format: 'gone'
-      - format: 'unpublishing'
+      - schema_name: 'redirect'
+      - schema_name: 'gone'
+      - schema_name: 'unpublishing'
       expiry: '3000-01-01'
       reason: "Rummager indexes the new link, not the old one"
 
     - predicate:
-      - format: 'taxon'
+      - schema_name: 'taxon'
       expiry: '2017-01-01'
       reason: "Taxon is a new thing and shouldn't be visible to users"
 
     - predicate:
-      - format: 'topic'
+      - schema_name: 'topic'
         content_id: '76e9abe7-dac8-49f0-bb5e-53e4b0d2cdba'
       expiry: '3000-01-01'
       reason: "Topic main page"
 
     - predicate:
       - publishing_app: 'whitehall'
-        format: 'html_publication'
+        schema_name: 'html_publication'
       expiry: '2017-01-01'
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
     - predicate:
-      - format: 'inside-government-link'
+      - schema_name: 'inside-government-link'
       expiry: '3000-01-01'
       reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
@@ -131,36 +131,36 @@ LinksMissingFromRummager:
       reason: "We're not going to look at people links for a long time - let's reassess next year"
 
     - predicate:
-      - format: 'email_alert_signup'
-      - format: 'special_route'
-      - format: 'financial_releases_geoblocker'
-      - format: 'finder_email_signup'
-      - format: 'financial_release'
-      - format: 'financial_releases_campaign'
+      - schema_name: 'email_alert_signup'
+      - schema_name: 'special_route'
+      - schema_name: 'financial_releases_geoblocker'
+      - schema_name: 'finder_email_signup'
+      - schema_name: 'financial_release'
+      - schema_name: 'financial_releases_campaign'
       expiry: '3000-01-01'
       reason: "Format doesn't contain searchable information"
 
     - predicate:
-      - format: 'redirect'
-      - format: 'gone'
-      - format: 'unpublishing'
+      - schema_name: 'redirect'
+      - schema_name: 'gone'
+      - schema_name: 'unpublishing'
       expiry: '3000-01-01'
       reason: "Rummager indexes the new link, not the old one"
 
     - predicate:
-      - format: 'taxon'
+      - schema_name: 'taxon'
       expiry: '2017-01-01'
       reason: "Taxon is a new thing and shouldn't be visible to users"
 
     - predicate:
-      - format: 'topic'
+      - schema_name: 'topic'
         content_id: '76e9abe7-dac8-49f0-bb5e-53e4b0d2cdba'
       expiry: '3000-01-01'
       reason: "Topic main page"
 
     - predicate:
       - publishing_app: 'whitehall'
-        format: 'html_publication'
+        schema_name: 'html_publication'
       expiry: '2017-01-01'
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
@@ -196,17 +196,17 @@ LinksMissingFromPublishingApi:
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api'
     - predicate:
-      - format: 'placeholder_organisation'
+      - schema_name: 'placeholder_organisation'
         link_type: 'organisations'
       expiry: '2016-07-01'
       reason: 'Organisations are tagged to itself. https://trello.com/c/aOTMr3WJ'
     - predicate:
-      - format: 'hmrc_manual_section'
+      - schema_name: 'hmrc_manual_section'
         link_type: 'organisations'
       expiry: '2016-07-01'
       reason: "HMRC Manuals API doesn't tag manual sections yet: https://trello.com/c/ofpGSyzO"
     - predicate:
-      - format: redirect
+      - schema_name: redirect
       expiry: '3000-01-01'
       reason: We shouldn't index redirects in search.
 

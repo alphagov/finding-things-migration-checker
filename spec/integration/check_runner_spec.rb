@@ -52,8 +52,8 @@ RummagerRedirects
   end
 
   def check_csv_content
-    expect(read_csv('LinksMissingFromRummager.csv')).to eq("link_type,link_content_id,content_id,publishing_app,format\norganisations,42,1,app1,format1\n")
-    expect(read_csv('BasePathsMissingFromRummager.csv')).to eq("content_id,publishing_app,format\n1,app1,format1\n")
+    expect(read_csv('LinksMissingFromRummager.csv')).to eq("link_type,link_content_id,content_id,publishing_app,document_type,schema_name\norganisations,42,1,app1,my-document-type,my-schema-name\n")
+    expect(read_csv('BasePathsMissingFromRummager.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
   end
 
   def read_csv(csv_filename)
@@ -73,7 +73,8 @@ RummagerRedirects
               locale: "en",
               base_path: "/base_path_1",
               publishing_app: "app1",
-              format: "format1",
+              document_type: "my-document-type",
+              schema_name: "my-schema-name",
               user_facing_version: "3",
               state: "published"
             }],
@@ -113,7 +114,7 @@ RummagerRedirects
       response_total: 1,
       response_results: [
         {
-          format: "format2",
+          format: "my-rummager-format",
           link: "/base_path_2",
           organisations: [
             {

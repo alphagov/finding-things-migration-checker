@@ -29,7 +29,7 @@ module Checks
       LEFT JOIN publishing_api_content pubapi_document
         ON document_lookup.content_id = pubapi_document.content_id
 
-      WHERE pubapi_link.format = 'redirect'
+      WHERE pubapi_link.schema_name = 'redirect'
       SQL
 
       headers = %w(

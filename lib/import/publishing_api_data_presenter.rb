@@ -3,10 +3,10 @@ module Import
     def self.present_content(content_id_data)
       # assumptions:
       # a content_id always has at least one content_item
-      # each content_item of a given content_id has the same format and publishing_app
+      # each content_item of a given content_id has the same schema and publishing_app
 
       exemplar = content_id_data['content_items'].first
-      [content_id_data['content_id'], exemplar['publishing_app'], exemplar['format'], ever_published(content_id_data)]
+      [content_id_data['content_id'], exemplar['publishing_app'], exemplar['document_type'], exemplar['schema_name'], ever_published(content_id_data)]
     end
 
     def self.present_links(content_id_data)
