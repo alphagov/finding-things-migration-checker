@@ -220,6 +220,10 @@ LinksMissingFromPublishingApi:
       - schema_name: redirect
       expiry: '3000-01-01'
       reason: We shouldn't index redirects in search.
+    - predicate:
+      - publishing_app: 'service-manual-publisher'
+      expiry: '2017-01-01'
+      reason: 'In progress: https://trello.com/c/2PX73XvD'
 
 RummagerRedirectedLinks:
   rules:
