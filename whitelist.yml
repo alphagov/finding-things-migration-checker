@@ -57,6 +57,42 @@ BasePathsMissingFromRummager:
       expiry: '3000-01-01'
       reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
+    - predicate:
+      - publishing_app: 'policy-publisher'
+      expiry: '2016-07-01'
+      reason: 'Investigating: https://trello.com/c/xARBi6HF'
+
+    - predicate:
+      - publishing_app: 'publisher'
+      expiry: '2016-07-01'
+      reason: 'Investigating: https://trello.com/c/M0CimIHQ'
+
+    - predicate:
+      - publishing_app: 'collections-publisher'
+      expiry: '2016-07-01'
+      reason: 'Investigating: https://trello.com/c/hLGohIrz'
+
+    - predicate:
+      - publishing_app: 'whitehall'
+      - publishing_app: 'specialist-publisher'
+      expiry: '2016-07-01'
+      reason: 'Investigating, possible bug in checker. https://trello.com/c/PtYjhVR8'
+
+    - predicate:
+      - publishing_app: 'hmrc-manuals-api'
+      expiry: '2016-07-01'
+      reason: 'Investigating: https://trello.com/c/nI9RYIpX'
+
+    - predicate:
+      - publishing_app: 'service-manual-publisher'
+      expiry: '2016-12-01'
+      reason: 'Service Manual team are working on this'
+
+    - predicate:
+      - publishing_app: 'share-sale-publisher'
+      expiry: '3000-01-01'
+      reason: 'Share sale pages are going away soon'
+
 BasePathsMissingFromPublishingApi:
   rules:
     - predicate:
@@ -73,6 +109,12 @@ BasePathsMissingFromPublishingApi:
       - format: inside-government-link
       expiry: '3000-01-01'
       reason: "These are internal links added by recommended links. Don't belong in Publishing API."
+
+    - predicate:
+      - format: publication
+        index: government
+      expiry: '2016-07-01'
+      reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
 LinkedBasePathsMissingFromPublishingApi:
   rules:
