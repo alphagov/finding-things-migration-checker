@@ -64,11 +64,19 @@ BasePathsMissingFromRummager:
 
     - predicate:
       - document_type: 'business_support'
+      - document_type: 'completed_transaction'
       expiry: '3000-01-01'
       reason: |
         Business Support pages have always been kept out of the search
         index. This is probably because users should find these pages via the
         business support finder (https://www.gov.uk/business-finance-support-finder)
+
+        Completed transactions don't provide value to the user, so we don't index
+        these as well.
+
+        Panopticon decides whether or not to index a thing based on the format:
+
+        https://github.com/alphagov/panopticon/blob/master/app/models/rummageable_artefact.rb#L3
 
     - predicate:
       - publishing_app: 'collections-publisher'
