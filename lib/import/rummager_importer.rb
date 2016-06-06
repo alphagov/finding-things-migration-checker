@@ -38,7 +38,6 @@ module Import
           'content_id text',
           'format text',
           'rummager_index text',
-          'document_type text',
         ],
         index: ['base_path']
       )
@@ -89,7 +88,7 @@ module Import
     def import_content(rows)
       @checker_db.insert_batch(
         table_name: 'rummager_content',
-        column_names: %w(base_path content_id format rummager_index document_type),
+        column_names: %w(base_path content_id format rummager_index),
         rows: rows
       )
     end

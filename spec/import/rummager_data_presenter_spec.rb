@@ -20,7 +20,7 @@ module Import
       batch_data = [test_data_example]
 
       expected_rows = [
-          ['/vehicle-tax', nil, 'transaction', 'mainstream', 'edition'],
+          ['/vehicle-tax', nil, 'transaction', 'mainstream'],
       ]
 
       rows = RummagerDataPresenter.present_content(batch_data)
@@ -51,7 +51,6 @@ module Import
             'link' => "/government/organisations/test-org"
           },
         ],
-        'document_type' => 'edition',
         'format' => 'transaction',
         'index' => 'mainstream',
       }
