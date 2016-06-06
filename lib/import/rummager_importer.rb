@@ -79,6 +79,7 @@ module Import
     def do_request(offset)
       Services.rummager.unified_search(
         fields: %w(link content_id format mainstream_browse_pages specialist_sectors organisations policy_groups people),
+        order: 'public_timestamp',
         start: offset,
         count: BATCH_SIZE,
         debug: 'include_withdrawn'
