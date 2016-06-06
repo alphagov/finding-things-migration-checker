@@ -12,8 +12,6 @@ RSpec.describe CheckRunner do
     @tempdir = tempdir
     @csvdir = File.join(@tempdir, 'csvs')
     Dir.mkdir(@csvdir)
-    @whitelist = File.join(@tempdir, 'whitelist.yml')
-    FileUtils.touch(@whitelist)
 
     stub_publishing_api_content
     stub_rummager_content
@@ -24,7 +22,7 @@ RSpec.describe CheckRunner do
   end
 
   it "runs imports, runs checks, and generates output" do
-    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir, "SUPPRESS_PROGRESS" => "y", "WHITELIST_FILE" => @whitelist)
+    runner = CheckRunner.new("CHECK_OUTPUT_DIR" => @csvdir, "SUPPRESS_PROGRESS" => "y")
 
     exit_code = runner.run
     expect(exit_code).to eq(1)
@@ -52,8 +50,9 @@ RummagerRedirects
   end
 
   def check_csv_content
-    expect(read_csv('LinksMissingFromRummager.csv')).to eq("link_type,link_content_id,content_id,publishing_app,document_type,schema_name\norganisations,42,1,app1,my-document-type,my-schema-name\n")
-    expect(read_csv('BasePathsMissingFromRummager.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
+    # Use the _all files to not let the tests be influenced by the whitelist.
+    expect(read_csv('LinksMissingFromRummager_all.csv')).to eq("link_type,link_content_id,content_id,publishing_app,document_type,schema_name\norganisations,42,1,app1,my-document-type,my-schema-name\n")
+    expect(read_csv('BasePathsMissingFromRummager_all.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
   end
 
   def read_csv(csv_filename)

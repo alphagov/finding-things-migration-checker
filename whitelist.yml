@@ -65,7 +65,8 @@ BasePathsMissingFromRummager:
     - predicate:
       - document_type: 'business_support'
       expiry: '3000-01-01'
-      reason: | Business Support pages have always been kept out of the search
+      reason: |
+        Business Support pages have always been kept out of the search
         index. This is probably because users should find these pages via the
         business support finder (https://www.gov.uk/business-finance-support-finder)
 
