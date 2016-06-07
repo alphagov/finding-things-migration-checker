@@ -238,7 +238,7 @@ RummagerRedirectedLinks:
       - link_type: 'mainstream_browse_pages'
         document_publishing_app: 'publisher'
       expiry: '2016-06-14'
-      reason: 'https://trello.com/c/CZK3bygv/647-problem-updating-rummager-links-for-publisher-content-when-mainstream-browse-pages-get-redirected'
+      reason: 'https://trello.com/c/CZK3bygv - we are whitelisting these until we turn on indexing from publishing-api, since the links in publishing-api are correct.'
 
 RummagerRedirects:
   rules:
