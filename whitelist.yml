@@ -89,12 +89,6 @@ BasePathsMissingFromRummager:
       reason: 'Investigating: https://trello.com/c/hLGohIrz'
 
     - predicate:
-      - publishing_app: 'whitehall'
-      - publishing_app: 'specialist-publisher'
-      expiry: '2016-07-01'
-      reason: 'Investigating, possible bug in checker. https://trello.com/c/PtYjhVR8'
-
-    - predicate:
       - publishing_app: 'hmrc-manuals-api'
       expiry: '2016-07-01'
       reason: 'Investigating: https://trello.com/c/nI9RYIpX'
