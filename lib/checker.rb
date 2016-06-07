@@ -1,3 +1,5 @@
+require 'sigdump/setup'
+
 require 'sqlite3'
 require 'gds_api/rummager'
 require 'gds_api/publishing_api_v2'
