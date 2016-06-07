@@ -50,12 +50,11 @@ module Import
     end
 
     def import_publishing_api_batches
-      response = do_request(NIL_UUID)
-      results = response["results"]
-
       @progress_reporter.report('publishing api import', 0, 'just starting')
 
-      running_total = results ? results.size : 0
+      running_total = 0
+      response = do_request(NIL_UUID)
+      results = response["results"]
 
       while results && !results.empty? do
         running_total += results.size
