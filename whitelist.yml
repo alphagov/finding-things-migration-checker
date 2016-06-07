@@ -79,6 +79,11 @@ BasePathsMissingFromRummager:
         https://github.com/alphagov/panopticon/blob/master/app/models/rummageable_artefact.rb#L3
 
     - predicate:
+      - document_type: 'campaign'
+      expiry: '2017-07-01'
+      reason: "In progress: https://trello.com/c/fAF7mZ2H"
+
+    - predicate:
       - publishing_app: 'collections-publisher'
       expiry: '2016-07-01'
       reason: 'Investigating: https://trello.com/c/hLGohIrz'
@@ -220,6 +225,10 @@ LinksMissingFromPublishingApi:
       - schema_name: redirect
       expiry: '3000-01-01'
       reason: We shouldn't index redirects in search.
+    - predicate:
+      - publishing_app: 'service-manual-publisher'
+      expiry: '2017-01-01'
+      reason: 'In progress: https://trello.com/c/2PX73XvD'
 
 RummagerRedirectedLinks:
   rules:
