@@ -171,8 +171,10 @@ LinksMissingFromRummager:
     - predicate:
       - schema_name: 'topic'
         content_id: '76e9abe7-dac8-49f0-bb5e-53e4b0d2cdba'
+      - schema_name: 'mainstream_browse_page'
+        content_id: '8413047e-570a-448b-b8cb-d288a12807dd'
       expiry: '3000-01-01'
-      reason: "Topic main page"
+      reason: "/topic and /browse should not be in search"
 
     - predicate:
       - publishing_app: 'whitehall'
