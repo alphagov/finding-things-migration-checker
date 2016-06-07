@@ -36,6 +36,12 @@ BasePathsMissingFromRummager:
       reason: "Rummager indexes the new link, not the old one"
 
     - predicate:
+      - content_id: '44861ffb-7955-4736-afe8-107eef2ecf43'
+      - content_id: 'edfda596-b2db-4b1c-9544-4f0d4912a8f1'
+      expiry: '2017-06-01'
+      reason: "These manual sections have been redirected in router-data, so they shouldn't be in the search index. Will be fixed by future clean up of router data. Relates to https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api"
+
+    - predicate:
       - schema_name: 'taxon'
       expiry: '2017-01-01'
       reason: "Taxon is a new thing and shouldn't be visible to users"
