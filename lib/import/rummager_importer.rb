@@ -2,7 +2,6 @@ module Import
   class RummagerImporter
     def initialize(checker_db, progress_reporter)
       @checker_db = checker_db
-      @thread_pool = Thread.pool(3)
       @progress_reporter = progress_reporter
     end
 
@@ -10,19 +9,14 @@ module Import
       create_rummager_tables
 
       import_rummager_batches do |batch_data|
-        @thread_pool.process {
-          items = Import::RummagerDataPresenter.present_content(batch_data)
-          import_content(items)
-          import_base_path_mappings(items.map { |item| item[0] })
-        }
-        # we do this on the main import thread to provide a little backoff - requests can time out in the dev vm otherwise
+        items = Import::RummagerDataPresenter.present_content(batch_data)
+        import_content(items)
+        import_base_path_mappings(items.map { |item| item[0] })
         import_rummager_links(batch_data)
       end
 
       import_linked_base_path_mappings
 
-      @progress_reporter.message('rummager import', "waiting for #{@thread_pool.backlog} remaining tasks to complete")
-      @thread_pool.shutdown
       @progress_reporter.message('rummager import', 'finished')
     end
 

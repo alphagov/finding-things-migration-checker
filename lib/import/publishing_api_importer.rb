@@ -2,7 +2,6 @@ module Import
   class PublishingApiImporter
     def initialize(checker_db, progress_reporter)
       @checker_db = checker_db
-      @thread_pool = Thread.pool(1)
       @progress_reporter = progress_reporter
     end
 
@@ -10,13 +9,9 @@ module Import
       create_publishing_api_tables
 
       import_publishing_api_batches do |batch_data|
-        @thread_pool.process {
-          import_content(batch_data.map { |content_id_data| Import::PublishingApiDataPresenter.present_content(content_id_data) })
-          import_content_links(batch_data.flat_map { |content_id_data| Import::PublishingApiDataPresenter.present_links(content_id_data) })
-        }
+        import_content(batch_data.map { |content_id_data| Import::PublishingApiDataPresenter.present_content(content_id_data) })
+        import_content_links(batch_data.flat_map { |content_id_data| Import::PublishingApiDataPresenter.present_links(content_id_data) })
       end
-      @progress_reporter.message('publishing api import', "waiting for #{@thread_pool.backlog} remaining tasks to complete")
-      @thread_pool.shutdown
       @progress_reporter.message('publishing api import', 'finished')
     end
 
