@@ -20,7 +20,7 @@ module Import
       batch_data = [test_data_example]
 
       expected_rows = [
-          ['/vehicle-tax', nil, 'transaction', 'mainstream'],
+          ['/vehicle-tax', nil, 'transaction', 'mainstream', 'not_withdrawn'],
       ]
 
       rows = RummagerDataPresenter.present_content(batch_data)
@@ -52,6 +52,7 @@ module Import
           },
         ],
         'format' => 'transaction',
+        'is_withdrawn' => 'false',
         'index' => 'mainstream',
       }
     end
