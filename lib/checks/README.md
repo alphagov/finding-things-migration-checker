@@ -23,6 +23,7 @@ This check finds content present in Rummager for which the base_path doesn't map
 The assumption is that anything present in Rummager should be published.
 Our proxy for 'being published' is that the `/lookup-by-base-path` endpoint in Publishing API finds a content_id.
 Recommended links are excluded.
+Withdrawn items are excluded, because the content_id lookup does not guarantee to find a content_id for them.
 
 ### BasePathsMissingFromRummager
 
@@ -50,13 +51,6 @@ The assumption is that links should always be in sync.
 
 This check finds links present in Publishing API which are not present in Rummager.
 The assumption is that links should always be in sync.
-
-### ExpiredWhitelistEntries
-
-This check doesn't check anything about Rummager or Publishing API.
-Instead, it reports on whitelist entries which have expired.
-This is so that when the checks are running automatically in Jenkins, we are eventually reminded of discrepancies we previously whitelisted.
-We should provide a reason and a sensible recheck time when we add a whitelist entry.
 
 # RummagerRedirects
 
