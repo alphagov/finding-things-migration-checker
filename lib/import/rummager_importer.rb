@@ -32,6 +32,7 @@ module Import
           'content_id text',
           'format text',
           'rummager_index text',
+          'is_withdrawn text',
         ],
         index: ['base_path']
       )
@@ -72,7 +73,7 @@ module Import
 
     def do_request(offset)
       Services.rummager.unified_search(
-        fields: %w(link content_id format mainstream_browse_pages specialist_sectors organisations policy_groups people),
+        fields: %w(link content_id format is_withdrawn mainstream_browse_pages specialist_sectors organisations policy_groups people),
         order: 'public_timestamp',
         start: offset,
         count: BATCH_SIZE,
@@ -83,7 +84,7 @@ module Import
     def import_content(rows)
       @checker_db.insert_batch(
         table_name: 'rummager_content',
-        column_names: %w(base_path content_id format rummager_index),
+        column_names: %w(base_path content_id format rummager_index is_withdrawn),
         rows: rows
       )
     end

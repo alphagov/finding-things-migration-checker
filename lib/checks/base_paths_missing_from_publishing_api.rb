@@ -16,6 +16,7 @@ module Checks
       LEFT JOIN rummager_base_path_content_id lookup ON rc.base_path = lookup.base_path
       WHERE lookup.content_id IS NULL
       AND format NOT IN ('recommended-link')
+      AND rc.is_withdrawn != 'withdrawn'
       SQL
 
       headers = %w(base_path format index)

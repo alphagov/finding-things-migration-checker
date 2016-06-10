@@ -20,6 +20,9 @@ in Jenkins and still keep the job green even though there may be some known prob
 
 Each check's purpose and way of working should be described in the [checks readme](lib/checks/README.md)
 
+Whitelist entries have a reason for existing and an expiry date.
+Expired entries are reported as errors.
+
 ### Dependencies
 
 - [publishing api](https://github.com/alphagov/publishing-api)
