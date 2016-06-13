@@ -5,8 +5,8 @@ module Reporting
     end
 
     def create_report(name, headers, candidate_rows)
-      whitelist_function = @whitelist.get_whitelist_function(name, headers)
-      rows = candidate_rows.reject(&whitelist_function)
+      whitelister = @whitelist.get_whitelister(name, headers)
+      rows = candidate_rows.reject(&whitelister.whitelist_function)
       Reporting::Report.new(
         name: name,
         success: rows.empty?,

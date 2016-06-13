@@ -151,7 +151,7 @@ RSpec.describe Whitelist do
         'a' => 'foo',
         'b' => 'bar',
     }
-    conj_predicate = Whitelist.conjunction_for(headers, conj_hash)
+    conj_predicate = Whitelist::Predicate.conjunction_for(headers, conj_hash)
 
     expect(conj_predicate.call([1, 'foo', 'bar'])).to eq(true)
     expect(conj_predicate.call([2, 'foo', 'bar'])).to eq(true)
@@ -170,7 +170,7 @@ RSpec.describe Whitelist do
         'id' => '3'
       }
     ]
-    conj_predicate = Whitelist.predicate_for(headers, conj_hash_arr)
+    conj_predicate = Whitelist::Predicate.predicate_for(headers, conj_hash_arr)
 
     expect(conj_predicate.call(%w(1 foo bar))).to eq(true)
     expect(conj_predicate.call(%w(3 foo bar))).to eq(true)
@@ -179,12 +179,11 @@ RSpec.describe Whitelist do
     expect(conj_predicate.call(%w(3 whatever bar))).to eq(true)
   end
 
-
   it "constructs a value-testing predicate" do
     headers = %w(id a b)
     key_value = %w(a foo)
 
-    test_predicate = Whitelist.test_for(headers, key_value)
+    test_predicate = Whitelist::Predicate.test_for(headers, key_value)
 
     expect(test_predicate.call(%w(1 foo bar))).to eq(true)
     expect(test_predicate.call(%w(3 foo bar))).to eq(true)
@@ -196,7 +195,7 @@ RSpec.describe Whitelist do
     headers = %w(id a b)
     key_value = ['a', nil]
 
-    test_predicate = Whitelist.test_for(headers, key_value)
+    test_predicate = Whitelist::Predicate.test_for(headers, key_value)
 
     expect(test_predicate.call(%w(1 foo bar))).to eq(false)
     expect(test_predicate.call(['1', nil, 'bar'])).to eq(true)
@@ -227,6 +226,45 @@ RSpec.describe Whitelist do
     ]
 
     expect(whitelist.report_expired_entries(Date.parse('2016-07-05'))).to eq(expected_expires)
+  end
+
+  it "reports unused whitelist entries" do
+    whitelist = create_whitelist(
+      '
+      test_check_1:
+        rules:
+          - expiry: "2016-05-19"
+            reason: "foo"
+            predicate:
+              - a: "x"
+          - expiry: "2016-06-20"
+            reason: "bar"
+            predicate:
+              - a: "y"
+          - expiry: "2017-07-22"
+            reason: "baz"
+            predicate:
+              - a: "z"
+      '
+    )
+
+    headers = %w(id a)
+
+    rows = [
+      %w(1 x),
+      %w(2 y),
+      %w(3 a),
+      %w(4 b),
+    ]
+    expected_rows = [
+      %w(3 a),
+      %w(4 b),
+    ]
+
+    whitelister = whitelist.get_whitelister('test_check_1', headers)
+    expect(rows.reject(&whitelister.whitelist_function)).to eq(expected_rows)
+    expect(whitelister.unused_entries.size).to eq(1)
+    expect(whitelister.unused_entries[0].reason).to eq("baz")
   end
 
   def create_whitelist(yaml_string)

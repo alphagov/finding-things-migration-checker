@@ -19,17 +19,16 @@
 class Whitelist
   def initialize(whitelist)
     @whitelist = whitelist
+    @predicates = build_predicate_hash(whitelist)
   end
 
   def apply(check_name, headers, rows)
-    rows.reject(&get_whitelist_function(check_name, headers))
+    whitelister = get_whitelister(check_name, headers)
+    rows.reject(&whitelister.whitelist_function)
   end
 
-  def get_whitelist_function(check_name, headers)
-    check = get_or_else(@whitelist, check_name, {})
-    rules = get_or_else(check, 'rules', [])
-    rule_predicates = rules.map { |rule| Whitelist.predicate_for(headers, get_or_else(rule, 'predicate', [])) }
-    lambda { |row| rule_predicates.any? { |r| r.call(row) } }
+  def get_whitelister(check_name, headers)
+    Whitelister.new(get_or_else(@predicates, check_name, []), headers)
   end
 
   def get_or_else(hash, key, default)
@@ -47,23 +46,71 @@ class Whitelist
     expiries.select { |expiry| Date.parse(expiry[1]) <= reference_date }
   end
 
-  def self.predicate_for(headers, conj_hash_arr)
-    conjunctions = conj_hash_arr.map { |conj_hash| Whitelist.conjunction_for(headers, conj_hash) }
-    lambda { |row| conjunctions.any? { |c| c.call(row) } }
-  end
-
-  def self.conjunction_for(headers, conj_hash)
-    tests = conj_hash.map { |key_value| Whitelist.test_for(headers, key_value) }
-    lambda { |row| tests.all? { |t| t.call(row) } }
-  end
-
-  def self.test_for(headers, key_value)
-    row_index = headers.find_index(key_value[0])
-    lambda { |row| row[row_index] == key_value[1] }
-  end
-
   def self.load(whitelist_file)
     yaml = YAML.load_file(whitelist_file)
     Whitelist.new(yaml ? yaml : {})
+  end
+
+private
+
+  def build_predicate_hash(whitelist)
+    whitelist.map do |check_name, rules_hash|
+      rules = get_or_else(rules_hash, 'rules', [])
+      return check_name => rules.map { |predicate_hash| build_predicate(predicate_hash) }
+    end
+  end
+
+  def build_predicate(predicate_hash)
+    Predicate.new(
+      predicate_hash['predicate'],
+      predicate_hash['reason'],
+      predicate_hash['expiry'],
+    )
+  end
+
+  class Predicate
+    attr_reader :reason, :expiry
+
+    def initialize(conj_hash_arr, reason, expiry)
+      @conj_hash_arr = conj_hash_arr ? conj_hash_arr : []
+      @reason = reason
+      @expiry = expiry
+    end
+
+    def predicate_function(headers)
+      Predicate.predicate_for(headers, @conj_hash_arr)
+    end
+
+    def self.predicate_for(headers, conj_hash_arr)
+      conjunctions = conj_hash_arr.map { |conj_hash| Predicate.conjunction_for(headers, conj_hash) }
+      lambda { |row| conjunctions.any? { |c| c.call(row) } }
+    end
+
+    def self.conjunction_for(headers, conj_hash)
+      tests = conj_hash.map { |key_value| Predicate.test_for(headers, key_value) }
+      lambda { |row| tests.all? { |t| t.call(row) } }
+    end
+
+    def self.test_for(headers, key_value)
+      row_index = headers.find_index(key_value[0])
+      lambda { |row| row[row_index] == key_value[1] }
+    end
+  end
+
+  class Whitelister
+    attr_reader :whitelist_function, :unused_entries
+
+    def initialize(predicate_arr, headers)
+      predicate_functions = predicate_arr.map { |predicate| [predicate, predicate.predicate_function(headers)] }
+      @unused_entries = predicate_arr.dup
+      @whitelist_function = lambda do |row|
+        predicate_values = predicate_functions.map { |p, f| [p, f.call(row)] }
+
+        matches = predicate_values.select { |_, v| v }.map { |p, _| p }
+        @unused_entries = @unused_entries - matches
+
+        !matches.empty?
+      end
+    end
   end
 end
