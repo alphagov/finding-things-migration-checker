@@ -7,7 +7,7 @@ module Import
           item['content_id'],
           item['format'],
           item['index'],
-          item['is_withdrawn'] == 'true' ? 'withdrawn' : 'not_withdrawn',
+          item['is_withdrawn'] ? 'withdrawn' : 'not_withdrawn',
         ]
       end
     end

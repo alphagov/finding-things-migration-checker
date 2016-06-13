@@ -52,7 +52,7 @@ module Import
           },
         ],
         'format' => 'transaction',
-        'is_withdrawn' => 'false',
+        'is_withdrawn' => false,
         'index' => 'mainstream',
       }
     end
