@@ -43,20 +43,30 @@ private
   end
 
   def run_importers
-    @progress_reporter.message("setup", "importing data using #{@importers.map(&:class)}")
+    @progress_reporter.message("check runner", "importing data using #{@importers.map(&:class)}")
     @importers.map { |importer| Thread.new { importer.import } }.each(&:join)
   end
 
   def run_checks
-    @progress_reporter.message("setup", "running checks using #{@checks.map(&:class)}")
+    @progress_reporter.message("check runner", "running checks using #{@checks.map(&:class)}")
     @checks.map { |check| Thread.future { check.run_check } }.map(&:value)
   end
 
   def report_results(reports)
     reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}.csv"), report.csv) }
     reports.each { |report| File.write(File.join(@output_dir.to_s, "#{report.name}_all.csv"), report.csv_including_whitelisted_rows) }
-    reports.each { |report| @progress_reporter.message("setup", report.summary) }
+    reports.each { |report| @progress_reporter.message("check runner", report.summary) }
+    report_unused_whitelist_entries(reports)
     exit_code = reports.all?(&:success) ? 0 : 1
     exit_code
+  end
+
+  def report_unused_whitelist_entries(reports)
+    @progress_reporter.message("check runner", "Unused whitelist entries:")
+    reports.each do |report|
+      unless report.unused_whitelist_entries.empty?
+        @progress_reporter.message("check runner", "#{report.name} unused entries: #{report.unused_whitelist_entries}")
+      end
+    end
   end
 end

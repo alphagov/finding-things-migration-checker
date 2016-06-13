@@ -81,6 +81,10 @@ private
       Predicate.predicate_for(headers, @conj_hash_arr)
     end
 
+    def inspect
+      "{predicate: #{@conj_hash_arr}, reason: '#{@reason}', expiry: '#{@expiry}'}"
+    end
+
     def self.predicate_for(headers, conj_hash_arr)
       conjunctions = conj_hash_arr.map { |conj_hash| Predicate.conjunction_for(headers, conj_hash) }
       lambda { |row| conjunctions.any? { |c| c.call(row) } }
