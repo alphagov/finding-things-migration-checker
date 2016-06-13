@@ -1,5 +1,5 @@
 module Checks
-  class BasePathsMissingFromRummager
+  class PublishingApiContentMissingFromRummager
     def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db

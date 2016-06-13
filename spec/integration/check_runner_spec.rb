@@ -34,15 +34,15 @@ RSpec.describe CheckRunner do
 
   def check_csvs_are_present
     expected_names = %w(
-BasePathsMissingFromRummager
-BasePathsMissingFromPublishingApi
-LinkedBasePathsMissingFromPublishingApi
+PublishingApiContentMissingFromRummager
+RummagerContentMissingFromPublishingApi
+RummagerLinkTargetsMissingFromPublishingApi
 LinksMissingFromRummager
 LinksMissingFromPublishingApi
-RummagerLinksNotIndexedInRummager
+RummagerLinkTargetsMissingFromRummager
 ExpiredWhitelistEntries
-RummagerRedirectedLinks
-RummagerRedirects
+RedirectedRummagerLinkTargets
+RedirectedRummagerContent
 )
     expected_csvs = expected_names.flat_map { |name| ["#{name}.csv", "#{name}_all.csv"] }
     actual_csvs = Dir[File.join(@csvdir, '*')].map { |f| File.basename(f) }
@@ -52,7 +52,7 @@ RummagerRedirects
   def check_csv_content
     # Use the _all files to not let the tests be influenced by the whitelist.
     expect(read_csv('LinksMissingFromRummager_all.csv')).to eq("link_type,link_content_id,content_id,publishing_app,document_type,schema_name\norganisations,42,1,app1,my-document-type,my-schema-name\n")
-    expect(read_csv('BasePathsMissingFromRummager_all.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
+    expect(read_csv('PublishingApiContentMissingFromRummager_all.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
   end
 
   def read_csv(csv_filename)

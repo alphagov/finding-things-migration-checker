@@ -6,7 +6,7 @@
 # Each rule also provides an expiry date and a reason for the whitelist entry to exist.
 #
 # An example check section, with a single rule:
-#BasePathsMissingFromPublishingApi:
+#RummagerContentMissingFromPublishingApi:
 #  rules:
 #    - predicate:
 #      - index: 'service-manual'
@@ -16,7 +16,7 @@
 #      reason: "service-manual (and one extra page) is not fully baked yet, but we'll be ready to handle it soon"
 
 
-BasePathsMissingFromRummager:
+PublishingApiContentMissingFromRummager:
   rules:
     - predicate:
       - schema_name: 'email_alert_signup'
@@ -109,7 +109,7 @@ BasePathsMissingFromRummager:
       expiry: '3000-01-01'
       reason: 'Share sale pages are going away soon'
 
-BasePathsMissingFromPublishingApi:
+RummagerContentMissingFromPublishingApi:
   rules:
     - predicate:
       - index: 'service-manual'
@@ -132,7 +132,7 @@ BasePathsMissingFromPublishingApi:
       expiry: '2016-07-01'
       reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
-LinkedBasePathsMissingFromPublishingApi:
+RummagerLinkTargetsMissingFromPublishingApi:
   rules:
     - predicate:
       - link_type: 'people'
@@ -182,7 +182,7 @@ LinksMissingFromRummager:
       expiry: '2017-01-01'
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
-RummagerLinksNotIndexedInRummager:
+RummagerLinkTargetsMissingFromRummager:
   rules:
     - predicate:
       - link_type: 'people'
@@ -232,7 +232,7 @@ LinksMissingFromPublishingApi:
       expiry: '2017-01-01'
       reason: 'In progress: https://trello.com/c/2PX73XvD'
 
-RummagerRedirectedLinks:
+RedirectedRummagerLinkTargets:
   rules:
     - predicate:
       - link_type: 'mainstream_browse_pages'
@@ -240,7 +240,7 @@ RummagerRedirectedLinks:
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/CZK3bygv - we are whitelisting these until we turn on indexing from publishing-api, since the links in publishing-api are correct.'
 
-RummagerRedirects:
+RedirectedRummagerContent:
   rules:
     - predicate:
       - publishing_app: 'whitehall'
