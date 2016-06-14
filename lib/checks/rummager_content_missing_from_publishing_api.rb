@@ -1,5 +1,5 @@
 module Checks
-  class LinkedBasePathsMissingFromPublishingApi
+  class RummagerContentMissingFromPublishingApi
     def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
@@ -9,18 +9,17 @@ module Checks
     def run_check
       query = <<-SQL
       SELECT
-        rl.link_base_path,
-        rl.link_type,
-        rl.base_path,
+        rc.base_path,
         rc.format,
         rc.rummager_index
-      FROM rummager_link rl
-      LEFT JOIN rummager_base_path_content_id lookup ON rl.link_base_path = lookup.base_path
-      JOIN rummager_content rc ON rc.base_path = rl.base_path
+      FROM rummager_content rc
+      LEFT JOIN rummager_base_path_content_id lookup ON rc.base_path = lookup.base_path
       WHERE lookup.content_id IS NULL
+      AND format NOT IN ('recommended-link')
+      AND rc.is_withdrawn != 'withdrawn'
       SQL
 
-      headers = %w(link link_type item item_format item_index)
+      headers = %w(base_path format index)
       rows = @checker_db.execute(query)
       @reporter.create_report(@name, headers, rows)
     end

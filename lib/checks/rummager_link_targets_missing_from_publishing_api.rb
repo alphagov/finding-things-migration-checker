@@ -1,5 +1,5 @@
 module Checks
-  class RummagerLinksNotIndexedInRummager
+  class RummagerLinkTargetsMissingFromPublishingApi
     def initialize(name, checker_db, reporter)
       @name = name
       @checker_db = checker_db
@@ -12,12 +12,12 @@ module Checks
         rl.link_base_path,
         rl.link_type,
         rl.base_path,
-        rc_item.format,
-        rc_item.rummager_index
+        rc.format,
+        rc.rummager_index
       FROM rummager_link rl
-      LEFT JOIN rummager_content rc ON rc.base_path = rl.link_base_path
-      JOIN rummager_content rc_item ON rc_item.base_path = rl.base_path
-      WHERE rc.base_path IS NULL
+      LEFT JOIN rummager_base_path_content_id lookup ON rl.link_base_path = lookup.base_path
+      JOIN rummager_content rc ON rc.base_path = rl.base_path
+      WHERE lookup.content_id IS NULL
       SQL
 
       headers = %w(link link_type item item_format item_index)
