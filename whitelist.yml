@@ -109,6 +109,13 @@ PublishingApiContentMissingFromRummager:
       expiry: '3000-01-01'
       reason: 'Share sale pages are going away soon'
 
+    - predicate:
+      - content_id: 'ccb6c301-2c64-4a59-88c9-0528d0ffd088'
+      - content_id: 'd6582d48-df19-46b3-bf84-9157192801a6'
+      expiry: '3000-01-01'
+      reason: "policy-publisher has two hardcoded finders which we don't include in Rummager and don't need to fix"
+
+
 RummagerContentMissingFromPublishingApi:
   rules:
     - predicate:
