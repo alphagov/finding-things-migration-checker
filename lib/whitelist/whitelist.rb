@@ -54,9 +54,10 @@ class Whitelist
 private
 
   def build_predicate_hash(whitelist)
-    whitelist.map do |check_name, rules_hash|
+    whitelist.reduce({}) do |hash, (check_name, rules_hash)|
       rules = get_or_else(rules_hash, 'rules', [])
-      return check_name => rules.map { |predicate_hash| build_predicate(predicate_hash) }
+      hash[check_name] = rules.map { |predicate_hash| build_predicate(predicate_hash) }
+      hash
     end
   end
 
