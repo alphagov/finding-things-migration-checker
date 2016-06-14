@@ -59,11 +59,6 @@ PublishingApiContentMissingFromRummager:
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
     - predicate:
-      - schema_name: 'inside-government-link'
-      expiry: '3000-01-01'
-      reason: "These are internal links added by recommended links. Don't belong in Publishing API."
-
-    - predicate:
       - publishing_app: 'policy-publisher'
       expiry: '2016-07-01'
       reason: 'Investigating: https://trello.com/c/xARBi6HF'
@@ -176,19 +171,6 @@ LinksMissingFromRummager:
       reason: "Rummager indexes the new link, not the old one"
 
     - predicate:
-      - schema_name: 'taxon'
-      expiry: '2017-01-01'
-      reason: "Taxon is a new thing and shouldn't be visible to users"
-
-    - predicate:
-      - schema_name: 'topic'
-        content_id: '76e9abe7-dac8-49f0-bb5e-53e4b0d2cdba'
-      - schema_name: 'mainstream_browse_page'
-        content_id: '8413047e-570a-448b-b8cb-d288a12807dd'
-      expiry: '3000-01-01'
-      reason: "/topic and /browse should not be in search"
-
-    - predicate:
       - publishing_app: 'whitehall'
         schema_name: 'html_publication'
       expiry: '2017-01-01'
@@ -201,14 +183,9 @@ RummagerLinkTargetsMissingFromRummager:
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
     - predicate:
-      - link_type: 'organisations'
-        link: null
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/pFNSVJqm/648-organisations-hash-in-rummager-missing-the-link-field'
-    - predicate:
       - link_type: 'mainstream_browse_pages'
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/KufxB8Sv/650-item-links-not-getting-updated-in-rummager-when-the-link-target-is-redirected-in-publishing-api'
+      expiry: '2016-07-14'
+      reason: "We're waiting for indexing to be turned on before this will go away. See https://trello.com/c/CZK3bygv"
     - predicate:
       - link_type: 'working_groups'
       expiry: '3000-01-01'
@@ -272,7 +249,7 @@ RedirectedRummagerLinkTargets:
     - predicate:
       - link_type: 'mainstream_browse_pages'
         document_publishing_app: 'publisher'
-      expiry: '2016-06-14'
+      expiry: '2016-07-14'
       reason: 'https://trello.com/c/CZK3bygv - we are whitelisting these until we turn on indexing from publishing-api, since the links in publishing-api are correct.'
 
 RedirectedRummagerContent:
