@@ -267,6 +267,44 @@ RSpec.describe Whitelist do
     expect(whitelister.unused_entries[0].reason).to eq("baz")
   end
 
+  it "builds whitelisters for all checks with whitelist entries" do
+    whitelist = create_whitelist(
+      '
+      test_check_1:
+        rules:
+          - expiry: "2016-05-19"
+            reason: "foo"
+            predicate:
+              - a: "b"
+      test_check_2:
+        rules:
+          - expiry: "2016-05-19"
+            reason: "bar"
+            predicate:
+              - a: "b"
+      '
+    )
+
+    headers = %w(id a)
+
+    row_whitelisted = [
+      %w(1 b),
+    ]
+    row_not_whitelisted = [
+      %w(1 z),
+    ]
+
+    whitelister = whitelist.get_whitelister('test_check_1', headers)
+    expect(whitelister).not_to be_nil
+    expect(row_whitelisted.reject(&whitelister.whitelist_function)).to be_empty
+    expect(whitelister.unused_entries).to be_empty
+
+    whitelister = whitelist.get_whitelister('test_check_2', headers)
+    expect(whitelister).not_to be_nil
+    expect(row_not_whitelisted.reject(&whitelister.whitelist_function)).not_to be_empty
+    expect(whitelister.unused_entries).not_to be_empty
+  end
+
   def create_whitelist(yaml_string)
     Whitelist.new(YAML.load(yaml_string))
   end
