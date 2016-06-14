@@ -243,6 +243,29 @@ LinksMissingFromPublishingApi:
       - publishing_app: 'service-manual-publisher'
       expiry: '2017-01-01'
       reason: 'In progress: https://trello.com/c/2PX73XvD'
+    - predicate:
+      - publishing_app: 'publisher'
+        content_id: af54e529-5419-4816-b6bd-d5df3f9652f6
+      - publishing_app: 'publisher'
+        content_id: b2c17c88-1701-427e-b1bb-02b05eef9c44
+      - publishing_app: 'publisher'
+        content_id: db364fa7-96c5-42c2-a3db-ce06d4a7c97e
+      - publishing_app: 'publisher'
+        content_id: 7a4bc8d3-c563-466b-b07b-bedd58650e40
+      - publishing_app: 'publisher'
+        content_id: c119b045-544b-4851-92e5-29b683255751
+      - publishing_app: 'publisher'
+        content_id: 17e1c741-1a7f-45ec-8532-7c787f35003d
+      - publishing_app: 'publisher'
+        content_id: 6cc57294-2821-4c49-bd7a-0a960089626d
+      - publishing_app: 'publisher'
+        content_id: 7a4bc8d3-c563-466b-b07b-bedd58650e40
+      - publishing_app: 'publisher'
+        content_id: bb148231-a649-4ed0-9eb6-8b40965179b7
+      - publishing_app: 'publisher'
+        content_id: f4b96a38-5247-4afd-b554-8a258a0e8c93
+      expiry: '2017-01-01'
+      reason: 'Links deleted in content api. Rummager has historically not removed links. This will be corrected when message queue indexing gets switched on.'
 
 RedirectedRummagerLinkTargets:
   rules:
