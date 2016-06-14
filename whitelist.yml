@@ -127,6 +127,11 @@ RummagerContentMissingFromPublishingApi:
       reason: "These are internal links added by recommended links. Don't belong in Publishing API."
 
     - predicate:
+      - format: recommended-link
+      expiry: '3000-01-01'
+      reason: "Recommended links don't belong in Publishing API."
+
+    - predicate:
       - format: publication
         index: government
       expiry: '2016-07-01'
