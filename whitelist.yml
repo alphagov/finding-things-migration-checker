@@ -59,11 +59,6 @@ PublishingApiContentMissingFromRummager:
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
     - predicate:
-      - schema_name: 'inside-government-link'
-      expiry: '3000-01-01'
-      reason: "These are internal links added by recommended links. Don't belong in Publishing API."
-
-    - predicate:
       - publishing_app: 'policy-publisher'
       expiry: '2016-07-01'
       reason: 'Investigating: https://trello.com/c/xARBi6HF'
