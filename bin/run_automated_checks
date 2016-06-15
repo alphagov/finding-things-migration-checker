@@ -3,4 +3,4 @@
 set -e
 
 # all checks get run if none are specified
-bundle exec bin/run_checks.rb
+bundle exec bin/run_checks.rb $@
