@@ -198,11 +198,6 @@ LinksMissingFromPublishingApi:
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
     - predicate:
-      - link_type: 'organisations'
-        publishing_app: 'specialist-publisher'
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/csue5VYU/646-specialist-publisher-manuals-have-missing-organisations-in-publishing-api'
-    - predicate:
       - schema_name: 'placeholder_organisation'
         link_type: 'organisations'
       expiry: '2016-07-01'
