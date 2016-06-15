@@ -42,15 +42,16 @@ Our proxy for 'user-visible' is that the `/lookup-by-base-path` endpoint in Publ
 This check finds link targets for links present in Rummager for which the target base_path is not present in Rummager.
 The assumption is that any link target in Rummager should be indexed.
 
-### LinksMissingFromPublishingApi
+### MissingLinks
 
-This check finds links present in Rummager which are not present in Publishing API.
+This check creates two reports:
+
+- links present in Rummager which are not present in Publishing API.
+- links present in Publishing API which are not present in Rummager.
+
 The assumption is that links should always be in sync.
-
-### LinksMissingFromRummager
-
-This check finds links present in Publishing API which are not present in Rummager.
-The assumption is that links should always be in sync.
+This check only reports missing links on items for which the base_path in Rummager can be mapped to the content_id in Publishing API.
+Items which cannot be mapped should be covered by the missing content checks.
 
 ### RedirectedRummagerContent
 

@@ -51,7 +51,7 @@ RedirectedRummagerContent
 
   def check_csv_content
     # Use the _all files to not let the tests be influenced by the whitelist.
-    expect(read_csv('LinksMissingFromRummager_all.csv')).to eq("link_type,link_content_id,content_id,publishing_app,document_type,schema_name\norganisations,42,1,app1,my-document-type,my-schema-name\n")
+    expect(read_csv('LinksMissingFromRummager_all.csv')).to eq("link_type,link_content_id,link_base_path,content_id,base_path,publishing_app,document_type,schema_name\n")
     expect(read_csv('PublishingApiContentMissingFromRummager_all.csv')).to eq("content_id,publishing_app,document_type,schema_name\n1,app1,my-document-type,my-schema-name\n")
   end
 
@@ -76,7 +76,8 @@ RedirectedRummagerContent
               schema_name: "my-schema-name",
               user_facing_version: "3",
               state: "published"
-            }],
+            }
+          ],
           links: {
             organisations: ["42"],
             manual: ["84"]
