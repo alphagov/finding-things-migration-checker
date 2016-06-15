@@ -16,15 +16,16 @@ class CheckerDB
     end
   end
 
-  def create_table(table_name:, columns:, index: [])
+  def create_table(table_name:, columns:)
     query = <<-SQL
       CREATE TABLE #{table_name} (
         #{columns.join(',')}
       )
     SQL
-
     execute(query)
+  end
 
+  def create_indexes(table_name:, index: [])
     # we only handle single-column indexes at the moment
     index.each do |col|
       index_query = <<-SQL

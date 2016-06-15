@@ -12,6 +12,9 @@ module Import
         import_content(batch_data.map { |content_id_data| Import::PublishingApiDataPresenter.present_content(content_id_data) })
         import_content_links(batch_data.flat_map { |content_id_data| Import::PublishingApiDataPresenter.present_links(content_id_data) })
       end
+
+      @progress_reporter.message('publishing api import', 'adding indexes')
+      create_publishing_api_indexes
       @progress_reporter.message('publishing api import', 'finished')
     end
 
@@ -30,7 +33,6 @@ module Import
           'schema_name text',
           'ever_published text',
         ],
-        index: ['content_id'],
       )
 
       @checker_db.create_table(
@@ -40,7 +42,18 @@ module Import
           'link_type text',
           'link_content_id text',
         ],
-        index: ['content_id'],
+      )
+    end
+
+    def create_publishing_api_indexes
+      @checker_db.create_indexes(
+        table_name: "publishing_api_content",
+        index: %w(content_id),
+      )
+
+      @checker_db.create_indexes(
+        table_name: "publishing_api_link",
+        index: %w(content_id link_content_id),
       )
     end
 
