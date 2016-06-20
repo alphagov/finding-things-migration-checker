@@ -153,29 +153,6 @@ LinksMissingFromRummager:
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
 
-    - predicate:
-      - schema_name: 'email_alert_signup'
-      - schema_name: 'special_route'
-      - schema_name: 'financial_releases_geoblocker'
-      - schema_name: 'finder_email_signup'
-      - schema_name: 'financial_release'
-      - schema_name: 'financial_releases_campaign'
-      expiry: '3000-01-01'
-      reason: "Format doesn't contain searchable information"
-
-    - predicate:
-      - schema_name: 'redirect'
-      - schema_name: 'gone'
-      - schema_name: 'unpublishing'
-      expiry: '3000-01-01'
-      reason: "Rummager indexes the new link, not the old one"
-
-    - predicate:
-      - publishing_app: 'whitehall'
-        schema_name: 'html_publication'
-      expiry: '2017-01-01'
-      reason: "We don't currently index html attachments (but perhaps we should?)"
-
 RummagerLinkTargetsMissingFromRummager:
   rules:
     - predicate:
