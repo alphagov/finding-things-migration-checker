@@ -229,9 +229,9 @@ RedirectedRummagerContent:
     - predicate:
       - publishing_app: 'whitehall'
       - publishing_app: 'hmrc-manuals-api'
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api'
+      expiry: '2016-08-14'
+      reason: "Not a blocker. We're tracking this in a planned ticket: https://trello.com/c/oDkd28x5"
     - predicate:
       - publishing_app: 'service-manual-publisher'
       expiry: '2016-08-14'
-      reason: "Service manual is being rewritten. Redirects are sent to publishing api, but service manual publisher does not remove the old link from rummager. https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api"
+      reason: "Service manual is being rewritten. Redirects are sent to publishing api, but service manual publisher does not remove the old link from rummager. https://trello.com/c/oDkd28x5"
