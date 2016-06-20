@@ -6,7 +6,7 @@ module Import
     end
 
     def import
-      create_rummager_tables
+      Tables.create_rummager_tables(@checker_db)
 
       import_rummager_batches do |batch_data|
         items = Import::RummagerDataPresenter.present_content(batch_data)
@@ -15,47 +15,16 @@ module Import
         import_rummager_links(batch_data)
       end
 
+      @progress_reporter.message('rummager import', 'mapping remaining linked base_paths to content_ids')
       import_linked_base_path_mappings
-
+      @progress_reporter.message('rummager import', 'adding indexes')
+      Tables.create_rummager_indexes(@checker_db)
       @progress_reporter.message('rummager import', 'finished')
     end
 
   private
 
     BATCH_SIZE = 1000
-
-    def create_rummager_tables
-      @checker_db.create_table(
-        table_name: "rummager_content",
-        columns: [
-          'base_path text',
-          'content_id text',
-          'format text',
-          'rummager_index text',
-          'is_withdrawn text',
-        ],
-        index: ['base_path']
-      )
-
-      @checker_db.create_table(
-        table_name: "rummager_link",
-        columns: [
-          "base_path text",
-          "link_type text",
-          "link_base_path text",
-        ],
-        index: ['base_path']
-      )
-
-      @checker_db.create_table(
-        table_name: "rummager_base_path_content_id",
-        columns: [
-          "base_path text",
-          "content_id text",
-        ],
-        index: %w(base_path content_id)
-      )
-    end
 
     def import_rummager_batches
       offset = 0

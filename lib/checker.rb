@@ -14,6 +14,7 @@ require 'db/checker_db'
 require 'reporting/progress_reporter'
 require 'reporting/check_reporter'
 
+require 'import/tables'
 require 'import/rummager_data_presenter'
 require 'import/rummager_importer'
 require 'import/publishing_api_data_presenter'

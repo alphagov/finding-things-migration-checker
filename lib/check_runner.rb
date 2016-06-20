@@ -49,7 +49,7 @@ private
 
   def run_checks
     @progress_reporter.message("check runner", "running checks using #{@checks.map(&:class)}")
-    @checks.map { |check| Thread.future { check.run_check } }.map(&:value)
+    @checks.map { |check| Thread.future { check.run_check } }.flat_map(&:value)
   end
 
   def report_results(reports)
