@@ -139,6 +139,21 @@ RummagerContentMissingFromPublishingApi:
       expiry: '2016-07-01'
       reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
+    - predicate:
+      - base_path: "/government/news/cma-opens-consultation-on-reed-elsevier-undertakings,news_article,government"
+      - base_path: "/government/collections/common-land-guidance-for-commons-registration-authorities-and-applicants,document_collection,government"
+      - base_path: "/government/news/rpa-remains-on-track-to-pay-bps-2015-claims-from-december,news_article,government"
+      - base_path: "/government/speeches/ghana-oil-and-gas-for-inclusive-growth,speech,government"
+      - base_path: "/government/world-location-news/uk-visa-operations-in-south-india-are-impacted-by-the-floods-in-chennai,world_location_news_article,government"
+      - base_path: "/guidance/how-to-appeal-your-rateable-value,detailed_guidance,detailed"
+      - base_path: "/government/news/hoac-pre-planning-application-engagement-event-19-march-2016-harefield,news_article,government"
+      - base_path: "/ask-crown-court-sentence-review,answer,mainstream"
+      - base_path: "/government/world/organisations/british-consulate-general-casablanca,worldwide_organisation,government"
+      - base_path: "/gwyliau-banc,custom-application,mainstream"
+      - base_path: "/government/world/organisations/uk-representation-in-the-commonwealth,worldwide_organisation,government"
+      expiry: '2016-08-14'
+      reason: "Some arbitrary missing base_paths which we decided are not blockers. https://trello.com/c/TKyqrBHr"
+
 RummagerLinkTargetsMissingFromPublishingApi:
   rules:
     - predicate:
