@@ -6,7 +6,7 @@ module Import
     end
 
     def import
-      create_publishing_api_tables
+      Tables.create_publishing_api_tables(@checker_db)
 
       import_publishing_api_batches do |batch_data|
         import_content(batch_data.map { |content_id_data| Import::PublishingApiDataPresenter.present_content(content_id_data) })
@@ -14,7 +14,7 @@ module Import
       end
 
       @progress_reporter.message('publishing api import', 'adding indexes')
-      create_publishing_api_indexes
+      Tables.create_publishing_api_indexes(@checker_db)
       @progress_reporter.message('publishing api import', 'finished')
     end
 
@@ -22,40 +22,6 @@ module Import
 
     BATCH_SIZE = 1000
     NIL_UUID = '00000000-0000-0000-0000-000000000000'.freeze
-
-    def create_publishing_api_tables
-      @checker_db.create_table(
-        table_name: 'publishing_api_content',
-        columns: [
-          'content_id text',
-          'publishing_app text',
-          'document_type text',
-          'schema_name text',
-          'ever_published text',
-        ],
-      )
-
-      @checker_db.create_table(
-        table_name: 'publishing_api_link',
-        columns: [
-          'content_id text',
-          'link_type text',
-          'link_content_id text',
-        ],
-      )
-    end
-
-    def create_publishing_api_indexes
-      @checker_db.create_indexes(
-        table_name: "publishing_api_content",
-        index: %w(content_id),
-      )
-
-      @checker_db.create_indexes(
-        table_name: "publishing_api_link",
-        index: %w(content_id link_content_id),
-      )
-    end
 
     def import_publishing_api_batches
       @progress_reporter.report('publishing api import', 0, 'just starting')
