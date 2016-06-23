@@ -1,4 +1,4 @@
-# Whitelist file to filter out some of the differences detected by the checks.
+## Whitelist file to filter out some of the differences detected by the checks.
 # Each check has its own section, keyed by the check name.
 # Each section can have multiple rules.
 # Each rule defines a predicate in disjunctive normal form where the innermost
@@ -189,10 +189,6 @@ LinksMissingFromPublishingApi:
       expiry: '3000-01-01'
       reason: We shouldn't index redirects in search.
     - predicate:
-      - publishing_app: 'service-manual-publisher'
-      expiry: '2017-01-01'
-      reason: 'In progress: https://trello.com/c/2PX73XvD'
-    - predicate:
       - publishing_app: 'publisher'
         content_id: af54e529-5419-4816-b6bd-d5df3f9652f6
       - publishing_app: 'publisher'
@@ -231,7 +227,3 @@ RedirectedRummagerContent:
       - publishing_app: 'hmrc-manuals-api'
       expiry: '2016-06-14'
       reason: 'https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api'
-    - predicate:
-      - publishing_app: 'service-manual-publisher'
-      expiry: '2016-08-14'
-      reason: "Service manual is being rewritten. Redirects are sent to publishing api, but service manual publisher does not remove the old link from rummager. https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api"
