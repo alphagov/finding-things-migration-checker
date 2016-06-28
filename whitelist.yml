@@ -139,6 +139,29 @@ RummagerContentMissingFromPublishingApi:
       expiry: '2016-07-01'
       reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
+    - predicate:
+      - format: custom-application
+        index: mainstream
+        base_path: '/gwyliau-banc'
+      expiry: '2017-07-01'
+      reason: "We don't think this is important enough to fix right now. Check again in a year."
+
+    - predicate:
+      - format: worldwide_organisation
+        index: government
+        base_path: '/government/world/organisations/uk-representation-in-the-commonwealth'
+      expiry: '2017-07-01'
+      reason: "We don't think this is important enough to fix right now. Check again in a year."
+
+    - predicate:
+      - base_path: '/guidance/how-to-appeal-your-rateable-value'
+      - base_path: '/government/news/cma-opens-consultation-on-reed-elsevier-undertakings'
+      - base_path: '/government/world-location-news/uk-visa-operations-in-south-india-are-impacted-by-the-floods-in-chennai'
+      - base_path: '/government/collections/common-land-guidance-for-commons-registration-authorities-and-applicants'
+      - base_path: '/government/news/rpa-remains-on-track-to-pay-bps-2015-claims-from-december'
+      expiry: '2016-09-01'
+      reason: "Whitelisting this while several of Mo's PRs get deployed"
+
 RummagerLinkTargetsMissingFromPublishingApi:
   rules:
     - predicate:
