@@ -159,6 +159,9 @@ RummagerContentMissingFromPublishingApi:
       - base_path: '/government/world-location-news/uk-visa-operations-in-south-india-are-impacted-by-the-floods-in-chennai'
       - base_path: '/government/collections/common-land-guidance-for-commons-registration-authorities-and-applicants'
       - base_path: '/government/news/rpa-remains-on-track-to-pay-bps-2015-claims-from-december'
+      - base_path: '/government/speeches/ghana-oil-and-gas-for-inclusive-growth'
+      - base_path: '/government/news/hoac-pre-planning-application-engagement-event-19-march-2016-harefield'
+      - base_path: '/ask-crown-court-sentence-review'
       expiry: '2016-09-01'
       reason: "Whitelisting this while several of Mo's PRs get deployed"
 
@@ -168,6 +171,12 @@ RummagerLinkTargetsMissingFromPublishingApi:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
+
+    - predicate:
+      - link_type: 'organisations'
+        item: '/government/organisations/court-of-protection/about'
+      expiry: '2017-07-01'
+      reason: "This has an organisation link with only a slug - I think this should go away when the item is next republished."
 
 LinksMissingFromRummager:
   rules:
