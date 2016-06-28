@@ -139,6 +139,20 @@ RummagerContentMissingFromPublishingApi:
       expiry: '2016-07-01'
       reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
+    - predicate:
+      - format: custom-application
+        index: mainstream
+        base_path: '/gwyliau-banc'
+      expiry: '2017-07-01'
+      reason: "We don't think this is important enough to fix right now. Check again in a year."
+
+    - predicate:
+      - format: worldwide_organisation
+        index: government
+        base_path: '/government/world/organisations/uk-representation-in-the-commonwealth'
+      expiry: '2017-07-01'
+      reason: "We don't think this is important enough to fix right now. Check again in a year."
+
 RummagerLinkTargetsMissingFromPublishingApi:
   rules:
     - predicate:
