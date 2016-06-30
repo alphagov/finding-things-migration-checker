@@ -20,7 +20,7 @@ module Checks
 
       headers = %w(content_id base_path publishing_app)
       rows = @checker_db.execute(query)
-      @reporter.create_report(@name, headers, rows)
+      [@reporter.create_report(@name, headers, rows)]
     end
   end
 end

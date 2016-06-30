@@ -19,7 +19,7 @@ module Checks
 
       headers = %w(base_path format index)
       rows = @checker_db.execute(query)
-      @reporter.create_report(@name, headers, rows)
+      [@reporter.create_report(@name, headers, rows)]
     end
   end
 end
