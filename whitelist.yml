@@ -174,9 +174,9 @@ RummagerLinkTargetsMissingFromPublishingApi:
 
     - predicate:
       - link_type: 'organisations'
-        item: '/government/organisations/court-of-protection/about'
-      expiry: '2017-07-01'
-      reason: "This has an organisation link with only a slug - I think this should go away when the item is next republished."
+        link: null
+      expiry: '2017-10-01'
+      reason: "Some corporate information pages and finders have an organisation link with only a slug. https://trello.com/c/zx42y5Mk"
 
 LinksMissingFromRummager:
   rules:
