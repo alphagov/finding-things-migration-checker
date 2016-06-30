@@ -191,14 +191,16 @@ RummagerLinkTargetsMissingFromRummager:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
-    - predicate:
-      - link_type: 'mainstream_browse_pages'
-      expiry: '2016-07-14'
-      reason: "We're waiting for indexing to be turned on before this will go away. See https://trello.com/c/CZK3bygv"
+
     - predicate:
       - link_type: 'working_groups'
       expiry: '3000-01-01'
       reason: 'Not interested in working groups right now.'
+
+    - predicate:
+      - link_type: 'organisations'
+      expiry: '2016-08-01'
+      reason: 'It seems we have a truckload of false positives for organisations. https://trello.com/c/6pyJIP1D'
 
 LinksMissingFromPublishingApi:
   rules:
