@@ -59,11 +59,6 @@ PublishingApiContentMissingFromRummager:
       reason: "We don't currently index html attachments (but perhaps we should?)"
 
     - predicate:
-      - publishing_app: 'policy-publisher'
-      expiry: '2016-07-01'
-      reason: 'Investigating: https://trello.com/c/xARBi6HF'
-
-    - predicate:
       - document_type: 'business_support'
       - document_type: 'completed_transaction'
       expiry: '3000-01-01'
@@ -85,14 +80,9 @@ PublishingApiContentMissingFromRummager:
       reason: "In progress: https://trello.com/c/fAF7mZ2H"
 
     - predicate:
-      - publishing_app: 'collections-publisher'
-      expiry: '2016-07-01'
-      reason: 'Investigating: https://trello.com/c/hLGohIrz'
-
-    - predicate:
       - publishing_app: 'hmrc-manuals-api'
-      expiry: '2016-07-01'
-      reason: 'Investigating: https://trello.com/c/nI9RYIpX'
+      expiry: '2016-12-01'
+      reason: 'Previously investigated here: https://trello.com/c/nI9RYIpX - this may need revisiting'
 
     - predicate:
       - publishing_app: 'service-manual-publisher'
@@ -120,8 +110,8 @@ RummagerContentMissingFromPublishingApi:
 
     - predicate:
       - format: operational_field
-      expiry: '2016-07-01'
-      reason: "Being worked on: https://trello.com/c/0UAMj5gj"
+      expiry: '2016-12-01'
+      reason: "Being worked on by core-formats: https://trello.com/c/0UAMj5gj"
 
     - predicate:
       - format: inside-government-link
@@ -132,12 +122,6 @@ RummagerContentMissingFromPublishingApi:
       - format: recommended-link
       expiry: '3000-01-01'
       reason: "Recommended links don't belong in Publishing API."
-
-    - predicate:
-      - format: publication
-        index: government
-      expiry: '2016-07-01'
-      reason: "This is caused by statistics/publications base path confusion. https://trello.com/c/gIPdZfk3"
 
     - predicate:
       - format: custom-application
@@ -210,16 +194,6 @@ LinksMissingFromPublishingApi:
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
     - predicate:
-      - schema_name: 'placeholder_organisation'
-        link_type: 'organisations'
-      expiry: '2016-07-01'
-      reason: 'Organisations are tagged to itself. https://trello.com/c/aOTMr3WJ'
-    - predicate:
-      - schema_name: 'hmrc_manual_section'
-        link_type: 'organisations'
-      expiry: '2016-07-01'
-      reason: "HMRC Manuals API doesn't tag manual sections yet: https://trello.com/c/ofpGSyzO"
-    - predicate:
       - schema_name: redirect
       expiry: '3000-01-01'
       reason: We shouldn't index redirects in search.
@@ -247,18 +221,10 @@ LinksMissingFromPublishingApi:
       expiry: '2017-01-01'
       reason: 'Links deleted in content api. Rummager has historically not removed links. This will be corrected when message queue indexing gets switched on.'
 
-RedirectedRummagerLinkTargets:
-  rules:
-    - predicate:
-      - link_type: 'mainstream_browse_pages'
-        document_publishing_app: 'publisher'
-      expiry: '2016-07-14'
-      reason: 'https://trello.com/c/CZK3bygv - we are whitelisting these until we turn on indexing from publishing-api, since the links in publishing-api are correct.'
-
 RedirectedRummagerContent:
   rules:
     - predicate:
       - publishing_app: 'whitehall'
       - publishing_app: 'hmrc-manuals-api'
-      expiry: '2016-06-14'
-      reason: 'https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api'
+      expiry: '2017-06-14'
+      reason: 'See https://trello.com/c/oDkd28x5/649-items-not-getting-updated-in-rummager-when-redirected-in-publishing-api - This is content that has been redirected but the original link is still in rummager. This means users could see duplicate results with different links. We made a decision to not check this now'
