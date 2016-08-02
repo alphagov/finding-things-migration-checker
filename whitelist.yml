@@ -169,6 +169,34 @@ LinksMissingFromRummager:
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
 
+    - predicate:
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/pedlars-certificate'
+        link_base_path: '/browse/business/sale-goods-services-data'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/employee-ownership'
+        link_base_path: '/browse/employing-people/contracts'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/apply-special-educational-needs-assessment'
+        link_base_path: '/browse/disabilities/equipment'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/apply-special-educational-needs-assessment'
+        link_base_path: '/browse/births-deaths-marriages/child-adoption'
+      expiry: '2016-09-01'
+      reason: "These links are all missing from rummager. Publishing api is correct. Content team are going to republish."
+
+    - predicate:
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/international-child-abduction'
+        link_base_path: '/browse/abroad/travel-abroad'
+      expiry: '2016-09-01'
+      reason: "This link is missing from rummager but exists in rummager. But the content is withdrawn. We should just remove the old link."
+
+    - predicate:
+      - link_type: 'organisations'
+      expiry: '2016-09-01'
+      reason: "Deal with this after automating the links checker."
+
 RummagerLinkTargetsMissingFromRummager:
   rules:
     - predicate:
@@ -184,8 +212,8 @@ RummagerLinkTargetsMissingFromRummager:
     - predicate:
       - link_type: 'organisations'
       - link_type: 'topics'
-      expiry: '2016-08-01'
-      reason: 'It seems we have a truckload of false positives for organisations and topics. https://trello.com/c/6pyJIP1D'
+      expiry: '2017-06-01'
+      reason: 'It seems we have a truckload of false positives for organisations and topics. Impact: searching by organisation may not be complete. https://trello.com/c/6pyJIP1D'
 
 LinksMissingFromPublishingApi:
   rules:
@@ -220,6 +248,14 @@ LinksMissingFromPublishingApi:
         content_id: f4b96a38-5247-4afd-b554-8a258a0e8c93
       expiry: '2017-01-01'
       reason: 'Links deleted in content api. Rummager has historically not removed links. This will be corrected when message queue indexing gets switched on.'
+
+    - predicate:
+      - publishing_app: 'whitehall'
+        content_id: 932dbd8c-12c5-46a6-8ca2-bc42113ae291
+      - publishing_app: 'whitehall'
+        content_id: 945dd603-4550-4b39-b92d-cb6f2d04be55
+      expiry: '2017-01-01'
+      reason: 'Some withdrawn documents that lost their links in publishing api. https://trello.com/c/nOhlbdQT/50-withdrawn-reports-no-longer-tagged-to-dfh'
 
 RedirectedRummagerContent:
   rules:
