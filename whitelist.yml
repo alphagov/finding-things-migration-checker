@@ -247,7 +247,36 @@ LinksMissingFromPublishingApi:
       - publishing_app: 'publisher'
         content_id: f4b96a38-5247-4afd-b554-8a258a0e8c93
       expiry: '2017-01-01'
-      reason: 'Links deleted in content api. Rummager has historically not removed links. This will be corrected when message queue indexing gets switched on.'
+      reason: 'Links deleted in content api. Rummager has historically not removed links. This may be corrected when rummager content is sourced from the publishing api queue.'
+
+    - predicate:
+      - base_path: '/reporting-road-obstruction'
+        format: 'placeholder'
+        link_base_path: '/browse/housing/recycling-rubbish'
+      - base_path: '/report-debris-motorways-main-road'
+        format: 'placeholder'
+        link_base_path: '/browse/housing/recycling-rubbish'
+      - base_path: '/apply-building-regulation-approval-from-council'
+        format: 'placeholder'
+        link_base_path: '/browse/housing/planning-permission'
+      expiry: '3000-01-01'
+      reason: 'Placeholder content that is redirected. Rummager and publishing api both have the old item, but publishing api never got the links.'
+
+    - predicate:
+      - base_path: '/employee-ownership'
+        link_base_path: '/browse/business/setting-up'
+      - base_path: '/employee-reservist'
+        link_base_path: '/browse/employing-people/payroll'
+      - base_path: '/employee-reservist'
+        link_base_path: '/topic/business-tax/PAYE'
+      - base_path: '/register-biomass-supplier'
+        link_base_path: '/browse/benefits-heating'
+      - base_path: '/hunting'
+        link_base_path: '/browse/environment-countryside'
+      - base_path: '/pedlars-certificate'
+        link_base_path: '/browse/business/setting-up'
+      expiry: '2016-09-01'
+      reason: 'Rummager has some extra links that should be removed. Raising with content team.'
 
     - predicate:
       - publishing_app: 'whitehall'
@@ -256,6 +285,27 @@ LinksMissingFromPublishingApi:
         content_id: 945dd603-4550-4b39-b92d-cb6f2d04be55
       expiry: '2017-01-01'
       reason: 'Some withdrawn documents that lost their links in publishing api. https://trello.com/c/nOhlbdQT/50-withdrawn-reports-no-longer-tagged-to-dfh'
+
+    - predicate:
+      - publishing_app: 'whitehall'
+        link_type: 'topic'
+        base_path: '/government/collections/river-basin-management-plans-update'
+      expiry: '2016-09-01'
+      reason: 'See https://trello.com/c/ouFmYN9S/55-rummager-data-flooded-with-duplicate-tags'
+
+    - predicate:
+      - link_base_path: '/topic/competition/mergers'
+        base_path: '/government/news/cma-opens-consultation-on-reed-elsevier-undertakings'
+      - link_base_path: '/topic/environmental-management/land-management'
+        base_path: '/government/collections/common-land-guidance-for-commons-registration-authorities-and-applicants'
+      expiry: '2017-09-01'
+      reason: 'Redirected content, but not a redirect in publishing api. We can probably ignore this.'
+
+    - predicate:
+      - base_path: '/government/publications/markets-orders-and-undertakings-register'
+      - base_path: '/government/collections/planning-and-economic-development'
+      expiry: '2016-09-01'
+      reason: 'Missing link in publishing api. https://trello.com/c/IsMZN5wj/56-inconsistent-topic-tagging-for-whitehall-content'
 
 RedirectedRummagerContent:
   rules:
