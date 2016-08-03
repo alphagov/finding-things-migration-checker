@@ -251,13 +251,13 @@ LinksMissingFromPublishingApi:
 
     - predicate:
       - base_path: '/reporting-road-obstruction'
-        format: 'placeholder'
+        document_type: 'placeholder'
         link_base_path: '/browse/housing/recycling-rubbish'
       - base_path: '/report-debris-motorways-main-road'
-        format: 'placeholder'
+        document_type: 'placeholder'
         link_base_path: '/browse/housing/recycling-rubbish'
       - base_path: '/apply-building-regulation-approval-from-council'
-        format: 'placeholder'
+        document_type: 'placeholder'
         link_base_path: '/browse/housing/planning-permission'
       expiry: '3000-01-01'
       reason: 'Placeholder content that is redirected. Rummager and publishing api both have the old item, but publishing api never got the links.'
@@ -306,6 +306,135 @@ LinksMissingFromPublishingApi:
       - base_path: '/government/collections/planning-and-economic-development'
       expiry: '2016-09-01'
       reason: 'Missing link in publishing api. https://trello.com/c/IsMZN5wj/56-inconsistent-topic-tagging-for-whitehall-content'
+
+    - predicate:
+      - base_path: /government/publications/health-professions-council-annual-report-2006-to-2007
+      - base_path: /government/publications/health-professions-council-annual-report-and-accounts-2007-08
+      - base_path: /government/publications/health-professions-council-annual-report-and-accounts-2009-to-2010
+      - base_path: /government/publications/hospital-estates-and-facilities-statistics-201011
+      - base_path: /government/publications/min-423-revalidating-a-certificate-of-competency
+      - base_path: /government/publications/code-of-practice-on-noise-from-audible-intruder-alarms-1982
+      - base_path: /government/publications/webtag-si-ntem-sub-models
+      - base_path: /government/publications/webtag-tag-unit-a4-1-social-impact-appraisal
+      - base_path: /government/publications/markets-orders-and-undertakings-register
+      - base_path: /government/publications/webtag-tag-unit-a3-environmental-impact-appraisal-may-2014
+      - base_path: /government/publications/southerham-grey-pit-flood-defence-repair-works
+      - base_path: /government/publications/seaton-weir-flood-defence-repair-works
+      - base_path: /government/publications/16-to-19-bursary-fund-mi-return-for-2013-to-2014
+      - base_path: /government/publications/webtag-tag-data-book-may-2014
+      - base_path: /government/publications/webtag-tag-unit-a5-3-rail-appraisal
+      - base_path: /government/publications/webtag-tag-unit-a1-1-cost-benefit-analysis
+      - base_path: /government/publications/webtag-tag-unit-a1-2-scheme-costs
+      - base_path: /government/publications/webtag-tag-unit-a1-3-user-and-provider-impacts-may-2014
+      - base_path: /government/publications/webtag-tag-unit-m4-forecasting-and-uncertainty-may-2014
+      - base_path: /government/publications/m31-4ax-duro-felguera-uk-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/bl5-2dl-mrs-m-entwistle-mr-j-entwistle-mr-d-entwistle-environmental-permit-application-advertisement
+      - base_path: /government/publications/ng13-9hb-lc-and-jm-parker-environmental-permit-application-advertisement
+      - base_path: /government/publications/b16-8ha-ec-harris-uk-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/rhino-horn-worked-items-application-for-pre-sale-approval
+      - base_path: /government/publications/hr3-6nt-p-t-baker-farms-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/sy7-0qb-mrs-caroline-mann-environmental-permit-application-advertisement
+      - base_path: /government/publications/la6-2et-rigmaden-court-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/wa7-1pn-kier-infrastructure-and-overseas-limited-fcc-construccion-sa-and-samsung-ct-ecuk-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ta9-3pz-secret-world-wildlife-rescue-environmental-permit-application-advertisement
+      - base_path: /government/publications/low-wood-hotel-1958-limited-and-holbeck-ghyll-country-house-hotel-limited-application-made-to-abstract-water-and-impound-water
+      - base_path: /government/publications/pe31-6xj-mr-hugh-kemsley-environmental-permit-application-advertisement
+      - base_path: /government/publications/pe6-7th-biffa-waste-services-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/bb3-0rp-sita-uk-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ch62-3nl-riverside-aggregates-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/tn23-3hf-mr-russell-marsh-environmental-permit-application-advertisement
+      - base_path: /government/publications/so21-1ta-mr-clive-pace-environmental-permit-application-advertisement
+      - base_path: /government/publications/le65-2un-mr-hayo-harmens-environmental-permit-application-advertisement
+      - base_path: /government/publications/gu24-8hu-fairoaks-operations-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/kingston-small-boats-head-race-river-restriction-notice
+      - base_path: /government/publications/le12-5tq-egdon-resource-u-k-limited-environmental-permit-applications-advertisement
+      - base_path: /government/publications/co6-3rn-edward-drake-environmental-permit-application-advertisement
+      - base_path: /government/publications/dn7-5ta-mr-terry-tyas-environmental-permit-application-advertisement
+      - base_path: /government/publications/l35-3ss-mr-robin-seddon-environmental-permit-application-advertisement
+      - base_path: /government/publications/wr6-5qq-mr-james-terry-brevitt-environmental-permit-application-advertisement
+      - base_path: /government/publications/ca1-3nq-h2-energy-esco-33-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/so30-2hb-wessex-demolition-and-salvage-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/s33-6rp-hope-construction-materials-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ct3-4hq-veolia-environmental-services-uk-plc-environmental-permit-application-advertisement
+      - base_path: /government/publications/ln11-8pg-elsham-linc-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/cw11-3pu-hw-martin-waste-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/s44-5qj-national-trust-environmental-permit-application-advertisement
+      - base_path: /government/publications/gu34-3ej-mr-william-kerridge-environmental-permit-application-advertisement
+      - base_path: /government/publications/ip19-0pl-northumbrian-water-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ln4-8sf-st-andrews-church-parochial-church-council-environmental-permit-application-advertisement
+      - base_path: /government/publications/so41-8af-meryl-armitage-environmental-permit-application-advertisement
+      - base_path: /government/publications/pl18-9sq-mr-nicholas-cole-environmental-permit-application-advertisement
+      - base_path: /government/publications/sn14-7ex-mrs-joanna-sarah-reed-environmental-permit-application-advertisement
+      - base_path: /government/publications/rg17-0ur-mr-john-smith-environmental-permit-application-advertisement
+      - base_path: /government/publications/pe7-2hd-east-anglian-resources-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/nr30-3qd-veolia-es-uk-limited-environmental-permit-application-advertisement--2
+      - base_path: /government/publications/ta5-2bq-s-roberts-and-son-bridgwater-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/burghley-house-preservation-trust-limited-application-made-to-abstract-take-water
+      - base_path: /government/publications/environment-agency-application-made-to-impound-water
+      - base_path: /government/publications/sale-of-miscellaneous-surplus-defence-equipment-in-cyprus
+      - base_path: /government/publications/sale-of-miscellaneous-surplus-defence-equipment-in-cyprus
+      - base_path: /government/publications/rg1-8na-balfour-beatty-plc-environmental-permit-application-advertisement
+      - base_path: /government/publications/tn25-6nh-mrs-rochelle-godden-environmental-permit-application-advertisement
+      - base_path: /government/publications/rg26-5sb-mr-michael-and-mrs-amanda-baker-environmental-permit-application-advertisement
+      - base_path: /government/publications/ip2-8nb-brett-aggregates-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/tf13-6qn-benbow-environmental-permit-application-advertisement
+      - base_path: /government/publications/ex38-7ay-torrington-farmers-hunt-environmental-permit-application-advertisement
+      - base_path: /government/publications/sp5-5jw-mr-john-parnell-environmental-permit-application-advertisement
+      - base_path: /government/publications/min-480-new-requirements-for-security-training-for-shipboard-personnel
+      - base_path: /government/publications/nn17-3jw-anglian-water-services-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/tn27-9eu-mrs-kathy-hook-environmental-permit-application-advertisement
+      - base_path: /government/publications/tn31-6eu-mr-carl-mumford-environmental-permit-application-advertisement
+      - base_path: /government/publications/tn20-6jj-mrs-jennifer-dunlop-environmental-permit-application-advertisement
+      - base_path: /government/publications/rg29-1jp-mrs-marion-holloway-environmental-permit-application-advertisement
+      - base_path: /government/publications/po18-8st-mr-lawrence-marsh-environmental-permit-application-advertisement
+      - base_path: /government/publications/ub3-4qr-fm-conway-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/se10-0nu-energy-10-greenwich-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/st10-3eq-lafarge-tarmac-cement-and-lime-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/bs25-1qp-mr-john-goodwin-environmental-permit-application-advertisement
+      - base_path: /government/publications/breedon-aggregates-england-limited-application-made-to-abstract-take-water
+      - base_path: /government/publications/ba3-4dw-rm-penny-plant-hire-and-demolition-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/da10-0df-independent-water-networks-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/tackling-irresponsible-dog-ownership-draft-practitioners-manual
+      - base_path: /government/publications/tackling-irresponsible-dog-ownership-draft-practitioners-manual
+      - base_path: /government/publications/fyfield-estates-limited-application-made-to-abstract-take-water
+      - base_path: /government/publications/ba2-7dg-mr-david-curwen-mr-james-mcphee-mr-jeffery-savage-mr-patrick-dawson-environmental-permit-application-advertisement
+      - base_path: /government/publications/ex36-3lt-mr-peter-delbridge-environmental-permit-application-advertisement
+      - base_path: /government/publications/tr10-9ed-mr-david-trethewey-environmental-permit-application-advertisement
+      - base_path: /government/publications/cv22-7de-modern-plant-hire-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/me6-5ax-smurfit-kappa-uk-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/nr28-9ry-dalkia-plc-environmental-permit-application-advertisement
+      - base_path: /government/publications/nn3-6rx-greencore-food-to-go-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/en11-0rf-tamar-renewable-power-hoddesdon-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/tq12-6ut-kj-howard-civil-engineering-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ne10-0el-northumbrian-water-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ne8-2pw-northumbrian-water-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/dl16-6lq-northumbrian-water-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/right-to-rent-immigration-checks-guidance-on-who-is-affected
+      - base_path: /government/publications/right-to-rent-immigration-checks-guidance-on-who-is-affected
+      - base_path: /government/publications/failure-to-make-an-immigration-right-to-rent-check-penalty-guidance
+      - base_path: /government/publications/failure-to-make-an-immigration-right-to-rent-check-penalty-guidance
+      - base_path: /government/publications/ba1-8hq-wolfe-securities-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ip13-6rz-mr-dennis-crowe-environmental-permit-application-advertisement
+      - base_path: /government/publications/bb7-4qf-castle-cement-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/nr28-9ry-h-j-heinz-frozen-and-chilled-foods-europe-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/pe28-5nt-mr-stephen-wright-environmental-permit-application-advertisement
+      - base_path: /government/publications/yo8-8eq-mr-steven-masters-environmental-permit-application-advertisement
+      - base_path: /government/publications/ip14-3na-valley-farm-poultry-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ts2-1sd-port-clarence-energy-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/cr4-4na-riverside-ad-limited-environmental-permit-draft-decision-advertisement
+      - base_path: /government/publications/sp6-2pz-mrs-margaret-bunyard-environmental-permit-application-advertisement
+      - base_path: /government/publications/b69-3el-innovative-environmental-solutions-uk-limited-environmental-permit-draft-decision-advertisement
+      - base_path: /government/publications/rh7-6hu-matthews-sussex-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/ng13-9ne-sheardown-farms-limited-environmental-permit-application-advertisement
+      - base_path: /government/publications/lead-local-flood-authorities-england-funding-for-2014-to-2015
+      - base_path: /government/publications/how-to-make-right-to-rent-checks
+      - base_path: /government/publications/how-to-make-right-to-rent-checks
+      - base_path: /government/publications/psn-local-public-services-data-handling-guidelines
+      - base_path: /government/publications/bathing-waters-2013-projected-classifications-in-england
+      - base_path: /government/publications/bathing-waters-2013-projected-classifications-in-england
+      - base_path: /government/publications/professional-deputy-costs
+      expiry: '2017-09-14'
+      reason: 'See https://trello.com/c/jVPQzU1S/57-125-withdrawn-publications-are-missing-their-organisation-tags-in-the-publishing-api# - these are withdrawn editions that are placeholders in the publishing api. Publishing api does not have the organisation links.'
 
 RedirectedRummagerContent:
   rules:
