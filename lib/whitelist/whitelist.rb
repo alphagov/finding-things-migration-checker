@@ -98,6 +98,9 @@ private
 
     def self.test_for(headers, key_value)
       row_index = headers.find_index(key_value[0])
+      if row_index.nil?
+        raise ArgumentError.new("Invalid key_value #{key_value}")
+      end
       lambda { |row| row[row_index] == key_value[1] }
     end
   end
