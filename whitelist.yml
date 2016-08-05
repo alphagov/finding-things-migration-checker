@@ -186,6 +186,16 @@ LinksMissingFromRummager:
       reason: "These links are all missing from rummager. Publishing api is correct. Content team are going to republish."
 
     - predicate:
+      - link_type: 'topics'
+        base_path: '/government/publications/employment-intermediaries-travel-expense-guidance'
+      - link_type: 'topics'
+        base_path: '/government/publications/proposed-hutchisontelefonica-merger-cma-letter-to-european-commission'
+      - link_type: 'topics'
+        base_path: '/government/publications/dedicated-schools-grant-2014-to-2015'
+      expiry: '2016-09-01'
+      reason: "These links are all missing from rummager. https://trello.com/c/dN1lkKRp/60-topic-tags-missing-from-rummager"
+
+    - predicate:
       - link_type: 'mainstream_browse_pages'
         base_path: '/international-child-abduction'
         link_base_path: '/browse/abroad/travel-abroad'
@@ -221,6 +231,78 @@ LinksMissingFromPublishingApi:
       - link_type: 'people'
       expiry: '2017-06-01'
       reason: "We're not going to look at people links for a long time - let's reassess next year"
+
+    - predicate:
+      - link_type: 'organisations'
+      expiry: '2017-10-01'
+      reason: "Ignoring until mainstream browse and topics are consistent"
+
+    - predicate:
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/employee-ownership'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/drink-drive-limit'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/child-car-seats-the-rules'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/speed-limits'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/motorcycle-helmet-law'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/employee-reservist'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/electric-bike-rules'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/legal-obligations-drivers-riders'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/drug-use-and-driving'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/register-biomass-supplier'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/hunting'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/pedlars-certificate'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/guidance/the-highway-code'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/mobility-scooters-and-powered-wheelchairs-rules'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/government/publications/know-your-traffic-signs'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/reporting-road-obstruction'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/driving-eyesight-rules'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/report-debris-motorways-main-roads'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/apply-building-regulation-approval-from-council'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/quad-bikes-the-rules'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/seat-belts-law'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/using-mobile-phones-when-driving-the-law'
+      - link_type: 'mainstream_browse_pages'
+        base_path: '/topic/driving-tests-and-learning-to-drive/motorcycle'
+      expiry: '2017-10-01'
+      reason: "Driving and start a business content that is inconsistent. This was probably tagged recently: investigate why links are missing. The topic is a special case - check if we can structure this better so we don't mix/match multiple navigation paths."
+
+    - predicate:
+      - link_type: 'topics'
+        base_path: '/employee-reservist'
+      - link_type: 'topics'
+        base_path: '/government/collections/common-land-guidance-for-commons-registration-authorities-and-applicants'
+      - link_type: 'topics'
+        base_path: '/government/collections/planning-and-economic-development'
+      - link_type: 'topics'
+        base_path: '/government/collections/river-basin-management-plans-update'
+      - link_type: 'topics'
+        base_path: '/government/news/cma-opens-consultation-on-reed-elsevier-undertakings'
+      - link_type: 'topics'
+        base_path: '/government/publications/markets-orders-and-undertakings-register'
+      expiry: '2017-10-01'
+      reason: "Expand the scope of other whitelist entries so that we can get regular monitoring running."
+
     - predicate:
       - schema_name: redirect
       expiry: '3000-01-01'
