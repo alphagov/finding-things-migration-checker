@@ -41,7 +41,7 @@ module Import
     end
 
     def do_request(offset)
-      Services.rummager.unified_search(
+      Services.rummager.search(
         fields: %w(link content_id format is_withdrawn mainstream_browse_pages specialist_sectors organisations policy_groups people),
         order: 'public_timestamp',
         start: offset,
