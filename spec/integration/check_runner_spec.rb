@@ -7,7 +7,7 @@ RSpec.describe CheckRunner do
   before do
     @publishing_api_content_and_links_url = "#{Plek.new.find('publishing-api')}/v2/grouped-content-and-links"
     @publishing_api_lookup_url = "#{Plek.new.find('publishing-api')}/lookup-by-base-path"
-    @rummager_search_url = "#{Plek.new.find('rummager')}/unified_search.json"
+    @rummager_search_url = "#{Plek.new.find('rummager')}/search.json"
 
     @tempdir = tempdir
     @csvdir = File.join(@tempdir, 'csvs')
